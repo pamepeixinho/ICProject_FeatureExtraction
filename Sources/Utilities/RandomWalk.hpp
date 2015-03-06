@@ -7,7 +7,6 @@ class RandomWalk
 {
 public:
     RandomWalk();
-    FeaturesComplexNetwork walk(int pathLen);
     static void normalizeGraph(FeaturesComplexNetwork& cn);
 
 };

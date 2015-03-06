@@ -4,9 +4,6 @@ RandomWalk::RandomWalk()
 {
 }
 
-FeaturesComplexNetwork RandomWalk::walk(int pathLen){
-
-}
 
 void RandomWalk::normalizeGraph(FeaturesComplexNetwork &cn){
     FeaturesComplexNetwork::NodeIterator nodes;

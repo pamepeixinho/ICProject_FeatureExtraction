@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 2.4)
 add_definitions( -DUSE_MATH_DEFINES )
 
 
-if(POLICY CMP0020)
-      cmake_policy(SET CMP0020 NEW) 
-endif()
+#if(POLICY CMP0020)
+#      cmake_policy(SET CMP0020 NEW) 
+#endif()
 
-IF(COMMAND cmake_policy)
-      CMAKE_POLICY(SET CMP0003 NEW)
-ENDIF(COMMAND cmake_policy)
+#IF(COMMAND cmake_policy)
+#      CMAKE_POLICY(SET CMP0003 NEW)
+#ENDIF(COMMAND cmake_policy)
 
 PROJECT(PhDThesis C CXX)
 SET(CMAKE_AUTOMOC TRUE)
@@ -20,7 +20,7 @@ set(CMAKE_INCLUDE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/include)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 
-ADD_DEFINITIONS(-std=c++11 -g -O2 -Wall)
+#ADD_DEFINITIONS(-std=c++11 -g -Wall)
 IF(APPLE)
     ADD_DEFINITIONS(-fPIC)
 ENDIF()
@@ -32,4 +32,4 @@ ADD_SUBDIRECTORY(Sources)
 #    COMMAND ${CMAKE_COMMAND} -P clean-all.cmake
 #)
 
-INCLUDE(CPack)
+#INCLUDE(CPack)

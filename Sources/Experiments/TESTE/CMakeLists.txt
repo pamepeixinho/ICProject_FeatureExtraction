@@ -10,9 +10,8 @@ INCLUDE(${VTK_USE_FILE})
 
 INCLUDE_DIRECTORIES(".")
 
-FILE(GLOB_RECURSE Source_Files main.cpp *.cpp *.h)
+FILE(GLOB_RECURSE Source_Files  *.cpp)
 
-ADD_EXECUTABLE(SetupPadrao ${Source_Files})
-#ADD_EXECUTABLE(SetupPadrao main.cpp)
-TARGET_LINK_LIBRARIES(SetupPadrao FeatureExtractors ComplexNetwork Utilities Qt5::Core Qt5::Widgets Qt5::OpenGL  ${OpenCV_LIBS}  ${VTK_LIBRARIES})
+ADD_EXECUTABLE(TESTE ${Source_Files})
+TARGET_LINK_LIBRARIES(TESTE FeatureExtractors Utilities Qt5::Core Qt5::Widgets Qt5::OpenGL  ${OpenCV_LIBS}  ${VTK_LIBRARIES})
 
