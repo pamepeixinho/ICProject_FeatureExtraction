@@ -12,6 +12,5 @@ INCLUDE_DIRECTORIES(".")
 
 FILE(GLOB_RECURSE Source_Files  *.cpp)
 
-ADD_EXECUTABLE(TESTE ${Source_Files})
-TARGET_LINK_LIBRARIES(TESTE FeatureExtractors Utilities Qt5::Core Qt5::Widgets Qt5::OpenGL  ${OpenCV_LIBS}  ${VTK_LIBRARIES})
-
+ADD_EXECUTABLE(Graph ${Source_Files})
+TARGET_LINK_LIBRARIES(Graph FeatureExtractors Utilities Qt5::Core Qt5::Widgets Qt5::OpenGL  ${OpenCV_LIBS}  ${VTK_LIBRARIES})

@@ -14,5 +14,5 @@ FILE(GLOB_RECURSE Source_Files *.cpp *.h)
 
 ADD_EXECUTABLE(SetupPadrao ${Source_Files})
 #ADD_EXECUTABLE(SetupPadrao main.cpp)
-TARGET_LINK_LIBRARIES(SetupPadrao FeatureExtractors ComplexNetwork Utilities Qt5::Core Qt5::Widgets Qt5::OpenGL AnaliseGrafo  ${OpenCV_LIBS}  ${VTK_LIBRARIES})
+TARGET_LINK_LIBRARIES(SetupPadrao FeatureExtractors ComplexNetwork Utilities Qt5::Core Qt5::Widgets Qt5::OpenGL Graph ${OpenCV_LIBS}  ${VTK_LIBRARIES})
 
