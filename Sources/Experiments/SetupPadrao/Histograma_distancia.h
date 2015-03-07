@@ -4,21 +4,25 @@
 #include "Vertice.h"
 #include <vector>
 #include <iostream>
-#include <opencv2/core/mat.hpp>
+#include <opencv2\imgproc\imgproc.hpp>
+#include <opencv2\core\mat.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <assert.h>
+
+using namespace std;
+using namespace cv;
 
 class Hsv_Dist : public Vertice{
-	std::vector<float> histograma;
-	int VALOR_COMP;
+	vector<float> histograma;
 public:
-	Hsv_Dist(std::vector<float>&);
+	int VALOR_COMP;
+	Hsv_Dist(vector<float>&, int);
 	Hsv_Dist(){}
-	Hsv_Dist(char*, cv::Mat, cv::Mat, int, int, int, int, std::string);
+	Hsv_Dist(char*, Mat, Mat, int, int, int, int, string);
+	Hsv_Dist(int);
 
 	int getType() const;
-	std::vector<float> getHistDist();
-	void setHist(const std::vector<float>&);
+	vector<float> getHistDist();
+	void setHist(const vector<float>&);
 
 	float distancia(Hsv_Dist)const;
 

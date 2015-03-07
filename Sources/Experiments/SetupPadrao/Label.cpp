@@ -1,4 +1,3 @@
-
 #include "Vertice.h"
 #include "Label.h"
 #include <iostream>
