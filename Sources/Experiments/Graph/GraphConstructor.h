@@ -30,7 +30,9 @@
 #include "Graph.h"
 //#include <Experiments\AnaliseGrafo\OcorrenciaGrafo.h>
 
+template <typename Label_type, typename Histograma_type>
 class GraphConstructor{
+	//Graph *Grafo;
 	SunDatabaseReader &reader;
 	char *arq_hsvimages;
 	char *arq_vertice;

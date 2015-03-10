@@ -20,10 +20,10 @@
 #include <opencv2\imgproc\imgproc.hpp>
 #include <assert.h>
 #include <set>
+#include <memory>
 #include <Experiments\Graph\Vertice.h>
 #include <Experiments\Graph\Label.h>
 #include <Experiments\Graph\Histograma.h>
-#include <memory>
 #include <Experiments\Graph\Graph.h>
 #include <Experiments\Graph\OcorrenciaGrafo.h>
 #include <Experiments\Graph\GraphConstructor.h>
@@ -51,9 +51,12 @@ int main(int argc, char* argv[]){
 
 	SunDatabaseReader reader("/Users/pamela/Documents/IC/Study/project1/SUN2012_COMPLETA/SUN2012");
 
-	GraphConstructor constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
-
+	Graph<Label, Hsv_DiscrY>Grafo;
+	
+	/*GraphConstructor<Label,Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);*/
+	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
 	constructor.build();
+	
 
 	OcorrenciaH_Grafo(arq_vertice, arq_grafo, arq_ocorrencia);
 
