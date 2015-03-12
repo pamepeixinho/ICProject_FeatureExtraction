@@ -13,16 +13,19 @@ using namespace cv;
 
 class Hsv_Dist : public Vertice{
 	vector<float> histograma;
-public:
 	int VALOR_COMP;
+public:
 	Hsv_Dist(vector<float>&, int);
 	Hsv_Dist(){}
-	Hsv_Dist(char*, Mat, Mat, int, int, int, int, string);
+	Hsv_Dist(char*, Mat, Mat, int, int, int, int, string,int);
 	Hsv_Dist(int);
 
 	int getType() const;
 	vector<float> getHistDist();
 	void setHist(const vector<float>&);
+
+	void setValor(int);
+	int getValor();
 
 	float distancia(Hsv_Dist)const;
 

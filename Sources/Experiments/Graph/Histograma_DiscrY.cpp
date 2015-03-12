@@ -59,35 +59,24 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 	//imshow("mask", mask);
 
 
-	int z = 0, branco = 0, h1 = 0, s1 = 0, v1 = 0, r = 0, g = 0, b = 0;
+	int branco = 0, h1 = 0, s1 = 0, v1 = 0, shift=0;
 
 	for (int x = 0; x < img_hsv.rows; x++){
 
 		for (int y = 0; y < img_hsv.cols; y++){
 
-			uchar bw = mask.at<uchar>(x, y);
+			if (mask.data[x*mask.cols + y] > 0){
 
-			if (bw != 0){
-			Vec3b p = img_hsv.at<Vec3b>(x, y);
+				shift = x*image.cols * 3 + y * 3;
+				h1 = MIN(image.data[shift] / 255.*(h - 1) + 0.5, (h - 1));
+				s1 = MIN(image.data[shift + 1] / 255.*(s - 1) + 0.5, (h - 1));
+				v1 = MIN(image.data[shift + 2] / 255.*(v - 1) + 0.5, (h - 1));
+				//ret[h*vd*sd + s*vd + v]++;
 
-			h1 = p.val[0];
-			s1 = p.val[1];
-			v1 = p.val[2];
-
-
-				//printf("H(entravetor)=%d, S(entravetor)=%d, V(entravetor)=%d\n", h1, s1, v1);
-
-				particiona(&h1, ph);
-				particiona(&s1, ps);
-				particiona(&v1, pv);
-
-				z = ((s*v)*h1) + (v*s1) + v1;
-				hist[z] += 1;
-
-				z = 0;
+				hist[((s*v)*h1) + (v*s1) + v1] += 1;
 				branco++;
 			}
-
+		
 		}
 	}
 
