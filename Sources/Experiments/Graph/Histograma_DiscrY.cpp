@@ -1,5 +1,5 @@
 #include "Histograma_DiscrY.h"
-#include <opencv2\imgproc\imgproc.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 //#include "Funcoes_Vector_hist.h"
 
 using namespace cv;
@@ -67,13 +67,13 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 
 			uchar bw = mask.at<uchar>(x, y);
 
+			if (bw != 0){
 			Vec3b p = img_hsv.at<Vec3b>(x, y);
 
 			h1 = p.val[0];
 			s1 = p.val[1];
 			v1 = p.val[2];
 
-			if (bw != 0){
 
 				//printf("H(entravetor)=%d, S(entravetor)=%d, V(entravetor)=%d\n", h1, s1, v1);
 
@@ -92,8 +92,8 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 	}
 
 	//fprintf(arq, "quantidade pixel que entrou no vetor:%d\n", branco);
-	//fprintf(arq, "\nImage:quantidade pixel linhas:%d\ colunas:%d e total:%d\n", img_hsv.rows, img_hsv.cols, (img_hsv.rows*img_hsv.cols));
-	//fprintf(arq, "\nMask:quantidade pixel linhas:%d\ colunas:%d e total:%d\n", mask.rows, mask.cols, (mask.rows*mask.cols));
+	//fprintf(arq, "\nImage:quantidade pixel linhas:%d/ colunas:%d e total:%d\n", img_hsv.rows, img_hsv.cols, (img_hsv.rows*img_hsv.cols));
+	//fprintf(arq, "\nMask:quantidade pixel linhas:%d/ colunas:%d e total:%d\n", mask.rows, mask.cols, (mask.rows*mask.cols));
 
 	hist = normalizavetor(hist, branco, (h*s*v));
 	fprintf(arq, "Regiao_%s%d_%d = [", regiao.c_str(), n, K);

@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <iostream>
-#include <opencv2\imgproc\imgproc.hpp>
-#include <opencv2\core\mat.hpp>
-#include <opencv2\highgui\highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include "Vertice.h"
 #include "Funcoes_Vector_hist.h"
 

@@ -1,11 +1,11 @@
 #ifndef HISTOGRAMA_DISTANCIA_H
 #define HISTOGRAMA_DISTANCIA_H
 
-#include "Vertice.h"
+#include <Experiments/Graph/Vertice.h>
 #include <vector>
 #include <iostream>
-#include <opencv2\imgproc\imgproc.hpp>
-#include <opencv2\core\mat.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/mat.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace std;

@@ -51,7 +51,7 @@ int main(int argc, char* argv[]){
 
 	SunDatabaseReader reader("/Users/pamela/Documents/IC/Study/project1/SUN2012_COMPLETA/SUN2012");
 
-	Graph<Label, Hsv_DiscrY>Grafo;
+	//Graph<Label, Hsv_DiscrY>Grafo;
 	
 	/*GraphConstructor<Label,Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);*/
 	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
