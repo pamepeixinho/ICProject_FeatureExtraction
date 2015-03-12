@@ -35,7 +35,7 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 	this->K = K;
 	vector<float> hist;
 
-	FILE* arq = fopen(nomearquivo, "a");
+	//FILE* arq = fopen(nomearquivo, "a");
 
 	Mat img_hsv;
 
@@ -85,11 +85,11 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 	//fprintf(arq, "\nMask:quantidade pixel linhas:%d/ colunas:%d e total:%d\n", mask.rows, mask.cols, (mask.rows*mask.cols));
 
 	hist = normalizavetor(hist, branco, (h*s*v));
-	fprintf(arq, "Regiao_%s%d_%d = [", regiao.c_str(), n, K);
-	for (int i = 0; i < (h*s*v); i++){
-		fprintf(arq, "%.2f ", hist[i]);
-	}
-	fprintf(arq, "];\n");
+	//fprintf(arq, "Regiao_%s%d_%d = [", regiao.c_str(), n, K);
+	//for (int i = 0; i < (h*s*v); i++){
+	//	fprintf(arq, "%.2f ", hist[i]);
+	//}
+	//fprintf(arq, "];\n");
 
 	img_hsv.release();
 
@@ -99,11 +99,11 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 	for (int i = 0; i < hist.size(); i++)
 		this->histograma_y[i] = (int)((hist[i] * K) + 0.5);
 
-	fprintf(arq, "Regiao_%s%d_discrY_%d = [", regiao.c_str(), n, K);
-	for (int i = 0; i < histograma_y.size(); i++){
-		fprintf(arq, "%d ", histograma_y[i]);
-	}
-	fprintf(arq, "];\n\n");
+	//fprintf(arq, "Regiao_%s%d_discrY_%d = [", regiao.c_str(), n, K);
+	//for (int i = 0; i < histograma_y.size(); i++){
+	//	fprintf(arq, "%d ", histograma_y[i]);
+	//}
+	//fprintf(arq, "];\n\n");
 
-	fclose(arq);
+	//fclose(arq);
 }

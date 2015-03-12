@@ -66,7 +66,8 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 		SupervisedImage i = reader.readNext();
 
 		char num[10];
-		itoa(quantidade, num, 10);
+		//itoa(quantidade, num, 10);
+		sprintf(num, "%d", quantidade);
 
 		strcpy(nomearquivo_temp, arq_hsvimages);
 		strcat(nomearquivo_temp, num);
@@ -102,9 +103,9 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 				Grafo.ConstructEdges(LABEL, HSV);
 			}
 
+		}
 			Grafo.printVertices(arq_vertice);
 			Grafo.printGraph(arq_grafo);
-		}
 
 		quantidade++;
 		printf("\n");
