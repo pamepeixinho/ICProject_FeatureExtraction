@@ -17,16 +17,16 @@
 #include <string.h>
 #include <vector>
 #include <math.h>
-#include <opencv2\imgproc\imgproc.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <assert.h>
 #include <set>
 #include <memory>
-#include <Experiments\Graph\Vertice.h>
-#include <Experiments\Graph\Label.h>
-#include <Experiments\Graph\Histograma.h>
-#include <Experiments\Graph\Graph.h>
-#include <Experiments\Graph\OcorrenciaGrafo.h>
-#include <Experiments\Graph\GraphConstructor.h>
+#include <Experiments/Graph/Vertice.h>
+#include <Experiments/Graph/Label.h>
+#include <Experiments/Graph/Histograma.h>
+#include <Experiments/Graph/Graph.h>
+#include <Experiments/Graph/OcorrenciaGrafo.h>
+#include <Experiments/Graph/GraphConstructor.h>
 
 //#define VALOR_COMP 0.25
 //#define IND_LABEL 0
