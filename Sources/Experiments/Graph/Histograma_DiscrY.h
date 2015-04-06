@@ -13,13 +13,13 @@ using namespace std;
 
 class Hsv_DiscrY :public Vertice{
 	vector<int> histograma_y;
-	int K;
+	int  K;
 public:
 
 	Hsv_DiscrY(){}
 	Hsv_DiscrY(const vector<int>&, int);
 	Hsv_DiscrY(vector<float>&, int);
-	Hsv_DiscrY(char *, cv::Mat, cv::Mat, int, int, int, int, string, int);
+	Hsv_DiscrY(cv::Mat, cv::Mat, int, int, int, int, string, float);
 	
 	int getType() const;
 

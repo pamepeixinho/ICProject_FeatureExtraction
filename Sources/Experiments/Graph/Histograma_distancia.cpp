@@ -7,11 +7,11 @@
 #include "Funcoes_Vector_hist.h"
 
 
-Hsv_Dist::Hsv_Dist(std::vector<float>& values, int valor):VALOR_COMP(valor){
+Hsv_Dist::Hsv_Dist(std::vector<float>& values, float valor):VALOR_COMP(valor){
 	this->histograma = values;
 }
 
-Hsv_Dist::Hsv_Dist(int valor):VALOR_COMP(valor){}
+Hsv_Dist::Hsv_Dist(float valor):VALOR_COMP(valor){}
 
 int Hsv_Dist::getType() const{
 	return 1;
@@ -44,20 +44,20 @@ bool Hsv_Dist::operator<(const Vertice& other) const{
 	return distancia(*other_hsv);
 }
 
-int Hsv_Dist::getValor(){
+float Hsv_Dist::getValor(){
 	return VALOR_COMP;
 }
 
-void Hsv_Dist::setValor(int VALOR_COMP){
+void Hsv_Dist::setValor(float VALOR_COMP){
 	this->VALOR_COMP = VALOR_COMP;
 }
 
-Hsv_Dist::Hsv_Dist(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std::string regiao, int k){
+Hsv_Dist::Hsv_Dist( cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std::string regiao, float k){
 	vector<float> hist;
 	
 	setValor(k);
 
-	FILE* arq = fopen(nomearquivo, "a");
+//	FILE* arq = fopen(nomearquivo, "a");
 
 	Mat img_hsv;
 
@@ -72,7 +72,7 @@ Hsv_Dist::Hsv_Dist(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, int s,
 
 	hist.resize((h*s*v), 0);
 
-	cvtColor(image, img_hsv, CV_BGR2HSV_FULL);
+//	cvtColor(image, img_hsv, CV_BGR2HSV_FULL);
 
 	int branco = 0, h1 = 0, s1 = 0, v1 = 0, shift=0;
 
@@ -102,15 +102,15 @@ Hsv_Dist::Hsv_Dist(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, int s,
 	}
 
 	hist = normalizavetor(hist, branco, (h*s*v));
-	fprintf(arq, "Regiao_%s%d = [", regiao.c_str(), n);
-	for (int i = 0; i < (h*s*v); i++){
-		fprintf(arq, "%.2f ", hist[i]);
-	}
-	fprintf(arq, "];\n\n");
+//	fprintf(arq, "Regiao_%s%d = [", regiao.c_str(), n);
+//	for (int i = 0; i < (h*s*v); i++){
+//		fprintf(arq, "%.2f ", hist[i]);
+//	}
+//	fprintf(arq, "];\n\n");
 
 	img_hsv.release();
 
-	fclose(arq);
+//	fclose(arq);
 	
 	this->histograma = hist;
 }

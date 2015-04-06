@@ -19,8 +19,8 @@ class Graph{
 	vector<Vertice*>indice;
 	vector<vector<int> >Matriz_Adjacencia;
 public:
-	void printVertices(const char *);
-	void printGraph(const char *);
+	void printVertices(char *);
+	void printGraph(char *);
 	void ConstructEdges(type1, type2);
 	//void ConstructEdges(Label, Hsv_DiscrY);
 };
@@ -34,7 +34,7 @@ char v[60];
 char aux[60];
 
 template<typename type1, typename type2>
-void Graph<type1, type2>::printVertices(const char *arquivo_vertices){
+void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 	strcpy(v, arquivo_vertices);
 	strcpy(aux, arquivo_vertices);
 
@@ -70,13 +70,14 @@ void Graph<type1, type2>::printVertices(const char *arquivo_vertices){
 }
 
 template<typename type1, typename type2>
-void Graph<type1, type2>::printGraph(const char *arquivo_grafo){
+void Graph<type1, type2>::printGraph( char *arquivo_grafo){
 	char L = 'L';
 	char H = 'H';
 
 	strcpy(v, arquivo_grafo);
+	strcpy(aux, arquivo_grafo);
 
-	FILE *arq_g = fopen(strcat(v, ".txt"), "w");
+	FILE *arq_g = fopen(strcat(aux, ".txt"), "w");
 	FILE *arq_gb = fopen(strcat(v, ".bin"), "wb");
 
 

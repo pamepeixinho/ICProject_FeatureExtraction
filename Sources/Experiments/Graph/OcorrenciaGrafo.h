@@ -15,7 +15,8 @@ public:
 	int indice;
 	int soma;
 	int ocorre;
-	Estrutura_Ocorrencia(const int , const int, const int);
+	int type;
+	Estrutura_Ocorrencia(const int, const int , const int, const int);
 };
 
 bool operator < (const Estrutura_Ocorrencia& a, const Estrutura_Ocorrencia& b);

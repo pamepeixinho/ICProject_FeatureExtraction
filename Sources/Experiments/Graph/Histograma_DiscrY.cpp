@@ -31,8 +31,8 @@ bool Hsv_DiscrY::operator<(const Vertice& other) const{
 	//return dist;
 }
 
-Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std::string regiao, int K){
-	this->K = K;
+Hsv_DiscrY::Hsv_DiscrY( cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std::string regiao, float  K){
+	this->K = (int)K;
 	vector<float> hist;
 
 	//FILE* arq = fopen(nomearquivo, "a");
@@ -50,7 +50,7 @@ Hsv_DiscrY::Hsv_DiscrY(char *nomearquivo, cv::Mat image, cv::Mat mask, int h, in
 
 	hist.resize((h*s*v), 0);
 
-	cvtColor(image, img_hsv, CV_BGR2HSV_FULL);
+//	cvtColor(image, img_hsv, CV_BGR2HSV_FULL);
 	//Convert RGB to HSV (FULL)->(0 - 255, 0-255, 0-255)
 
 	//printf("     %d %d\n", mask.cols, mask.rows);

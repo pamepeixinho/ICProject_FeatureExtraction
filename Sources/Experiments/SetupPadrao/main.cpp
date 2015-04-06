@@ -39,22 +39,23 @@ using namespace std;
 //entrada prompt: (pasta)imagens\imagem (hsv)0 0 0 (K)0 (arquivos) Vertice Grafo
 int main(int argc, char* argv[]){
 
-	if (argc!=9){
-		printf("\nEntrada de Argumentos:\n(pasta)imagens\imagem (h s v)0 0 0 (k || valor_comp)0 (arquivo_Vertice)Vertice (arquivo_Grafo)Grafo (arquivo_Ocorrencia)Ocorrencia\n");
+	if (argc!=8){
+		printf("\nEntrada de Argumentos:\n(h s v)0 0 0 (k || valor_comp)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
 		return 0;
 	}
 
-	char *nomearquivo = argv[1], *arq_vertice = argv[6], *arq_grafo = argv[7], *arq_ocorrencia = argv[8];
-	int arg_h = atoi(argv[2]), arg_s = atoi(argv[3]), arg_v = atoi(argv[4]), arg_K = atoi(argv[5]);
+	char *arq_vertice = argv[6], *arq_grafo = argv[7], *arq_ocorrencia = argv[8];
+	int arg_h = atoi(argv[2]), arg_s = atoi(argv[3]), arg_v = atoi(argv[4]);
+	float arg_K = atoi(argv[5]);
 	
-	printf("ARGUMENTOS: h%d s%d v%d k%d\n\n", arg_h, arg_s, arg_v, arg_K);
+	printf("ARGUMENTOS: h%d s%d v%d k%.2f\n\n", arg_h, arg_s, arg_v, arg_K);
 
-	SunDatabaseReader reader("/Users/pamela/Documents/IC/Study/project1/SUN2012_COMPLETA/SUN2012");
+	SunDatabaseReader reader("/home/pamela/SUN2012/");
 
 	//Graph<Label, Hsv_DiscrY>Grafo;
 	
 	/*GraphConstructor<Label,Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);*/
-	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
+	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
 	constructor.build();
 	
 

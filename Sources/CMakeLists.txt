@@ -1,7 +1,7 @@
 
 
 #Add ComplexNetwork dir to build ComplexNetwork lib
-#ADD_SUBDIRECTORY(ComplexNetwork)
+ADD_SUBDIRECTORY(ComplexNetwork)
 ADD_SUBDIRECTORY(FeatureExtractors)
 
 #Add required packages to build all others executables
