@@ -1,0 +1,2 @@
+media = 157.00
+desvio padrao = 158.15
