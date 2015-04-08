@@ -22,4 +22,7 @@ public:
 bool operator < (const Estrutura_Ocorrencia& a, const Estrutura_Ocorrencia& b);
 void OcorrenciaH_Grafo(char *, char *, char *);
 
+
+void OcorrenciaVert_Grafo(char *, char *, char *);
+
 #endif // !ANALISE_GRAFO
