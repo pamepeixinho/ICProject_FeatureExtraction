@@ -11,7 +11,7 @@ using namespace std;
 Estrutura_Ocorrencia::Estrutura_Ocorrencia(const int ind, const int type, const int som, const int oco):indice(ind),type(type), soma(som), ocorre(oco){}
 
 bool operator < (const Estrutura_Ocorrencia& a, const Estrutura_Ocorrencia& b){
-	return (a.indice) < (b.indice);
+	return (a.type) < (b.type);
 }
 
 void OcorrenciaH_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
@@ -33,11 +33,11 @@ void OcorrenciaH_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 //	printf("g - %s \n", arquivo_g);
 //	printf("v - %s \n", arquivo_v);
 
-	FILE *arq_grafo = fopen(strcat(arquivo_g, ".bin"), "rb");
+	FILE *arq_grafo = fopen(arquivo_g, "rb");
 //	printf("%s \n", arquivo_g);
 	assert(arq_grafo != NULL);
 
-	FILE *arq_vertices = fopen(strcat(arquivo_v, ".bin"), "rb");
+	FILE *arq_vertices = fopen(arquivo_v, "rb");
 //	printf("v - %s \n", arquivo_v);
 	assert(arq_vertices != NULL);
 
@@ -75,21 +75,25 @@ void OcorrenciaH_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 		type=0;
 	}
 
-	int v = 0, i = 0;
+	int v = -1, i = 0;
 	fprintf(arq_print, "Ocorre = [");
 	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(); it++, i++){
-		if (it->indice != 0 && v == 0)
-			v = i;
+		if (it->type != 0 && v == -1){
+			v=i;
+			printf("V = %d\n", v);
+		}
 		fprintf(arq_print, "%d ", it->ocorre);
-}	
+//		printf("%d\n ", it->type);
+	}
+	
 	fprintf(arq_print, "];");
 
 	fprintf(arq_print, "indice_Hist = %d;", v);
 
-
+//	printf("%d\n", v);
 	fprintf(arq_print_b, "%d ", v);
 
-	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(); it++, i++)
+	for (it = Ocorrencia.begin(); it != Ocorrencia.end(); it++)
 		fprintf(arq_print_b, "%d ", it->ocorre);
 	
 	Ocorrencia.clear();
@@ -122,11 +126,11 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 //	printf("g - %s \n", arquivo_g);
 //	printf("v - %s \n", arquivo_v);
 
-	FILE *arq_grafo = fopen(strcat(arquivo_g, ".bin"), "rb");
+	FILE *arq_grafo = fopen(arquivo_g, "rb");
 //	printf("%s \n", arquivo_g);
 	assert(arq_grafo != NULL);
 
-	FILE *arq_vertices = fopen(strcat(arquivo_v, ".bin"), "rb");
+	FILE *arq_vertices = fopen(arquivo_v, "rb");
 //	printf("v - %s \n", arquivo_v);
 	assert(arq_vertices != NULL);
 
@@ -141,7 +145,7 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 	fscanf(arq_grafo, "%d", &n);
 	fprintf(arq_print, "n = %d;", n);
 
-	fprintf(arq_print_b, "%d ", n);
+//	fprintf(arq_print_b, "%d ", n);
 		
 	for (int i = 0; i<n; i++){
 		fscanf(arq_vertices, "%d", &type);
@@ -164,19 +168,19 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 		type=0;
 	}
 
-	int v = 0, i = 0;
+	int v = -1, i = 0;
 	fprintf(arq_print, "Ocorre = [");
 	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(); it++, i++){
-		if (it->indice != 0 && v == 0){
+		if (it->type != 0 && v == -1)
 			v= i;
-		}
+		
 		fprintf(arq_print_b, "%d-%d, ", it->ocorre, it->indice);
 	}
 	fprintf(arq_print, "];");
 
 	fprintf(arq_print_b, "%d ", v);
 
-	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end() && i<v; it++, i++)
+	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(),i<v; it++, i++)
 		fprintf(arq_print, "%d %d ", it->ocorre, it->indice);
 	
 	Ocorrencia.clear();

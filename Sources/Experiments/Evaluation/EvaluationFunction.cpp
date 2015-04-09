@@ -36,15 +36,35 @@ char * buscaLabel(char *arq, int n){
 	}
 }
 
-int main(int argc, char *argv[]){
+void MediaSimples(char *oc, char *res ){
 
-	if(argc != 8)
-		printf("arquivo_Ocorre arquivo_vertice arquivo_resultado H S V Y\n");
+	FILE *arquivo = fopen(oc,"rb");
+	FILE *arq_result = fopen(res,"w");	
+	int num=0, hist=0, aux=0, somatoria = 0;
+	fscanf (arquivo, "%d %d", &num, &hist);
+	printf("%d %d\n", num, hist);	
+	for(int i=0;i<hist;i++){
+		fscanf(arquivo, "%d", &aux);		
+		somatoria+=aux;
+		printf("i=%d, aux=%d, somatoria=%d\n", i, aux, somatoria);
+	}
 
-	int h = atoi(argv[4]), s = atoi(argv[5]), v= atoi(argv[6]), y = atoi(argv[7]);
-	FILE *arquivo = fopen(argv[1],"rb");
-	FILE *arq_result = fopen(argv[3],"w");	
-	char *arq = argv[3];
+	double media = somatoria/(hist-1);
+	double media2 = somatoria/(num-hist);
+	printf("media1 = %.2lf\n\n", media);
+	fprintf(arq_result,"media1 = %.2lf\n",media);
+	printf("media2 = %.2lf\n\n", media2);
+	fprintf(arq_result,"media2 = %.2lf\n",media2);
+	fclose (arquivo);
+	fclose(arq_result);
+
+}
+
+void Media_Top10(char *oc, char *res, char *arq){
+
+	FILE *arquivo = fopen(oc,"rb");
+	FILE *arq_result = fopen(res,"w");	
+//	char *arq = argv[3];
 	int aux=0, n=0, aux2=0;
 	 int num=0, hist= 0, somatoria=0;
 
@@ -84,7 +104,7 @@ int main(int argc, char *argv[]){
 	printf("\n");
 
 
-	int nl10 = Ocorre.size() - 10;
+//	int nl10 = Ocorre.size() - 10;
 	fprintf(arq_result,"MAIS CO-OCORRERAM\n");
 	for (it = Ocorre.end(), i=0; it != Ocorre.begin(), i<10; it--, i++){
 		int n = it->indice;
@@ -95,5 +115,26 @@ int main(int argc, char *argv[]){
 	fclose(arquivo);
 	fclose(arq_result);
 
+
+
+}
+
+int main(int argc, char *argv[]){
+
+	printf("TYPE_OF_EVALUATION: 1-Media Simples 2-Media,Desvio P., Top10\n");
+
+	if(atoi(argv[1])==2 && argc != 5){
+		printf("TYPE_OF_EVALUATION arquivo_Ocorre.extensao  arquivo_vertice.extensao arquivo_resultado.extensao\n");
+		return 0;
+	}
+	if(atoi(argv[1])==1 && argc != 4){
+		printf("TYPE_OF_EVALUATION arquivo_Ocorre.extensao  arquivo_resultado.extensao\n");
+		return 0;
+	}	
+
+	if(atoi(argv[1])==1)
+		MediaSimples(argv[2], argv[3]);
+	else if(atoi(argv[1])==2)
+		Media_Top10(argv[2], argv[3], argv[4]);
 	return 0;
 }
