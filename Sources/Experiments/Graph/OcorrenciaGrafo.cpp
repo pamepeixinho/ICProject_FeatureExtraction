@@ -174,14 +174,15 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 		if (it->type != 0 && v == -1)
 			v= i;
 		
-		fprintf(arq_print_b, "%d-%d, ", it->ocorre, it->indice);
+		fprintf(arq_print, "%d-%d, ", it->ocorre, it->indice);
+		printf("%d-%d\n", it->ocorre, it->indice);
 	}
 	fprintf(arq_print, "];");
 
 	fprintf(arq_print_b, "%d ", v);
 
 	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(),i<v; it++, i++)
-		fprintf(arq_print, "%d %d ", it->ocorre, it->indice);
+		fprintf(arq_print_b, "%d %d ", it->ocorre, it->indice);
 	
 	Ocorrencia.clear();
 

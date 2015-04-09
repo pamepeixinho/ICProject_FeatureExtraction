@@ -23,10 +23,11 @@ char * buscaLabel(char *arq, int n){
 	char aux1, aux3;
 	char *label;
 	int aux2;
-
+	printf("oi");
 	FILE *arq_vertice = fopen(arq,"r");
 	while(!feof(arq_vertice)){
-		fscanf(arq_vertice, "%c %d %c", &aux1, &aux2, &aux3);
+			
+		fscanf(arq_vertice, "%c%d%c %c ", &aux1, &aux2, &aux3);
 		if(!feof(arq_vertice)){
 			if(aux1=='[' && aux2==n && aux3 == ']'){
 				fscanf(arq_vertice, "%s", label);
@@ -62,12 +63,14 @@ void MediaSimples(char *oc, char *res ){
 
 void Media_Top10(char *oc, char *res, char *arq){
 
+printf("1\n");
 	FILE *arquivo = fopen(oc,"rb");
 	FILE *arq_result = fopen(res,"w");	
 //	char *arq = argv[3];
 	int aux=0, n=0, aux2=0;
 	 int num=0, hist= 0, somatoria=0;
 
+printf("1\n");
 	
 	fscanf(arquivo, "%d", &num);
 	//fscanf(arquivo, "%d", &hist);
@@ -95,11 +98,12 @@ void Media_Top10(char *oc, char *res, char *arq){
 	float desvio_padrao =sqrt(desvio/Ocorre.size());
 	fprintf(arq_result,"desvio padrao = %.2f\n",desvio_padrao);
 	int i=0;
-	fprintf(arq_result, "TOP 10\n\nMENOS CO-OCORRERAM\n");
+	fprintf(arq_result, "\n\tTOP 10\nMENOS CO-OCORRERAM\n");
 	for (it = Ocorre.begin(), i=0; it != Ocorre.end(), i<10; it++, i++){
 		//menos co-ocorreram com outro hist
 		int n = it->indice;
-		printf("%d- %s\n", i, buscaLabel(arq, n));
+		printf("teste\n");
+		fprintf(arq_result, "%d- %s\n", i, buscaLabel(arq, n));
 	}
 	printf("\n");
 
@@ -127,7 +131,7 @@ int main(int argc, char *argv[]){
 		printf("TYPE_OF_EVALUATION arquivo_Ocorre.extensao  arquivo_vertice.extensao arquivo_resultado.extensao\n");
 		return 0;
 	}
-	if(atoi(argv[1])==1 && argc != 4){
+	else if(atoi(argv[1])==1 && argc != 4){
 		printf("TYPE_OF_EVALUATION arquivo_Ocorre.extensao  arquivo_resultado.extensao\n");
 		return 0;
 	}	
@@ -135,6 +139,7 @@ int main(int argc, char *argv[]){
 	if(atoi(argv[1])==1)
 		MediaSimples(argv[2], argv[3]);
 	else if(atoi(argv[1])==2)
-		Media_Top10(argv[2], argv[3], argv[4]);
+		Media_Top10(argv[2], argv[4], argv[3]);
+
 	return 0;
 }
