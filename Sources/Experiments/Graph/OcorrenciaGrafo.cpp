@@ -175,7 +175,7 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 			v= i;
 		
 		fprintf(arq_print, "%d-%d, ", it->ocorre, it->indice);
-		printf("%d-%d\n", it->ocorre, it->indice);
+//		printf("%d-%d\n", it->ocorre, it->indice);
 	}
 	fprintf(arq_print, "];");
 

@@ -1,9 +1,11 @@
 #include <set>
 #include <cstdlib>
+#include <string.h>
 #include <cstdio>
 #include <iostream>
 #include <math.h>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -18,22 +20,23 @@ public:
 	Ocorrencia_Label(int indice, int o):indice(indice), ocorrencia(o){}
 };
 
-char * buscaLabel(char *arq, int n){
-	
-	char aux1, aux3;
-	char *label;
-	int aux2;
-	printf("oi");
+char *  buscaLabel(char *arq, int n){
+	int aux2=0; 	
 	FILE *arq_vertice = fopen(arq,"r");
+	char linha[400];
+	 char label[100];
 	while(!feof(arq_vertice)){
-			
-		fscanf(arq_vertice, "%c%d%c %c ", &aux1, &aux2, &aux3);
+		fgets(linha,400,arq_vertice );
+		sscanf(linha, "[%d] = ", &aux2); 
 		if(!feof(arq_vertice)){
-			if(aux1=='[' && aux2==n && aux3 == ']'){
-				fscanf(arq_vertice, "%s", label);
+			if(aux2==n){
+				char *ch = strchr(linha, '=');
+				strcpy(label, ch+2);
 				return label;
 			}
-		}
+		}		
+				
+	
 	}
 }
 
@@ -43,11 +46,11 @@ void MediaSimples(char *oc, char *res ){
 	FILE *arq_result = fopen(res,"w");	
 	int num=0, hist=0, aux=0, somatoria = 0;
 	fscanf (arquivo, "%d %d", &num, &hist);
-	printf("%d %d\n", num, hist);	
+//	printf("%d %d\n", num, hist);	
 	for(int i=0;i<hist;i++){
 		fscanf(arquivo, "%d", &aux);		
 		somatoria+=aux;
-		printf("i=%d, aux=%d, somatoria=%d\n", i, aux, somatoria);
+//		printf("i=%d, aux=%d, somatoria=%d\n", i, aux, somatoria);
 	}
 
 	double media = somatoria/(hist-1);
@@ -63,15 +66,13 @@ void MediaSimples(char *oc, char *res ){
 
 void Media_Top10(char *oc, char *res, char *arq){
 
-printf("1\n");
 	FILE *arquivo = fopen(oc,"rb");
 	FILE *arq_result = fopen(res,"w");	
 //	char *arq = argv[3];
 	int aux=0, n=0, aux2=0;
 	 int num=0, hist= 0, somatoria=0;
 
-printf("1\n");
-	
+
 	fscanf(arquivo, "%d", &num);
 	//fscanf(arquivo, "%d", &hist);
 
@@ -93,6 +94,7 @@ printf("1\n");
 	
 	for (it = Ocorre.begin(); it != Ocorre.end(); it++){
 		desvio += pow((it->ocorrencia - media),2);
+//		printf("ind %d  - oco %d\n", it->indice, it->ocorrencia);
 	}
 
 	float desvio_padrao =sqrt(desvio/Ocorre.size());
@@ -101,9 +103,8 @@ printf("1\n");
 	fprintf(arq_result, "\n\tTOP 10\nMENOS CO-OCORRERAM\n");
 	for (it = Ocorre.begin(), i=0; it != Ocorre.end(), i<10; it++, i++){
 		//menos co-ocorreram com outro hist
-		int n = it->indice;
-		printf("teste\n");
-		fprintf(arq_result, "%d- %s\n", i, buscaLabel(arq, n));
+		n  = it->indice;
+		fprintf(arq_result, "%d- %s\n", i+1, buscaLabel(arq, n));
 	}
 	printf("\n");
 
@@ -112,7 +113,7 @@ printf("1\n");
 	fprintf(arq_result,"MAIS CO-OCORRERAM\n");
 	for (it = Ocorre.end(), i=0; it != Ocorre.begin(), i<10; it--, i++){
 		int n = it->indice;
-		fprintf(arq_result,"%d- %s\n", i, buscaLabel(arq, n));
+		fprintf(arq_result,"%d- %s\n", i+1, buscaLabel(arq, n));
 	
 	}
 
@@ -138,8 +139,9 @@ int main(int argc, char *argv[]){
 
 	if(atoi(argv[1])==1)
 		MediaSimples(argv[2], argv[3]);
-	else if(atoi(argv[1])==2)
+	else if(atoi(argv[1])==2){
 		Media_Top10(argv[2], argv[4], argv[3]);
+	}
 
 	return 0;
 }
