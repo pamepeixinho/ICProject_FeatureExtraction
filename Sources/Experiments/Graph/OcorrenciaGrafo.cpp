@@ -158,6 +158,9 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 			}
 		}
 		ind = i;
+
+		if(ind == 248)
+			printf("TYPE %d\n", type);
 //		printf("c = %d\n", c);
 //		printf("teste = %d %d %d\n", ind, soma, c);
 		Estrutura_Ocorrencia aux_i(ind,type,  soma, c);
@@ -181,8 +184,13 @@ void OcorrenciaVert_Grafo(char *arquivo_v, char *arquivo_g, char* arquivo_p){
 
 	fprintf(arq_print_b, "%d ", v);
 
-	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(),i<v; it++, i++)
+	for (it = Ocorrencia.begin(), i = 0; it != Ocorrencia.end(),i<v; it++, i++){
 		fprintf(arq_print_b, "%d %d ", it->ocorre, it->indice);
+		printf("%d\n", it->type);
+		if(it->indice == 248)
+			printf("passsouuuuu =(\n");
+
+	}
 	
 	Ocorrencia.clear();
 

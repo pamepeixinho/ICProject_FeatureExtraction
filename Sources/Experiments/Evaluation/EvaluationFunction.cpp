@@ -30,6 +30,7 @@ char *  buscaLabel(char *arq, int n){
 		sscanf(linha, "[%d] = ", &aux2); 
 		if(!feof(arq_vertice)){
 			if(aux2==n){
+				printf("%s\n\n",linha);
 				char *ch = strchr(linha, '=');
 				strcpy(label, ch+2);
 				return label;
@@ -79,11 +80,15 @@ void Media_Top10(char *oc, char *res, char *arq){
 	set<Ocorrencia_Label>Ocorre;
 	set <Ocorrencia_Label>::iterator it;
 
+	printf("%d\n", num);
+
 	for(int i=0;i<num;i++){
 		fscanf(arquivo, "%d %d", &aux, &aux2);	
 		Ocorrencia_Label t(aux2, aux);
 		Ocorre.insert(t);
 		somatoria+=aux;
+		if(aux2==248)
+			printf("aqui\n");
 	}
 
 	float media  = somatoria/num;
@@ -91,7 +96,6 @@ void Media_Top10(char *oc, char *res, char *arq){
 
 	fprintf(arq_result,"media = %.2f\n",media);
 
-	
 	for (it = Ocorre.begin(); it != Ocorre.end(); it++){
 		desvio += pow((it->ocorrencia - media),2);
 //		printf("ind %d  - oco %d\n", it->indice, it->ocorrencia);
@@ -111,9 +115,12 @@ void Media_Top10(char *oc, char *res, char *arq){
 
 //	int nl10 = Ocorre.size() - 10;
 	fprintf(arq_result,"MAIS CO-OCORRERAM\n");
-	for (it = Ocorre.end(), i=0; it != Ocorre.begin(), i<10; it--, i++){
+	for (it = Ocorre.end()--, i=0; it != Ocorre.begin(), i<11; it--, i++){
 		int n = it->indice;
-		fprintf(arq_result,"%d- %s\n", i+1, buscaLabel(arq, n));
+		if(i!=0){	
+			printf("%d %d\n", i, n);
+			fprintf(arq_result,"%d- %s\n", i+1, buscaLabel(arq, n));
+		}
 	
 	}
 
