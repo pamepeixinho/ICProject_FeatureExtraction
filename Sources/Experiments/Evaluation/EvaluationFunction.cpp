@@ -119,7 +119,7 @@ void Media_Top10(char *oc, char *res, char *arq){
 		int n = it->indice;
 		if(i!=0){	
 			printf("%d %d\n", i, n);
-			fprintf(arq_result,"%d- %s\n", i+1, buscaLabel(arq, n));
+			fprintf(arq_result,"%d- %s %d\n", i, buscaLabel(arq, n), it->ocorrencia);
 		}
 	
 	}

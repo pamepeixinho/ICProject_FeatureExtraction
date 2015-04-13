@@ -2,6 +2,7 @@
 #define GRAPHCONSTRUCTOR_H
 
 #include <Utilities/SunDatabaseReader.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <FeatureExtractors/Region.hpp>
 #include <Utilities/FeaturesComplexNetwork.hpp>
 //#include <Utilities/RandomWalk.hpp>
@@ -20,7 +21,6 @@
 #include <string.h>
 #include <vector>
 #include <math.h>
-#include <opencv2/imgproc/imgproc.hpp>
 #include <assert.h>
 #include <set>
 #include <Experiments/Graph/Vertice.h>
@@ -75,7 +75,8 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 		String path_image = i.getImagePath().toStdString();
 		Mat image = imread(path_image), image_show;
 
-		cvtColor(image, image, CV_BGR2HSV_FULL);
+		if(image.rows!=0 && image.cols !=0)
+			cvtColor(image, image, CV_BGR2HSV_FULL);
 		
 		printf("\n\n %d -", quantidade);
 		printf("%s\n", path_image.c_str());
