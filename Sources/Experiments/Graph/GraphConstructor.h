@@ -75,8 +75,9 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 		String path_image = i.getImagePath().toStdString();
 		Mat image = imread(path_image), image_show;
 
-		if(image.rows!=0 && image.cols !=0)
+		if(image.rows!=0 && image.cols !=0){
 			cvtColor(image, image, CV_BGR2HSV_FULL);
+		}
 		
 		printf("\n\n %d -", quantidade);
 		printf("%s\n", path_image.c_str());

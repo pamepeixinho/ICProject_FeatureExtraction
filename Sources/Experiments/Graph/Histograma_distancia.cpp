@@ -59,26 +59,17 @@ Hsv_Dist::Hsv_Dist( cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std
 
 //	FILE* arq = fopen(nomearquivo, "a");
 
-	Mat img_hsv;
 
-	float ph = 0, ps = 0, pv = 0;
-
-	//scanf("%d %d %d", &h, &s, &v);
-
-	ph = 255.0 / (h - 1);
-	ps = 255.0 / (s - 1);
-	pv = 255.0 / (v - 1);
 
 
 	hist.resize((h*s*v), 0);
 
-//	cvtColor(image, img_hsv, CV_BGR2HSV_FULL);
 
 	int branco = 0, h1 = 0, s1 = 0, v1 = 0, shift=0;
 
-	for (int x = 0; x < img_hsv.rows; x++){
+	for (int x = 0; x < image.rows; x++){
 
-		for (int y = 0; y < img_hsv.cols; y++){
+		for (int y = 0; y < image.cols; y++){
 
 			//uchar m = mask.at<uchar>(x, y);
 			//Vec3b p = img_hsv.at<Vec3b>(x, y);
@@ -108,7 +99,6 @@ Hsv_Dist::Hsv_Dist( cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std
 //	}
 //	fprintf(arq, "];\n\n");
 
-	img_hsv.release();
 
 //	fclose(arq);
 	

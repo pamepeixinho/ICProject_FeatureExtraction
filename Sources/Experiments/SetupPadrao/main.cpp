@@ -64,7 +64,7 @@ int main(int argc, char* argv[]){
 	printf("ARGUMENTOS: h%d s%d v%d k%.2f %s %s %s\n\n", arg_h, arg_s, arg_v, arg_K, arq_vertice, arq_grafo, arq_ocorrencia);
 //	system("pause");
 	SunDatabaseReader reader("/home/pamela/SUN2012/");
-
+//	SunDatabaseReader reader("/home/pamela/Dropbox/IC-Pamela1/SUN_TESTE/");
 
 
 	//Graph<Label, Hsv_DiscrY>Grafo;
@@ -75,15 +75,22 @@ int main(int argc, char* argv[]){
 
 	constructor.build();
 
-//	OcorrenciaH_Grafo(arq_vertice, arq_grafo, arq_ocorrencia);
-	char ocorre[100];
+	char ocorre[100], grafo[100];
+	strcpy(grafo, arq_grafo);
 	strcpy(ocorre, arq_ocorrencia);
+	strcpy(arq_ocorrencia, ocorre);
+
+	
 	strcat(ocorre, "_indices");
 	strcat(arq_ocorrencia, "_simples");
-	OcorrenciaH_Grafo(arq_vertice, arq_grafo, arq_ocorrencia);
-	OcorrenciaVert_Grafo(arq_vertice, arq_grafo, ocorre);
 
+	strcat(arq_vertice, "_ordem.bin");
+	strcat(grafo, ".bin");
 
+	printf("%s\n %s\n %s\n %s\n", ocorre, arq_ocorrencia, arq_vertice, grafo);
+	
+	OcorrenciaH_Grafo(arq_vertice, grafo, arq_ocorrencia);
+	OcorrenciaVert_Grafo(arq_vertice,grafo, ocorre);
 
 
 	return 0;

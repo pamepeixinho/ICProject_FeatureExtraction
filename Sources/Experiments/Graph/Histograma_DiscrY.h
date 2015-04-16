@@ -24,6 +24,7 @@ public:
 	int getType() const;
 
 	vector<int> getHist_y();
+	void printHistY();
 
 	bool operator<(const Vertice&) const;
 
