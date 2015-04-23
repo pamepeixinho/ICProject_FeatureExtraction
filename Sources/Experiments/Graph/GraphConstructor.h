@@ -118,7 +118,7 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 template <typename Label_type, typename Histograma_type>
 void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, char *g,int qt){
 	
-	Graph<Label_type, Histograma_type> Grafo;
+/*	Graph<Label_type, Histograma_type> Grafo;
 	Grafo.loadGraph(v,vb, g);
 	
 	this->quantidade = qt;
@@ -176,7 +176,7 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 
 		}
 		cont++;
-	}
+	}*/
 }
 
 
