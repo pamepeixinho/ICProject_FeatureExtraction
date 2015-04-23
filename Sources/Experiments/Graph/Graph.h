@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <string.h>
 #include <set>
+#include <assert.h>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 	void printVertices(char *);
 	void printGraph(char *);
 	void ConstructEdges(type1, type2);
+	void loadGraph(char *,char*,char*);
 	//void ConstructEdges(Label, Hsv_DiscrY);
 };
 
@@ -152,5 +154,80 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 }
 
 
+//label 0
+//histograma 1
+template<typename type1, typename type2>
+void Graph<type1, type2>::loadGraph(char *vert, char *vertb,char * grafo){
+//vert.txt && vert_ordem.bin
+//grafo.bin
+
+	std::pair<std::set<unique_ptr<Vertice>>::iterator, bool> insert_result;
+	bool it_b;
+	int aux2,ordem;
+	int type;
+	char linha[200];
+	char aux[400];
+	FILE *arq_vert = fopen(vert, "r");
+	assert(arq_vert!=NULL);
+	FILE *arq_vert_ordem = fopen(vertb, "rb");
+	assert(arq_vert_ordem!=NULL);
+	FILE *arq_grafo = fopen(grafo,"rb");
+	assert(arq_grafo!=NULL);
+
+	
+	set<unique_ptr<Vertice>>::iterator it_l;
+	set<unique_ptr<Vertice>>::iterator it_h;
+//alimenta vertices
+	while(!feof(arq_vert)){
+		fscanf(arq_vert_ordem, "%d", &type);
+		fgets(linha,400,arq_vert);
+		sscanf(linha, "[%d] = ", &aux2);	 
+		if(!feof(arq_vert)){
+				char *ch = strchr(linha, '=');
+				strcpy(aux, ch+2);
+			printf("aux = %s\n", aux);
+			if(type==0){
+				unique_ptr<Vertice> new_l(new type1(aux));
+				new_l->idx = indice.size();
+				insert_result = Vertices.insert(move(new_l));
+				it_l = insert_result.first;
+				it_b = insert_result.second;
+				indice.push_back(it_l->get());
+			}
+			else if(type==1){
+				vector<int>hist;
+				for(int i=0;aux[i]!='\0';i++){
+					hist.push_back(atoi((char*)aux[i]));
+				}
+
+				printf("Hist = ");
+				for(int i=0;i<hist.size();i++)
+					printf("%d ", hist[i]);
+				printf("\n");
+
+				unique_ptr<Vertice> new_h(new type2(hist));
+				new_h->idx = indice.size();
+				insert_result = Vertices.insert(move(new_h));
+				it_h = insert_result.first;
+				it_b = insert_result.second;
+				indice.push_back(it_h->get());
+			}
+			
+		}	
+	}
+//alimenta Grafo
+	fscanf(arq_grafo,"%d",&ordem);
+	int aux_matriz;
+	Matriz_Adjacencia.resize(ordem);
+	for(int i=0;i<ordem;i++){
+		for(int j=0;j<ordem;j++){
+			fscanf(arq_grafo, "%d",&aux_matriz); 
+			Matriz_Adjacencia[i][j]=aux_matriz;
+		}
+	}
+
+	fclose(arq_vert);
+	fclose(arq_grafo);
+}
 
 #endif
