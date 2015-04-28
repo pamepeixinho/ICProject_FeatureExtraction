@@ -227,6 +227,7 @@ void Graph<type1, type2>::loadGraph(char *vert, char *vertb,char * grafo){
 	}
 
 	fclose(arq_vert);
+	fclose(arq_vert_ordem);
 	fclose(arq_grafo);
 }
 

@@ -15,8 +15,16 @@
 #include <vector>
 #include <time.h>
 #include <assert.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv/cv.h>
+#include <opencv/highgui.h>
+#include <opencv/cxcore.h>
 
 using namespace std;
+using namespace cv;
 
 class ImageRead{
 public:

@@ -27,6 +27,7 @@
 #include <Experiments/Graph/Graph.h>
 #include <Experiments/Graph/OcorrenciaGrafo.h>
 #include <Experiments/Graph/GraphConstructor.h>
+#include <Experiments/Graph/HistogramaOcorrencia.h>
 
 
 //#define VALOR_COMP 0.25
@@ -61,31 +62,30 @@ int main(int argc, char* argv[]){
 	
 	printf("ARGUMENTOS: h%d s%d v%d k%.2f %s %s %s\n\n", arg_h, arg_s, arg_v, arg_K, arq_vertice, arq_grafo, arq_ocorrencia);
 	
-////	SunDatabaseReader reader("/home/pamela/SUN2012/");
+//	SunDatabaseReader reader("/home/pamela/SUN2012/");
 	SunDatabaseReader reader("/home/pamela/SUN_TESTE/");
 
-//	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
+	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
 
 //	constructor.build();
-//	constructor.recover("../../../experimentos/Experiments/Disc_5-3-3/Vertice533.txt","../../../experimentos/Experiments/Disc_5-3-3/Vertice533_ordem.bin", "../../../experimentos/Experiments");
+	constructor.recover("../../../experimentos/Experiments/Disc_5-3-3/Vertice533.txt","../../../experimentos/Experiments/Disc_5-3-3/Vertice533_ordem.bin", "../../../experimentos/Experiments/Disc_5-3-3/Grafo533.bin",10);
 
-	char ocorre[100], grafo[100];
+	char ocorre[100], grafo[100], vert1[100];
 	strcpy(grafo, arq_grafo);
-	strcpy(ocorre, arq_ocorrencia);
-	strcpy(arq_ocorrencia, ocorre);
-
+	strcpy(vert1, arq_vertice);
 	
-	strcat(ocorre, "_indices");
-	strcat(arq_ocorrencia, "_simples");
-
+	strcat(vert1, ".txt");
 	strcat(arq_vertice, "_ordem.bin");
 	strcat(grafo, ".bin");
 
-	printf("%s\n %s\n %s\n %s\n", ocorre, arq_ocorrencia, arq_vertice, grafo);
+	printf("%s\n %s\n %s\n %s\n", ocorre, vert1, arq_vertice, grafo);
 	
-	OcorrenciaH_Grafo(arq_vertice, grafo, arq_ocorrencia);
-	OcorrenciaVert_Grafo(arq_vertice,grafo, ocorre);
+	//char *vertice, char *vertice_b, char *grafo, char *arquivo_p
 
+	/*OcorrenciaH_Grafo(arq_vertice, grafo, arq_ocorrencia);
+	OcorrenciaVert_Grafo(arq_vertice,grafo, ocorre);*/
+
+	HistogramaOcorrencia Evaluation = HistogramaOcorrencia(vert1,arq_vertice,grafo,arq_ocorrencia);
 
 	return 0;
 

@@ -16,4 +16,6 @@ Debug/
 bin/
 lib/
 Makefile
-*.autosave
+*.autosaveexperimentos/
+experimentos
+

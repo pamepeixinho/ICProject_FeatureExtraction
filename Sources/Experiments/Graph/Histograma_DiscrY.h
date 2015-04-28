@@ -18,6 +18,7 @@ public:
 
 	Hsv_DiscrY(){}
 	Hsv_DiscrY(const vector<int>&, int);
+	Hsv_DiscrY(const vector<int>&);
 	Hsv_DiscrY(vector<float>&, int);
 	Hsv_DiscrY(cv::Mat, cv::Mat, int, int, int, int, string, float);
 	

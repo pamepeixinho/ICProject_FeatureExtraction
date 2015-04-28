@@ -11,6 +11,7 @@
 using namespace cv;
 
 Hsv_DiscrY::Hsv_DiscrY(const vector<int>&h, int k):histograma_y(h), K(k){}
+Hsv_DiscrY::Hsv_DiscrY(const vector<int>&h) : histograma_y(h){}
 
 Hsv_DiscrY::Hsv_DiscrY(vector<float>&h, int K){
 	this->K = K;

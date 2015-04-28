@@ -1,5 +1,5 @@
-#ifndef GRAPHCONSTRUCTOR_H
-#define GRAPHCONSTRUCTOR_H
+#ifndef GRAPH_CONSTRUCTOR_H
+#define GRAPH_CONSTRUCTOR_H
 
 #include <Utilities/DatabaseReader.hpp>
 #include <Utilities/SunDatabaseReader.hpp>
@@ -48,6 +48,7 @@ class GraphConstructor{
 public:
 	GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int, int quantidade=0);
 	void build();
+	Graph<Label_type,Histograma_type> build_g();
 	void recover(char*, char*,char *,int);
 };
 
@@ -179,5 +180,62 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 	}*/
 }
 
+template <typename Label_type, typename Histograma_type>
+Graph<Label_type, Histograma_type> GraphConstructor<Label_type, Histograma_type>::build_g(){
+
+	Graph<Label_type, Histograma_type> Grafo;
+//	char nomearquivo_temp[100];
+	while (reader.hasNext()){
+
+		SupervisedImage i = reader.readNext();
+
+//		char num[10];
+//		sprintf(num, "%d", quantidade);
+
+//		strcpy(nomearquivo_temp, arq_hsvimages);
+//		strcat(nomearquivo_temp, num);
+//		strcat(nomearquivo_temp, ".txt");
+
+		String path_image = i.getImagePath().toStdString();
+		Mat image = imread(path_image), image_show;
+
+		if(image.rows!=0 && image.cols !=0)
+			cvtColor(image, image, CV_BGR2HSV_FULL);
+		
+		printf("\n\n %d -", quantidade);
+		printf("%s\n", path_image.c_str());
+
+		for (int n = 0; n < i.getRegions().size(); n++){
+			printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
+
+			string label = i.getRegions()[n].getLabel().toStdString();
+			Label_type LABEL(label);
+
+			Mat mask = i.getRegions()[n].getMask(), mask_show;
+
+			//resize(mask, mask_show, Size(mask.cols / 4, mask.rows / 4));
+			//imshow("mask_show", mask_show);
+			//waitKey(0);
+
+			Histograma_type HSV;
+			//Hsv_Dist HSV(arg_K);
+			if ((mask.cols != 0 && mask.rows != 0) && (image.rows != 0 && image.cols != 0)){
+				HSV = Histograma_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+				//HSV = Histograma_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+				Grafo.ConstructEdges(LABEL, HSV);
+			}
+
+		}
+			Grafo.printVertices(arq_vertice);
+			Grafo.printGraph(arq_grafo);
+
+		quantidade++;
+		printf("\n");
+
+		image.release();
+
+	}
+	return Grafo;
+}
 
 #endif

@@ -1,5 +1,5 @@
-#ifndef RANDOM_READER_H
-#define RANDOM_READER_H
+#ifndef RANDOM_REGION_READER_H
+#define RANDOM_REGION_READER_H
 
 #include <Utilities/SunDatabaseReader.hpp>
 #include <Utilities/DatabaseReader.hpp>
@@ -18,21 +18,24 @@
 #include <QString>
 
 using namespace std; 
-
-class RandomReader: public DatabaseReader{
-	vector<string>images_path;
-	vector<string>supervised_path;
-	vector<string>::iterator i_it;
-	vector<string>::iterator s_it;
-	bool started;
+class ChoosedRegion{
 public:
-	RandomReader(string);
-	bool hasNext()const;
-	bool hasPrevious()const;
-	SupervisedImage readNext();
-	SupervisedImage readPrevious();
-	unsigned int getTotal()const;
-	~RandomReader(){}
+	string image_path;
+	string supervised_path;
+	int regionChoosed;
+	SupervisedImage readNextSupervisedImage()const;
+	ChoosedRegion(string, string, int);
 };
+
+class RandomRegionReader{
+	vector<ChoosedRegion>Regions;
+	int actualRegion;
+public:
+	RandomRegionReader(string);
+	ChoosedRegion readNextRegion();
+	bool hasNextRegion()const;
+	
+};
+
 
 #endif

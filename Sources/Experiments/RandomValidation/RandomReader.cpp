@@ -4,19 +4,20 @@ RandomReader::RandomReader(string path){
 	char *image, *supervised;
 	FILE *arq = fopen(path.c_str(), "rb");
 	assert(arq != NULL);
-
-	while (feof(arq)){
+	while (!feof(arq)){
 		fscanf(arq, "%s", image);
 		fscanf(arq, "%s", supervised);
-		if (feof(arq)){
+		if (!feof(arq)){
 			images_path.push_back(string(image));
 			supervised_path.push_back(string(supervised));
 		}
 	}
+	printf("\n%d %d\n", images_path.size(), supervised_path.size());
 	i_it = images_path.begin();
 	s_it = supervised_path.begin();
 	started = false;
 	fclose(arq);
+	printf("already!\n");
 }
 
 unsigned int RandomReader::getTotal()const{

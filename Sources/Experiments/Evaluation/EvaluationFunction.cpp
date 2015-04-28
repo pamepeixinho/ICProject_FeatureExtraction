@@ -1,3 +1,6 @@
+//EVALUATION OF LABEL
+//media e top 10 de LABEL
+
 #include <set>
 #include <cstdlib>
 #include <string.h>
