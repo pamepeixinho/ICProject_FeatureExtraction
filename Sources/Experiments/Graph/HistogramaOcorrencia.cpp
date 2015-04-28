@@ -1,6 +1,8 @@
 #include "HistogramaOcorrencia.h"
 //#include <HistogramaOcorrencia.h>
 
+//teste
+
 Ocorrencia_Label::Ocorrencia_Label(const int indice, const vector<int> c, const float media):indice(indice), c(c),media(media){
 }
 
