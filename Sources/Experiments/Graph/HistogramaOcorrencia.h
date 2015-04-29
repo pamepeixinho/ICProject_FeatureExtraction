@@ -30,7 +30,7 @@ public:
 	int grau(int);
 	vector<int> grau_v(int);
 	char * buscaLabel(char *, int);
-	bool compara(Ocorrencia_Label , Ocorrencia_Label);
+	bool compara(const Ocorrencia_Label& ,const Ocorrencia_Label&);
 };
 
 #endif
