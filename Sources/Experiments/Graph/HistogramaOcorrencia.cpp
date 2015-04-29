@@ -25,7 +25,7 @@ vector<int> HistogramaOcorrencia::grau_v(int v){
 	return ind_grau;
 }
 
-bool HistogramaOcorrencia::compara(Ocorrencia_Label a, Ocorrencia_Label b){
+bool HistogramaOcorrencia::compara(const Ocorrencia_Label &a,const Ocorrencia_Label &b){
 	return (a.media < b.media);
 }
 
