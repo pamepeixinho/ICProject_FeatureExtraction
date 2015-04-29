@@ -104,7 +104,7 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 	for (int i = 0; i < Oco.size(); i++)
 		fprintf(arq_print_b, "%d", Oco[i].media);
 
-	sort(Oco.begin(), Oco.end(), compara);
+//	sort(Oco.begin(), Oco.end(), compara);
 
 	for (int i = 0; i < 10; i++)
 		top.push_back(buscaLabel(vertice_b, Oco[i].indice));
