@@ -18,7 +18,7 @@ public:
 	vector<int>c;
 	float media;
 	Ocorrencia_Label(int, vector<int>, float);
-	bool operator < (const Ocorrencia_Label &other);
+	bool operator < (const Ocorrencia_Label &other)const;
 };
 
 class HistogramaOcorrencia{

@@ -6,7 +6,7 @@ Ocorrencia_Label::Ocorrencia_Label(int indice, vector<int> c,float media):indice
 	cout << "media construtor = " << this->media << endl;
 }
 
-bool Ocorrencia_Label::operator < (const Ocorrencia_Label &other){
+bool Ocorrencia_Label::operator < (const Ocorrencia_Label &other)const{
 	return (this->media < other.media);
 }
 
