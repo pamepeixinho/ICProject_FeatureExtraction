@@ -7,7 +7,7 @@ Ocorrencia_Label::Ocorrencia_Label(int indice, vector<int> c,float media):indice
 }
 
 bool Ocorrencia_Label::operator < (const Ocorrencia_Label &other){
-	return this->media < other.media;
+	return (this->media < other.media);
 }
 
 int HistogramaOcorrencia::grau(int v){
