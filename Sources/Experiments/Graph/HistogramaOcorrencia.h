@@ -17,12 +17,14 @@ public:
 	int indice;
 	vector<int>c;
 	float media;
-	Ocorrencia_Label(const int, const vector<int>, const float);
+	Ocorrencia_Label(int, vector<int>, float);
+	bool operator < (const Ocorrencia_Label &other);
 };
 
 class HistogramaOcorrencia{
 	vector<Ocorrencia_Label>Oco;
 	vector<vector<int> > Matriz;
+	vector<int>ocorre;
 	vector<char*> top;
 	vector<char*> down;
 public:

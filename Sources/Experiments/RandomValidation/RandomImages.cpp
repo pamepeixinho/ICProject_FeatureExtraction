@@ -10,7 +10,6 @@ int n=0;
 		aux.image_path = image.getImagePath().toStdString();
 		aux.supervised_path = image.getSupervisedPath().toStdString();	
 		Mat img = imread(aux.image_path);
-
 		if(img.rows!=0 && img.cols !=0)
 			all.push_back(aux);
 //		printf("%d\n", n);
@@ -28,13 +27,13 @@ int n=0;
 		qtatual++;
 	}
 	printf("quant = %d, 70% =  %d,qtatua =  %d\n",all.size(), percent, qtatual);
-	n=0;
+	n = 0;
 	while(all.size()>0){	
 		images.push_back(all[n]);
 		all.erase(all.begin()+n);
 		n++;
 	}
-	printf("images = %d\n", n);
+	printf("images = %d\n", images.size());
 }
 
 void RandomImages::print(string file_path){

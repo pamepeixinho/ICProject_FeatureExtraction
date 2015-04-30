@@ -1,18 +1,23 @@
 #include "HistogramaOcorrencia.h"
 //#include <HistogramaOcorrencia.h>
 
-//teste
-
-Ocorrencia_Label::Ocorrencia_Label(const int indice, const vector<int> c, const float media):indice(indice), c(c),media(media){
+Ocorrencia_Label::Ocorrencia_Label(int indice, vector<int> c,float media):indice(indice), c(c){
+	this->media = media;
+	cout << "media construtor = " << this->media << endl;
 }
 
+bool Ocorrencia_Label::operator < (const Ocorrencia_Label &other){
+	return this->media < other.media;
+}
 
 int HistogramaOcorrencia::grau(int v){
-	int grau = 0;
+	/*int grau = 0;
 	for (int i = 0; i < Matriz[v].size(); i++)
 		if (Matriz[v][i] != 0)
 			grau++;
-	return grau;
+	printf("grau de %d: %d\n", v, grau);
+	return grau;*/
+	return ocorre[v];
 }
 
 vector<int> HistogramaOcorrencia::grau_v(int v){
@@ -21,12 +26,8 @@ vector<int> HistogramaOcorrencia::grau_v(int v){
 	for (int i = 0; i < Matriz[v].size(); i++)
 		if (Matriz[v][i] != 0)
 			ind_grau.push_back(i);
-		
+	printf("grau_v.size() = %d\n", ind_grau.size());
 	return ind_grau;
-}
-
-bool HistogramaOcorrencia::compara(const Ocorrencia_Label &a,const Ocorrencia_Label &b){
-	return (a.media < b.media);
 }
 
 char *  HistogramaOcorrencia::buscaLabel(char *arq, int n){
@@ -57,69 +58,106 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 	strcpy(print, arquivo_p);
 
 	FILE *arq_grafo = fopen(grafo, "rb");
-	//	printf("%s \n", arquivo_g);
 	assert(arq_grafo != NULL);
 
-	FILE *arq_vertices = fopen(vertice, "rb");
-	//	printf("v - %s \n", arquivo_v);
+	FILE *arq_vertices = fopen(vertice_b, "rb");
 	assert(arq_vertices != NULL);
 
 	FILE *arq_print_b = fopen(strcat(print, "_MEDIA.txt"), "w");
-	//	printf("p2 - %s \n",print);
 	assert(arq_print_b != NULL);
 
 	FILE *arq_print_t = fopen(strcat(top1, "_TOP.txt"), "w");
-	//	printf("p2 - %s \n",print);
 	assert(arq_print_b != NULL);
 
 	int aux = 0, n = 0, type = 0;
 
-	fscanf(arq_grafo, "%d", &n);
+	printf("leu arquivos\n%s %s %s %s %s\n", grafo, vertice_b, print, top1, vertice);
 
+	fscanf(arq_grafo, "%d", &n);
+	cout <<n<< endl;
+	
+	Matriz.resize(n);
+	ocorre.resize(n);
+	int o=0;
 	for (int i = 0; i < n; i++){
 		for (int j = 0; j < n; j++){
 			fscanf(arq_grafo, "%d", &aux);
-			this->Matriz[i][j] = aux;
+			this->Matriz[i].push_back(aux);
+			if (aux != 0)
+				o++;
 		}
+		ocorre[i] = o;
+		o = 0;
 	}
 
 	vector<int> vi;
 	int soma = 0, gl=0;
 	float media = 0;
+
 	for (int i = 0; i < n; i++){
-		fscanf(arq_vertices, "%d", &type);
+		if (!feof(arq_vertices))
+			fscanf(arq_vertices, "%d", &type);
 		if (type == 0){
 			vi = grau_v(i);
 			gl = vi.size();
-			for (int j = 0; j < vi.size(); j++)
-				soma += grau(vi[i]);
+	
+			for (int j = 0; j < vi.size(); j++){
+				//printf("ocorre = %d\n", ocorre[vi[j]]);
+				soma += ocorre[vi[j]];
+			}
+
+			media = soma /gl;
+			//Ocorrencia_Label a = Ocorrencia_Label(i, vi, media);
+			//Ocorrencia_Label *a = new Ocorrencia_Label(i, vi, media);
+			float valor1 = media;
+			Ocorrencia_Label a(i, vi, valor1);
+			Oco.push_back(a);
 		}
-		media = soma / (gl*1.0);
-		Oco.push_back(Ocorrencia_Label(i, vi, media));
 		vi.clear();
 		soma = 0;
 		media = 0;
 	}
+	
+	printf("alimentou o ocorrencias\n");
+	//printf("oco size  = %d\n", Oco.size());
 
 	for (int i = 0; i < Oco.size(); i++)
-		fprintf(arq_print_b, "%d", Oco[i].media);
+		printf("%d - %f\n", Oco[i].indice, Oco[i].media);
 
-//	sort(Oco.begin(), Oco.end(), compara);
+	for (int i = 0; i < Oco.size(); i++)
+		fprintf(arq_print_b, "%.2f", Oco[i].media);
 
-	for (int i = 0; i < 10; i++)
-		top.push_back(buscaLabel(vertice_b, Oco[i].indice));
+	sort(Oco.begin(), Oco.end());
 
-	for (int i = Oco.size() - 1; i > Oco.size() - 11;i--)
-		down.push_back(buscaLabel(vertice_b, Oco[i].indice));
+	printf("-----------------sort----------------\n");
 
-	fprintf(arq_print_b, "Top 10\n\nTop Menos CoOcorreram\n");
+	for (int i = 0; i < Oco.size(); i++)
+		printf("%.2f\n", Oco[i].media);
 
-	for (int i = 0; i < top.size();i++)
-		fprintf(arq_print_b, "%s", top[i]);
 
-	fprintf(arq_print_b, "\n\nTop Mais CoOcorreram\n");
-	for (int i = 0; i < top.size(); i++)
-		fprintf(arq_print_b, "%s", down[i]);
+	//printf("melhores:\n");
+	//for (int i = 0; i < 10; i++){
+	//	char *label = buscaLabel(vertice, Oco[i].indice);
+	//	printf("%s\n", label);
+	//	top.push_back(label);
+	//}
+
+	//printf("piores:\n");
+	//for (int i = Oco.size() - 1; i > Oco.size() - 11; i--){
+	//	char *label = buscaLabel(vertice, Oco[i].indice);
+	//	printf("%s\n", label);
+	//	down.push_back(label);
+	//	//down.push_back(buscaLabel(vertice, Oco[i].indice));
+	//}
+
+	//fprintf(arq_print_b, "Top 10\n\nTop Menos CoOcorreram\n");
+
+	//for (int i = 0; i < top.size();i++)
+	//	fprintf(arq_print_b, "%s", top[i]);
+
+	//fprintf(arq_print_b, "\n\nTop Mais CoOcorreram\n");
+	//for (int i = 0; i < top.size(); i++)
+	//	fprintf(arq_print_b, "%s", down[i]);
 
 	fclose(arq_grafo);
 	fclose(arq_vertices);

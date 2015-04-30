@@ -20,6 +20,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <string.h>
+#include <time.h>
 #include <vector>
 #include <math.h>
 #include <assert.h>
@@ -62,6 +63,8 @@ arq_grafo(arq_grafo), arg_h(h), arg_s(s), arg_v(v), arg_K(k), quantidade(q)
 template <typename Label_type, typename Histograma_type>
 void GraphConstructor<Label_type, Histograma_type>::build(){
 
+	time_t timer = time(NULL);
+	
 	Graph<Label_type, Histograma_type> Grafo;
 //	char nomearquivo_temp[100];
 	while (reader.hasNext()){
@@ -102,11 +105,17 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 				HSV = Histograma_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				//HSV = Histograma_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				Grafo.ConstructEdges(LABEL, HSV);
-			}
-
+			}	
 		}
+
+		if (this->quantidade % 100 == 0){
+			time_t tempo = time(NULL);
+			printf("TIME : %.f\n******", difftime(tempo, timer));
+		}
+		if (this->quantidade % 500 == 0){
 			Grafo.printVertices(arq_vertice);
 			Grafo.printGraph(arq_grafo);
+		}
 
 		quantidade++;
 		printf("\n");

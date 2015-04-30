@@ -8,8 +8,10 @@ using namespace std;
 int main (int argc, char *argv[]){
 
 
-	if (argc != 5)
+	if (argc != 5){
 		printf("vertice.txt vertice.bin  grafo.bin resultado(sem extensao)\n");
+		return 0;
+	}
 
 	HistogramaOcorrencia Evaluation = HistogramaOcorrencia(argv[1], argv[2], argv[3],argv[4]);
 

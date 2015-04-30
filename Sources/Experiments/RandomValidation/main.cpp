@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
 	string type_path(type);
 	string path = "../../experimentos/AvaliacaoRandom/"+ type_path + "/";
 	printf("sun\n");
-	SunDatabaseReader sunreader("/home/pamela/SUN2012/");
+	//SunDatabaseReader sunreader("/home/pamela/SUN2012/");
+	SunDatabaseReader sunreader("C:Users/pamela/Downloads/SUN2012/SUN2012/SUN2012/");
 	printf("random image\n");
 	RandomImages a(sunreader);
 	printf("leu-printa\n");
@@ -50,10 +51,10 @@ int main(int argc, char *argv[])
 //	printf("%s %s\n", v, g);
 //	char v[20];
 //	char g[20];
-	Graph<Label, Hsv_DiscrY> Grafo;	
-	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, 18, 3,3, 4);
+	//Graph<Label, Hsv_DiscrY> Grafo;	
+	//GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, 18, 3,3, 4);
 	printf("graph\n");
-	Grafo =	constructor.build_g();
+	//Grafo =	constructor.build_g();
 
 //	RandomRegionReader regions(path+"Others.bin");
 			
