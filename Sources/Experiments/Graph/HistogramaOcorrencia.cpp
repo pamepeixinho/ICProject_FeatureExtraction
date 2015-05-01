@@ -3,7 +3,7 @@
 
 Ocorrencia_Label::Ocorrencia_Label(int indice, vector<int> c,float media):indice(indice), c(c){
 	this->media = media;
-	cout << "media construtor = " << this->media << endl;
+	//cout << "media construtor = " << this->media << endl;
 }
 
 bool Ocorrencia_Label::operator < (const Ocorrencia_Label &other)const{
@@ -11,12 +11,6 @@ bool Ocorrencia_Label::operator < (const Ocorrencia_Label &other)const{
 }
 
 int HistogramaOcorrencia::grau(int v){
-	/*int grau = 0;
-	for (int i = 0; i < Matriz[v].size(); i++)
-		if (Matriz[v][i] != 0)
-			grau++;
-	printf("grau de %d: %d\n", v, grau);
-	return grau;*/
 	return ocorre[v];
 }
 
@@ -26,29 +20,31 @@ vector<int> HistogramaOcorrencia::grau_v(int v){
 	for (int i = 0; i < Matriz[v].size(); i++)
 		if (Matriz[v][i] != 0)
 			ind_grau.push_back(i);
-	printf("grau_v.size() = %d\n", ind_grau.size());
+	//printf("grau_v.size() = %d\n", ind_grau.size());
 	return ind_grau;
 }
 
-char *  HistogramaOcorrencia::buscaLabel(char *arq, int n){
+char *  HistogramaOcorrencia::buscaLabel(char *arq, int n, int ordem){
 	int aux2 = 0;
 	FILE *arq_vertice = fopen(arq, "r");
-	char linha[400];
+
+	char linha[100];
 	char label[100];
-	while (!feof(arq_vertice)){
-		fgets(linha, 400, arq_vertice);
-		sscanf(linha, "[%d] = ", &aux2);
-		if (!feof(arq_vertice)){
+	printf("Arquivo\n");
+	for(int i=0;i<=ordem;i++){
+		fgets(linha, 100, arq_vertice);
+			//sscanf(linha, "[%d] = ", &aux2);
+			/*printf("linha = %s e aux2 = %d e n = %d\n", linha, aux2, n);*/
+		printf("linha = %s\n", linha);
 			if (aux2 == n){
-				printf("%s\n\n", linha);
-				char *ch = strchr(linha, '=');
-				strcpy(label, ch + 2);
-				return label;
+				printf("entrou\n aux==n\n");
+				//printf("linha certa = %s\n\n", linha);
+				//char *ch = strchr(linha, '=');
+				//strcpy(label, ch + 2);
+				return linha;
 			}
-		}
-
-
 	}
+	return "0";
 }
 
 HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char *grafo, char *arquivo_p){
@@ -110,8 +106,7 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 			//Ocorrencia_Label a = Ocorrencia_Label(i, vi, media);
 			//Ocorrencia_Label *a = new Ocorrencia_Label(i, vi, media);
 			float valor1 = media;
-			Ocorrencia_Label a(i, vi, valor1);
-			Oco.push_back(a);
+			Oco.push_back(Ocorrencia_Label(i, vi, valor1));
 		}
 		vi.clear();
 		soma = 0;
@@ -125,7 +120,7 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 		printf("%d - %f\n", Oco[i].indice, Oco[i].media);
 
 	for (int i = 0; i < Oco.size(); i++)
-		fprintf(arq_print_b, "%.2f", Oco[i].media);
+		fprintf(arq_print_b, "%.2f ", Oco[i].media);
 
 	sort(Oco.begin(), Oco.end());
 
@@ -134,19 +129,23 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 	for (int i = 0; i < Oco.size(); i++)
 		printf("%.2f\n", Oco[i].media);
 
+	system("PAUSE");
+	
+	printf("melhores:\n");
+	char *label = buscaLabel(vertice, Oco[0].indice, n);
+	printf("label %s", label);
 
-	//printf("melhores:\n");
-	//for (int i = 0; i < 10; i++){
-	//	char *label = buscaLabel(vertice, Oco[i].indice);
-	//	printf("%s\n", label);
-	//	top.push_back(label);
-	//}
+	/*for (int i = 0; i < 10; i++){
+		char *label = buscaLabel(vertice, Oco[i].indice);
+		printf("%s\n", label);
+		top.push_back(label);
+	}*/
 
 	//printf("piores:\n");
 	//for (int i = Oco.size() - 1; i > Oco.size() - 11; i--){
 	//	char *label = buscaLabel(vertice, Oco[i].indice);
-	//	printf("%s\n", label);
 	//	down.push_back(label);
+	//	printf("%s\n", down[i]);
 	//	//down.push_back(buscaLabel(vertice, Oco[i].indice));
 	//}
 

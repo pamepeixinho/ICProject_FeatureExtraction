@@ -31,7 +31,7 @@ public:
 	HistogramaOcorrencia(char *, char *, char*, char *);
 	int grau(int);
 	vector<int> grau_v(int);
-	char * buscaLabel(char *, int);
+	char * buscaLabel(char *, int, int);
 	bool compara(const Ocorrencia_Label& ,const Ocorrencia_Label&);
 };
 

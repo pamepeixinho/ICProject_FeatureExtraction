@@ -64,8 +64,8 @@ int main(int argc, char* argv[]){
 	
 	printf("ARGUMENTOS: h%d s%d v%d k%.2f %s %s %s\n\n", arg_h, arg_s, arg_v, arg_K, arq_vertice, arq_grafo, arq_ocorrencia);
 //	system("pause");
-	//SunDatabaseReader reader("/home/pamela/SUN2012/");
-	SunDatabaseReader reader("C:/Users/pamela/Downloads/SUN2012/SUN2012/SUN2012/");
+	SunDatabaseReader reader("/home/pamela/SUN2012/");
+	//SunDatabaseReader reader("C:/Users/pamela/Downloads/SUN2012/SUN2012/SUN2012/");
 //	SunDatabaseReader reader("/home/pamela/Dropbox/IC-Pamela1/SUN_TESTE/");
 
 
