@@ -110,7 +110,7 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 
 		if (this->quantidade % 100 == 0){
 			time_t tempo = time(NULL);
-			printf("TIME\t%d\t%.f\n", this->quantidade, difftime(tempo, timer)/60);
+			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer)/60);
 		}
 		if (this->quantidade % 500 == 0){
 			Grafo.printVertices(arq_vertice);
