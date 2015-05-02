@@ -24,27 +24,31 @@ vector<int> HistogramaOcorrencia::grau_v(int v){
 	return ind_grau;
 }
 
-char *  HistogramaOcorrencia::buscaLabel(char *arq, int n, int ordem){
+char *  HistogramaOcorrencia::buscaLabel(char *arq, int n){
 	int aux2 = 0;
 	FILE *arq_vertice = fopen(arq, "r");
 
-	char linha[100];
+	//printf("arq = %s\n", arq);
+	char linha[400];
 	char label[100];
-	printf("Arquivo\n");
-	for(int i=0;i<=ordem;i++){
-		fgets(linha, 100, arq_vertice);
-			//sscanf(linha, "[%d] = ", &aux2);
-			/*printf("linha = %s e aux2 = %d e n = %d\n", linha, aux2, n);*/
-		printf("linha = %s\n", linha);
-			if (aux2 == n){
-				printf("entrou\n aux==n\n");
-				//printf("linha certa = %s\n\n", linha);
-				//char *ch = strchr(linha, '=');
-				//strcpy(label, ch + 2);
-				return linha;
+
+	//for(int i=0;i<=ordem;i++){
+	while (!feof(arq_vertice)){
+		fgets(linha, 400, arq_vertice);
+			sscanf(linha, "[%d] = ", &aux2);
+			//printf("linha = %s e aux2 = %d e n = %d\n", linha, aux2, n);
+			//printf("linha = %s\n", linha);
+			if (!feof(arq_vertice) && aux2 == n){
+				//printf("entrou\n aux==n\n");
+				printf("linha certa = %s\n\n", linha);
+				char *ch = strchr(linha, '=');
+				strcpy(label, ch + 2);
+				return label;
 			}
 	}
-	return "0";
+
+	fclose(arq_vertice);
+	//return linha;
 }
 
 HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char *grafo, char *arquivo_p){
@@ -116,47 +120,34 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 	printf("alimentou o ocorrencias\n");
 	//printf("oco size  = %d\n", Oco.size());
 
-	for (int i = 0; i < Oco.size(); i++)
-		printf("%d - %f\n", Oco[i].indice, Oco[i].media);
+	/*for (int i = 0; i < Oco.size(); i++)
+		printf("%d - %f\n", Oco[i].indice, Oco[i].media);*/
 
 	for (int i = 0; i < Oco.size(); i++)
 		fprintf(arq_print_b, "%.2f ", Oco[i].media);
 
 	sort(Oco.begin(), Oco.end());
 
-	printf("-----------------sort----------------\n");
+	//printf("-----------------sort----------------\n");
 
-	for (int i = 0; i < Oco.size(); i++)
-		printf("%.2f\n", Oco[i].media);
-
-	system("PAUSE");
+	//for (int i = 0; i < Oco.size(); i++)
+	//	printf("%.2f\n", Oco[i].media);
 	
-	printf("melhores:\n");
-	char *label = buscaLabel(vertice, Oco[0].indice, n);
-	printf("label %s", label);
 
-	/*for (int i = 0; i < 10; i++){
+	fprintf(arq_print_t, "--Top 10--\n\nTop Menor Media:\n");
+	for (int i = 0; i < 10; i++){
 		char *label = buscaLabel(vertice, Oco[i].indice);
-		printf("%s\n", label);
+		fprintf(arq_print_t, "%d) %s\n",i+1, label);
 		top.push_back(label);
-	}*/
+	}
 
-	//printf("piores:\n");
-	//for (int i = Oco.size() - 1; i > Oco.size() - 11; i--){
-	//	char *label = buscaLabel(vertice, Oco[i].indice);
-	//	down.push_back(label);
-	//	printf("%s\n", down[i]);
-	//	//down.push_back(buscaLabel(vertice, Oco[i].indice));
-	//}
+	fprintf(arq_print_b, "Top Maior Media:\n");
+	for (int i = Oco.size()-1,j=0; i > Oco.size()-11; i--, j++){
+		char *label = buscaLabel(vertice, Oco[i].indice);
+		fprintf(arq_print_t, "%d) %s\n", j+1, label);
+		down.push_back(label);
+	}
 
-	//fprintf(arq_print_b, "Top 10\n\nTop Menos CoOcorreram\n");
-
-	//for (int i = 0; i < top.size();i++)
-	//	fprintf(arq_print_b, "%s", top[i]);
-
-	//fprintf(arq_print_b, "\n\nTop Mais CoOcorreram\n");
-	//for (int i = 0; i < top.size(); i++)
-	//	fprintf(arq_print_b, "%s", down[i]);
 
 	fclose(arq_grafo);
 	fclose(arq_vertices);
