@@ -89,7 +89,7 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 		ocorre[i] = o;
 		o = 0;
 	}
-
+	printf("terminou matriz\n");
 	vector<int> vi;
 	int soma = 0, gl=0;
 	float media = 0;
@@ -141,7 +141,7 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 		top.push_back(label);
 	}
 
-	fprintf(arq_print_b, "Top Maior Media:\n");
+	fprintf(arq_print_t, "Top Maior Media:\n");
 	for (int i = Oco.size()-1,j=0; i > Oco.size()-11; i--, j++){
 		char *label = buscaLabel(vertice, Oco[i].indice);
 		fprintf(arq_print_t, "%d) %s\n", j+1, label);
