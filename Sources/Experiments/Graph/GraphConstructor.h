@@ -196,6 +196,8 @@ Graph<Label_type, Histograma_type> GraphConstructor<Label_type, Histograma_type>
 
 	Graph<Label_type, Histograma_type> Grafo;
 //	char nomearquivo_temp[100];
+	time_t timer = time(NULL);
+
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
@@ -237,8 +239,16 @@ Graph<Label_type, Histograma_type> GraphConstructor<Label_type, Histograma_type>
 			}
 
 		}
+		if (this->quantidade % 100 == 0){
+			time_t tempo = time(NULL);
+			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
+		}
+		if (this->quantidade % 500 == 0){
 			Grafo.printVertices(arq_vertice);
 			Grafo.printGraph(arq_grafo);
+		}
+		/*	Grafo.printVertices(arq_vertice);
+			Grafo.printGraph(arq_grafo);*/
 
 		quantidade++;
 		printf("\n");
@@ -246,6 +256,10 @@ Graph<Label_type, Histograma_type> GraphConstructor<Label_type, Histograma_type>
 		image.release();
 
 	}
+
+	Grafo.printVertices(arq_vertice);
+	Grafo.printGraph(arq_grafo); 
+
 	return Grafo;
 }
 

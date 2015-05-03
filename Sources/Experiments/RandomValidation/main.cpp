@@ -25,22 +25,37 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-	printf("Lets Start\n");
+	
+	if (argc != 2){
+		printf("TYPE (HSV, Area, Orientacao)\n");
+		return 0;
+	}
+
 	char *type  = argv[1];
 	string type_path(type);
-	string path = "../../experimentos/AvaliacaoRandom/"+ type_path + "/";
+	//string path = "../../../experimentos/AvaliacaoRandom/"+ type_path + "/";
+	string path = "../../AvaliacaoRandom/" + type_path + "/";
 	printf("sun\n");
-	//SunDatabaseReader sunreader("/home/pamela/SUN2012/");
-	SunDatabaseReader sunreader("C:Users/pamela/Downloads/SUN2012/SUN2012/SUN2012/");
+
+	SunDatabaseReader sunreader("/home/pamela/SUN2012/");
+	//SunDatabaseReader sunreader("C:/Users/pamela/Documents/IC/Study/project1/SUN2012_COMPLETA/SUN2012/");
+
 	printf("random image\n");
 	RandomImages a(sunreader);
 	printf("leu-printa\n");
 	a.print(path);
+
 	printf("path = %s", path.c_str());
 	printf("printou\nreader\n");
 	printf("path = %s", path.c_str());
+	
+	//system("pause");
+
 	RandomReader reader(path + "ImagesChoosen.bin");
 	printf("ok!\n");
+
+	//system("pause");
+
 	string v_s(path+"Vertices");
 	string g_s(path+"Grafo");
 //	printf("%s %s\n",v_s.c_str(), g_s.c_str());

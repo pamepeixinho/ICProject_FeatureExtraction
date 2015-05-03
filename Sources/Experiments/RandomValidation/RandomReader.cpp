@@ -7,11 +7,13 @@ RandomReader::RandomReader(string path){
 	while (!feof(arq)){
 		fscanf(arq, "%s", image);
 		fscanf(arq, "%s", supervised);
+		printf("img = %s\nSup = %s\n", image, supervised);
 		if (!feof(arq)){
 			images_path.push_back(string(image));
 			supervised_path.push_back(string(supervised));
 		}
 	}
+
 	printf("\n%d %d\n", images_path.size(), supervised_path.size());
 	i_it = images_path.begin();
 	s_it = supervised_path.begin();

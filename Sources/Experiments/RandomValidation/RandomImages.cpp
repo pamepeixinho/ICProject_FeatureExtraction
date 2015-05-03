@@ -3,7 +3,7 @@
 RandomImages::RandomImages(DatabaseReader &reader){
 int n=0;
 	this->qtatual = 0;
-	printf("carrega\n");
+	//printf("carrega\n");
 	while (reader.hasNext()){
 		SupervisedImage image = reader.readNext();
 		ImageRead aux;
@@ -12,33 +12,45 @@ int n=0;
 		Mat img = imread(aux.image_path);
 		if(img.rows!=0 && img.cols !=0)
 			all.push_back(aux);
-//		printf("%d\n", n);
+		printf("%d\n", n);
 		n++;
 	}
-	printf("carregou : %d",n);
+	
+	printf("all = %d - %d\n", all.size(), n);
+
 	n=0;
 	srand(time(0));
 	int in;
 	int percent =  ((int)((all.size() * 70) / 100.0));
+
 	while (qtatual != percent){
 		in = rand() % all.size();
 		imagesChoosen.push_back(all[in]);
 		all.erase(all.begin()+in);
 		qtatual++;
 	}
-	printf("quant = %d, 70% =  %d,qtatua =  %d\n",all.size(), percent, qtatual);
+
+	printf("quant30 = %d, 70% =  %d,qtatual =  %d\n",all.size(), percent, qtatual);
 	n = 0;
+	
+	//system("pause");
+	
 	while(all.size()>0){	
-		images.push_back(all[n]);
-		all.erase(all.begin()+n);
+		int t = all.size();
+		images.push_back(all[t-1]);
+		all.erase(all.begin()+(t-1));
+		printf("30 - %d\n", n);
 		n++;
 	}
-	printf("images = %d\n", images.size());
+
+	printf("images = %d\nall = %d\n", images.size(), all.size());
 }
 
 void RandomImages::print(string file_path){
+	
 	string choosen = file_path + "ImagesChoosen.bin";
 	printf("%s\n", choosen.c_str());
+	
 	string others = file_path + "Others.bin";
 	printf("%s\n",others.c_str());
 
