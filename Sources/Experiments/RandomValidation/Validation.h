@@ -46,9 +46,7 @@ public:
 	public:
 		int ocorre;
 		string label;
-		bool operator < (const Vert &other){
-			return (this->ocorre > other.ocorre);
-		}
+		bool operator < (const Vert &other)const;
 		Vert(string, int);
 	};
 private:
@@ -66,10 +64,10 @@ public:
 	void build();
 };
 
-//template<typename type1>
-//bool Validation<type1>::Vert:: operator < (const Vert &other){
-//	return (this->ocorre > other.ocorre);
-//}
+template<typename type1>
+bool Validation<type1>::Vert:: operator < (const Vert &other)const{
+	return (this->ocorre > other.ocorre);
+}
 
 template<typename type1>
 Validation<type1>::Vert::Vert(string label, int o) :label(label), ocorre(o){
