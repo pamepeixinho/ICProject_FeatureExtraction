@@ -33,8 +33,6 @@ int n=0;
 	printf("quant30 = %d, 70% =  %d,qtatual =  %d\n",all.size(), percent, qtatual);
 	n = 0;
 	
-	//system("pause");
-	
 	while(all.size()>0){	
 		int t = all.size();
 		images.push_back(all[t-1]);
@@ -44,6 +42,14 @@ int n=0;
 	}
 
 	printf("images = %d\nall = %d\n", images.size(), all.size());
+}
+
+void RandomImages::getReader(vector<string>&img, vector<string> &sup){
+
+	for (int i = 0; i <images.size(); i++){
+		img.push_back(images[i].image_path);
+		sup.push_back(images[i].supervised_path);
+	}
 }
 
 void RandomImages::getReaderChoosen(vector<string>&img, vector<string> &sup){

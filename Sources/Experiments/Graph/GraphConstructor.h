@@ -195,21 +195,12 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 template <typename Label_type, typename Histograma_type>
 void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Histograma_type>& Grafo)
 {
-
-	//Graph<Label_type, Histograma_type> Grafo;
-	//	char nomearquivo_temp[100];
 	time_t timer = time(NULL);
 
+	printf(reader.hasNext() ? "has next\n" : "Doesnt have next\n");
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
-
-		//		char num[10];
-		//		sprintf(num, "%d", quantidade);
-
-		//		strcpy(nomearquivo_temp, arq_hsvimages);
-		//		strcat(nomearquivo_temp, num);
-		//		strcat(nomearquivo_temp, ".txt");
 
 		String path_image = i.getImagePath().toStdString();
 		Mat image = imread(path_image), image_show;
@@ -246,11 +237,10 @@ void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Hi
 			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
 		}
 		if (this->quantidade % 500 == 0){
+			printf("printar\n");
 			Grafo.printVertices(arq_vertice);
 			Grafo.printGraph(arq_grafo);
 		}
-		/*	Grafo.printVertices(arq_vertice);
-			Grafo.printGraph(arq_grafo);*/
 
 		quantidade++;
 		printf("\n");
@@ -258,7 +248,8 @@ void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Hi
 		image.release();
 
 	}
-
+	
+	printf("printar\n");
 	Grafo.printVertices(arq_vertice);
 	Grafo.printGraph(arq_grafo);
 

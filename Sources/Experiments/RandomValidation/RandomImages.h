@@ -44,6 +44,7 @@ public:
 	RandomImages(DatabaseReader&);
 	void print(string file);
 	void getReaderChoosen(vector<string>&, vector<string>&);
+	void getReader(vector<string>&, vector<string>&);
 };
 
 

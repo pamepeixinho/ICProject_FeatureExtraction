@@ -5,6 +5,8 @@ SupervisedImage ChoosedRegion::readNextSupervisedImage()const{
 }
 
 RandomRegionReader::RandomRegionReader(vector<string> im, vector<string>sup){
+	this->actualRegion = 0;
+	this->Regions.clear();
 	srand(time(0));
 	for (int i = 0; i < im.size(); i++){
 		SupervisedImage img = SupervisedImage(QString(im[i].c_str()), QString(sup[i].c_str()));

@@ -41,17 +41,18 @@ bool operator<(const unique_ptr<Vertice> &a, const unique_ptr<Vertice> &b){
 	return *a < *b;
 }
 
-char v[60];
-char aux[60];
-
 template<typename type1, typename type2>
 int Graph<type1, type2>::finding(type2 h){
 	set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new type2(h)));
-	return it_h->get()->idx;
+	if (it_h != Vertices.end())
+		return it_h->get()->idx;
+	return -1;
 }
 
 template<typename type1, typename type2>
 void Graph<type1, type2>::printVertices(char *arquivo_vertices){
+	char v[60];
+	char aux[60];
 	strcpy(v, arquivo_vertices);
 	strcpy(aux, arquivo_vertices);
 
@@ -88,6 +89,8 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 
 template<typename type1, typename type2>
 void Graph<type1, type2>::printGraph( char *arquivo_grafo){
+	char v[60];
+	char aux[60];
 	char L = 'L';
 	char H = 'H';
 
@@ -167,7 +170,6 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 	Matriz_Adjacencia[it_h->get()->idx][it_l->get()->idx] += 1;
 	Matriz_Adjacencia[it_l->get()->idx][it_h->get()->idx] += 1;
 }
-
 
 //label 0
 //histograma 1

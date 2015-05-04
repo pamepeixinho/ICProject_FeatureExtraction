@@ -9,6 +9,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <opencv/cxcore.h>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <QList>
 #include <cstdio>
 #include <stdlib.h>
@@ -17,7 +18,6 @@
 #include <string.h>
 #include <vector>
 #include <math.h>
-#include <opencv2/imgproc/imgproc.hpp>
 #include <assert.h>
 #include <set>
 #include <memory>
