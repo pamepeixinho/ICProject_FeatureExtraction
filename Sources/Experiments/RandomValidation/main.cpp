@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
 
 	//system("pause");
 
-	string v_s(path+"Vertices");
+	/*string v_s(path+"Vertices");
 	string g_s(path+"Grafo");
 	printf("%s %s\n",v_s.c_str(), g_s.c_str());
 
@@ -89,15 +89,20 @@ int main(int argc, char *argv[])
 
 	char *g; 
 	strcpy(g, g_s.c_str());
-	printf("%s %s\n", v, g);
+	printf("%s %s\n", v, g);*/
+
+	char v[20] = "Vertices", g[20] = "Grafo";
 		
-	//GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, 18, 3,3, 4);
-	//printf("graph\n");
-	//Graph<Label, Hsv_DiscrY> Grafo;
-	//constructor.build_g(Grafo);
+	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, 18, 3,3, 4);
+	printf("graph\n");
+	Graph<Label, Hsv_DiscrY> Grafo;
+	constructor.build_g(Grafo);
+
 	//set<unique_ptr<Vertice>> Vertices = Grafo.getVertices();
-	//vector<Vertice*> indice = Grafo.getIndice();
-	//vector <vector<int> > matriz = Grafo.getMatriz();
+	vector<Vertice*> indice = Grafo.getIndice();
+	vector <vector<int> > matriz = Grafo.getMatriz();
+	printf("matriz.size() = %d\n", matriz.size());
+	
 	//RandomRegionReader regions(path+"Others.bin");
 	//vector<Vert> adj;
 	//vector<int>notas;

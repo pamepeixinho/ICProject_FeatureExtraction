@@ -33,6 +33,7 @@ public:
 	void printGraph(char *);
 	void ConstructEdges(type1, type2);
 	void loadGraph(char *,char*,char*);
+	//set<unique_ptr<Vertice>>::iterator finding(type2);
 	//void ConstructEdges(Label, Hsv_DiscrY);
 };
 
