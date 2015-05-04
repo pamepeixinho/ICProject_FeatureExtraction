@@ -128,6 +128,7 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 	Grafo.printGraph(arq_grafo);
 }
 
+//complete
 template <typename Label_type, typename Histograma_type>
 void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, char *g,int qt){
 	
@@ -195,9 +196,13 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 template <typename Label_type, typename Histograma_type>
 void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Histograma_type>& Grafo)
 {
+	this->quantidade = 0;
 	time_t timer = time(NULL);
 
 	printf(reader.hasNext() ? "has next\n" : "Doesnt have next\n");
+	printf("vertices = %s\n Grafo = %s\n", this->arq_vertice,this->arq_grafo);
+
+	system("pause");
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
@@ -230,26 +235,26 @@ void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Hi
 				//HSV = Histograma_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				Grafo.ConstructEdges(LABEL, HSV);
 			}
-
 		}
+
 		if (this->quantidade % 100 == 0){
 			time_t tempo = time(NULL);
 			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
 		}
 		if (this->quantidade % 500 == 0){
-			printf("printar\n");
-			Grafo.printVertices(arq_vertice);
-			Grafo.printGraph(arq_grafo);
+			printf("printar1 - quantidade = %d -> %f\n",this->quantidade, quantidade%500);
+			Grafo.printVertices(this->arq_vertice);
+			Grafo.printGraph(this->arq_grafo);
 		}
 
-		quantidade++;
+		this->quantidade++;
 		printf("\n");
 
 		image.release();
 
 	}
 	
-	printf("printar\n");
+	printf("printar2\n");
 	Grafo.printVertices(arq_vertice);
 	Grafo.printGraph(arq_grafo);
 

@@ -51,12 +51,17 @@ int Graph<type1, type2>::finding(type2 h){
 
 template<typename type1, typename type2>
 void Graph<type1, type2>::printVertices(char *arquivo_vertices){
-	char v[60];
-	char aux[60];
+	//printf("entrou aqui\n");
+	char v[260];
+	char aux[260];
 	strcpy(v, arquivo_vertices);
 	strcpy(aux, arquivo_vertices);
+	//printf("*******vertices = %s\n", v);
 
 	FILE *arq_g = fopen(strcat(v, ".txt"), "w"), *arq_gb = fopen(strcat(aux, "_ordem.bin"), "wb");
+	assert(arq_g != NULL);
+	assert(arq_gb != NULL);
+	//printf("v = %s\naux = %s\n", v, aux);
 
 	vector<int>HistogramaI;
 	vector<float>HistogramaF;
@@ -89,14 +94,15 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 
 template<typename type1, typename type2>
 void Graph<type1, type2>::printGraph( char *arquivo_grafo){
-	char v[60];
-	char aux[60];
+	char v[260];
+	char aux[260];
 	char L = 'L';
 	char H = 'H';
 
 	strcpy(v, arquivo_grafo);
 	strcpy(aux, arquivo_grafo);
 
+	printf("grafo = %s\n", v);
 	FILE *arq_g = fopen(strcat(aux, ".txt"), "w");
 	FILE *arq_gb = fopen(strcat(v, ".bin"), "wb");
 
