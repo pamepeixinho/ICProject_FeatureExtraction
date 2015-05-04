@@ -80,16 +80,16 @@ int main(int argc, char *argv[])
 
 	//system("pause");
 
-	/*string v_s(path+"Vertices");
-	string g_s(path+"Grafo");*/
-//	printf("%s %s\n",v_s.c_str(), g_s.c_str());
-	/*char *v;
+	string v_s(path+"Vertices");
+	string g_s(path+"Grafo");
+	printf("%s %s\n",v_s.c_str(), g_s.c_str());
+
+	char *v;
 	strcpy(v, v_s.c_str());
+
 	char *g; 
-	strcpy(g, g_s.c_str());*/
-//	printf("%s %s\n", v, g);
-//	char v[20];
-//	char g[20];
+	strcpy(g, g_s.c_str());
+	printf("%s %s\n", v, g);
 		
 	//GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, 18, 3,3, 4);
 	//printf("graph\n");
@@ -100,6 +100,7 @@ int main(int argc, char *argv[])
 	//vector <vector<int> > matriz = Grafo.getMatriz();
 	//RandomRegionReader regions(path+"Others.bin");
 	//vector<Vert> adj;
+	//vector<int>notas;
 	//while (regions.hasNextRegion()){
 	//	ChoosedRegion r = regions.readNextRegion();
 	//	SupervisedImage img  = r.readNextSupervisedImage();
@@ -109,7 +110,6 @@ int main(int argc, char *argv[])
 	//	Mat mask = img.getRegions()[rc].getMask();
 	//	string label = img.getRegions()[rc].getLabel().toStdString();
 	//	Hsv_DiscrY hsv = Hsv_DiscrY(image, mask, 18, 3, 3, 1, "", 4);
-	//	//(..)
 	//	set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new Hsv_DiscrY(hsv)));
 	//	printf(it_h != Vertices.end() ? "achou H\n" : "nao achou H\n");
 	//	int in = it_h->get()->idx;
@@ -118,6 +118,7 @@ int main(int argc, char *argv[])
 	//			int oco = matriz[in][i];
 	//			string l = ((Label*) indice[i])->getLabel();
 	//			adj.push_back(Vert(l, oco));
+	//			notas.push_back(daNota(adj, label));
 	//			printf("Nota = %d\n", daNota(adj, label));
 	//		}
 	//	}
