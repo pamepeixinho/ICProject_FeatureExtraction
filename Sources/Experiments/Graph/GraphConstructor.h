@@ -49,7 +49,8 @@ class GraphConstructor{
 public:
 	GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int, int quantidade=0);
 	void build();
-	Graph<Label_type,Histograma_type> build_g();
+	//Graph<Label_type, Histograma_type> build_g();
+	void build_g(Graph<Label_type, Histograma_type>&);
 	void recover(char*, char*,char *,int);
 };
 
@@ -192,29 +193,30 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 }
 
 template <typename Label_type, typename Histograma_type>
-Graph<Label_type, Histograma_type> GraphConstructor<Label_type, Histograma_type>::build_g(){
+void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Histograma_type>& Grafo)
+{
 
-	Graph<Label_type, Histograma_type> Grafo;
-//	char nomearquivo_temp[100];
+	//Graph<Label_type, Histograma_type> Grafo;
+	//	char nomearquivo_temp[100];
 	time_t timer = time(NULL);
 
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
 
-//		char num[10];
-//		sprintf(num, "%d", quantidade);
+		//		char num[10];
+		//		sprintf(num, "%d", quantidade);
 
-//		strcpy(nomearquivo_temp, arq_hsvimages);
-//		strcat(nomearquivo_temp, num);
-//		strcat(nomearquivo_temp, ".txt");
+		//		strcpy(nomearquivo_temp, arq_hsvimages);
+		//		strcat(nomearquivo_temp, num);
+		//		strcat(nomearquivo_temp, ".txt");
 
 		String path_image = i.getImagePath().toStdString();
 		Mat image = imread(path_image), image_show;
 
-		if(image.rows!=0 && image.cols !=0)
+		if (image.rows != 0 && image.cols != 0)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
-		
+
 		printf("\n\n %d -", quantidade);
 		printf("%s\n", path_image.c_str());
 
@@ -258,9 +260,9 @@ Graph<Label_type, Histograma_type> GraphConstructor<Label_type, Histograma_type>
 	}
 
 	Grafo.printVertices(arq_vertice);
-	Grafo.printGraph(arq_grafo); 
+	Grafo.printGraph(arq_grafo);
 
-	return Grafo;
+	//return Grafo;
 }
 
 #endif
