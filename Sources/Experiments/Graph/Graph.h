@@ -20,6 +20,15 @@ class Graph{
 	vector<Vertice*>indice;
 	vector<vector<int> >Matriz_Adjacencia;
 public:
+	set<unique_ptr<Vertice>> getVertices(){
+		return this->Vertices;
+	}
+	vector<Vertice*> getIndice(){
+		return this->indice;
+	}
+	vector<vector<int> > getMatriz(){
+		return this->Matriz_Adjacencia;
+	}
 	void printVertices(char *);
 	void printGraph(char *);
 	void ConstructEdges(type1, type2);

@@ -46,6 +46,14 @@ int n=0;
 	printf("images = %d\nall = %d\n", images.size(), all.size());
 }
 
+void RandomImages::getReaderChoosen(vector<string>&img, vector<string> &sup){
+	
+	for (int i = 0; i < imagesChoosen.size(); i++){
+		img.push_back(imagesChoosen[i].image_path);
+		sup.push_back(imagesChoosen[i].supervised_path);
+	}
+}
+
 void RandomImages::print(string file_path){
 	
 	string choosen = file_path + "ImagesChoosen.bin";

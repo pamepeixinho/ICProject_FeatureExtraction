@@ -27,6 +27,7 @@ class RandomReader: public DatabaseReader{
 	bool started;
 public:
 	RandomReader(string);
+	RandomReader(vector<string>, vector<string>);
 	bool hasNext()const;
 	bool hasPrevious()const;
 	SupervisedImage readNext();

@@ -43,6 +43,7 @@ class RandomImages{
 public:
 	RandomImages(DatabaseReader&);
 	void print(string file);
+	void getReaderChoosen(vector<string>&, vector<string>&);
 };
 
 

@@ -26,6 +26,17 @@ RandomReader::RandomReader(string path){
 	printf("already!\n");
 }
 
+RandomReader::RandomReader(vector<string>img, vector<string>sup){
+	this->images_path = img;
+	this->supervised_path = sup;
+	printf("I = %d e S = %d\n", images_path.size(), supervised_path.size());
+
+	i_it = images_path.begin();
+	s_it = supervised_path.begin();
+	started = false;
+	printf("already!\n");
+}
+
 unsigned int RandomReader::getTotal()const{
 	return images_path.size();
 }
