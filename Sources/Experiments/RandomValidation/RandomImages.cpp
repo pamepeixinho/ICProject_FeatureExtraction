@@ -12,7 +12,7 @@ int n=0;
 		Mat img = imread(aux.image_path);
 		if(img.rows!=0 && img.cols !=0)
 			all.push_back(aux);
-		printf("%d\n", n);
+		//printf("%d\n", n);
 		n++;
 	}
 	
@@ -39,7 +39,7 @@ int n=0;
 		int t = all.size();
 		images.push_back(all[t-1]);
 		all.erase(all.begin()+(t-1));
-		printf("30 - %d\n", n);
+		//printf("30 - %d\n", n);
 		n++;
 	}
 
