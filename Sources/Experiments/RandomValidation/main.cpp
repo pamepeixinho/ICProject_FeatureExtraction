@@ -63,16 +63,16 @@ int main(int argc, char *argv[])
 	printf("leu-printa\n");
 	a.print(path);
 
-	vector<string>img;
+	vector<string>image_path;
 	vector<string>sup;
-	a.getReaderChoosen(img, sup);
+	a.getReaderChoosen(image_path, sup);
 
-	printf("Img.size = %d e Sup.size() = %d\n", img.size(), sup.size());
+	printf("Img.size = %d e Sup.size() = %d\n", image_path.size(), sup.size());
 	
 	//system("pause");
 
 	//RandomReader reader(path + "ImagesChoosen.bin");
-	RandomReader reader(img,sup);
+	RandomReader reader(image_path,sup);
 
 	printf("ok!\n");
 
@@ -93,31 +93,60 @@ int main(int argc, char *argv[])
 
 	char v[20] = "Vertices", g[20] = "Grafo";
 		
+	RandomRegionReader regions(path+"Others.bin");
+
 	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, 18, 3,3, 4);
 	printf("graph\n");
 	Graph<Label, Hsv_DiscrY> Grafo;
 	constructor.build_g(Grafo);
 
-	//set<unique_ptr<Vertice>> Vertices = Grafo.getVertices();
+	
 	vector<Vertice*> indice = Grafo.getIndice();
 	vector <vector<int> > matriz = Grafo.getMatriz();
 	printf("matriz.size() = %d\n", matriz.size());
 	
-	//RandomRegionReader regions(path+"Others.bin");
-	//vector<Vert> adj;
-	//vector<int>notas;
+
+	vector<Vert> adj;
+	vector<int>notas;
+
+	printf(regions.hasNextRegion() ? "has next\n" : "Doesnt have next\n");
+	ChoosedRegion r = regions.readNextRegion();
+	SupervisedImage img = r.readNextSupervisedImage();
+	int rc = r.regionChoosed;
+
+	Mat image = imread(img.getImagePath().toStdString());
+	cvtColor(image, image, CV_BGR2HSV_FULL);
+	Mat mask = img.getRegions()[rc].getMask();
+
+	string label = img.getRegions()[rc].getLabel().toStdString();
+
+	Hsv_DiscrY hsv = Hsv_DiscrY(image, mask, 18, 3, 3, 1, "", 4);
+	
+	int in = Grafo.finding(hsv);
+	printf("in = %d\n", in);
+	
+	for (int i = 0; i < matriz[in].size(); i++){
+		if (matriz[in][i] != 0){
+			int oco = matriz[in][i];
+			string l = ((Label*)indice[i])->getLabel();
+			adj.push_back(Vert(l, oco));
+			notas.push_back(daNota(adj, label));
+			printf("Nota = %d\n", daNota(adj, label));
+		}
+	}
+
+
 	//while (regions.hasNextRegion()){
 	//	ChoosedRegion r = regions.readNextRegion();
 	//	SupervisedImage img  = r.readNextSupervisedImage();
 	//	int rc = r.regionChoosed;
 	//	Mat image = imread(img.getImagePath().toStdString());
-	//		cvtColor(image, image, CV_BGR2HSV_FULL);
+	//	cvtColor(image, image, CV_BGR2HSV_FULL);
 	//	Mat mask = img.getRegions()[rc].getMask();
 	//	string label = img.getRegions()[rc].getLabel().toStdString();
 	//	Hsv_DiscrY hsv = Hsv_DiscrY(image, mask, 18, 3, 3, 1, "", 4);
-	//	set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new Hsv_DiscrY(hsv)));
-	//	printf(it_h != Vertices.end() ? "achou H\n" : "nao achou H\n");
-	//	int in = it_h->get()->idx;
+	//	int in = Grafo.finding(hsv);
+	//	printf("in = %d\n", in);
 	//	for (int i = 0; i < matriz[in].size(); i++){
 	//		if (matriz[in][i] != 0){
 	//			int oco = matriz[in][i];

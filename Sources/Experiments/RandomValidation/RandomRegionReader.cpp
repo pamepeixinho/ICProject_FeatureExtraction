@@ -4,6 +4,14 @@ SupervisedImage ChoosedRegion::readNextSupervisedImage()const{
 	return SupervisedImage(QString(this->image_path.c_str()),QString(this->supervised_path.c_str()));
 }
 
+RandomRegionReader::RandomRegionReader(vector<string> im, vector<string>sup){
+	srand(time(0));
+	for (int i = 0; i < im.size(); i++){
+		SupervisedImage img = SupervisedImage(QString(im[i].c_str()), QString(sup[i].c_str()));
+		int n = rand() % img.getRegions().size();
+		Regions.push_back(ChoosedRegion(im[i], sup[i], n));
+	}
+}
 
 RandomRegionReader::RandomRegionReader(string file){
 	this->actualRegion = 0;
@@ -18,7 +26,7 @@ RandomRegionReader::RandomRegionReader(string file){
 		if(!feof(arq)){
                 SupervisedImage img = SupervisedImage(QString(linha),QString(linha2));
                  int n = rand() % img.getRegions().size();
-		 	Regions.push_back(ChoosedRegion(linha,linha2,n));
+		 		Regions.push_back(ChoosedRegion(string(linha),string(linha2),n));
 		}
 	}
 }

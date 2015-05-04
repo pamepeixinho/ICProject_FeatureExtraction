@@ -33,7 +33,7 @@ public:
 	void printGraph(char *);
 	void ConstructEdges(type1, type2);
 	void loadGraph(char *,char*,char*);
-	//set<unique_ptr<Vertice>>::iterator finding(type2);
+	int finding(type2 h);
 	//void ConstructEdges(Label, Hsv_DiscrY);
 };
 
@@ -41,9 +41,14 @@ bool operator<(const unique_ptr<Vertice> &a, const unique_ptr<Vertice> &b){
 	return *a < *b;
 }
 
-//variaveis auxiliares
 char v[60];
 char aux[60];
+
+template<typename type1, typename type2>
+int Graph<type1, type2>::finding(type2 h){
+	set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new type2(h)));
+	return it_h->get()->idx;
+}
 
 template<typename type1, typename type2>
 void Graph<type1, type2>::printVertices(char *arquivo_vertices){

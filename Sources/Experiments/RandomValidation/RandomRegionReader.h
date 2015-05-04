@@ -32,6 +32,7 @@ class RandomRegionReader{
 	int actualRegion;
 public:
 	RandomRegionReader(string);
+	RandomRegionReader(vector<string>, vector<string>);
 	ChoosedRegion readNextRegion();
 	bool hasNextRegion()const;
 	
