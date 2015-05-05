@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
 	char *type  = argv[1];
 
 	if (strcmp(type,"HSV")==0){
-		if (argc != 10){
-			printf("path_SUN path nomeVertice nomeGrafo (H)0 (S)0 (V)0 (Y)0\n");
+		if (argc != 11){
+			printf("path_SUN path nomeVertice nomeGrafo nomeSaida.txt (H)0 (S)0 (V)0 (Y)0\n");
 			return 0;
 		}
 	}
@@ -77,10 +77,10 @@ int main(int argc, char *argv[])
 	
 	QString path_SUN(argv[2]);
 
-	int H = atoi(argv[6]);
-	int S = atoi(argv[7]);
-	int V = atoi(argv[8]);
-	int Y = atoi(argv[9]);
+	int H = atoi(argv[7]);
+	int S = atoi(argv[8]);
+	int V = atoi(argv[9]);
+	int Y = atoi(argv[10]);
 	printf("%d %d %d %d\n", H, S, V, Y);
 
 	SunDatabaseReader sunreader(path_SUN);
@@ -110,8 +110,6 @@ int main(int argc, char *argv[])
 
 	printf("Vertice = %s e Grafo = %s\n", v, g);
 
-	system("pause");
-
 	RandomReader reader(image_path,sup);
 	printf(reader.hasNext() ? "reader has next\n" : "reader Doesnt have next\n");
 
@@ -130,7 +128,7 @@ int main(int argc, char *argv[])
 
 	Validation<Hsv_DiscrY> validation(Grafo, regions, tipo, H, S, V, Y);
 	validation.build();
-	validation.print("resposta.txt");
+	validation.print(strcat(pathc,argv[6]));
 	validation.print();
 
 ////make class (grafo, regions)-----------------------------------------------	

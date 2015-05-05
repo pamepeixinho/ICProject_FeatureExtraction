@@ -59,7 +59,7 @@ private:
 public:
 	int daNota(vector<Vert>, string);
 	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int, int, int, int);
-	void print(string);
+	void print(char *);
 	void print();
 	void build();
 };
@@ -135,9 +135,9 @@ void Validation<type1>::build(){
 }
 
 template<typename type1>
-void Validation<type1>::print(string p_arq){
-	FILE *arquivo = fopen(p_arq.c_str(), "w");
-	
+void Validation<type1>::print(char *p_arq){
+	FILE *arquivo = fopen(p_arq, "w");
+	printf("printando arq\n");
 	for (int i = 0; i < this->notas.size(); i++)
 		fprintf(arquivo, "%d\n", notas[i]);
 
@@ -146,9 +146,9 @@ void Validation<type1>::print(string p_arq){
 
 template<typename type1>
 void Validation<type1>::print(){
+	printf("NOTAS:\n");
 	for (int i = 0; i < this->notas.size(); i++)
 		printf("%d\n", notas[i]);
-
 }
 
 #endif
