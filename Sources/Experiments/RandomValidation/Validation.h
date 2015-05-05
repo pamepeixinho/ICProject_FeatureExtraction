@@ -103,8 +103,9 @@ void Validation<type1>::build(){
 	vector <vector<int> > matriz = Grafo.getMatriz();
 	printf("matriz.size() = %d\n", matriz.size());
 	printf(this->regions.hasNextRegion() ? "has next\n" : "Doesnt have next\n");
-
+	int i = 0;
 	while (regions.hasNextRegion()){
+		printf("IMG  = %d\n", i);
 		ChoosedRegion r = regions.readNextRegion();
 		SupervisedImage img = r.readNextSupervisedImage();
 		int rc = r.regionChoosed;
@@ -143,6 +144,7 @@ void Validation<type1>::build(){
 		}
 		else
 			notas.push_back(-1);
+		i++;
 	}
 	print();
 }
