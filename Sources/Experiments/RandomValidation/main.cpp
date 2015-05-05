@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
 
 	Validation<Hsv_DiscrY> validation(Grafo, regions, tipo, H, S, V, Y);
 	validation.build();
-	printf("BUILD\n");
+	printf("VALIDATION - BUILD\n");
 	validation.print(strcat(pathc,argv[6]));
 	printf("FPRINTF\n");
 	validation.print();

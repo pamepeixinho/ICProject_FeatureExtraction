@@ -123,9 +123,12 @@ void Validation<type1>::build(){
 				}
 			}
 			sort(adj.begin(), adj.end());
-			printf("adj = \n");
+			/*printf("adj = \n");
 			for (int i = 0; i < adj.size(); i++)
-				printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());
+				printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());*/
+			printf("adj = ");
+			for (int i = 0; i < adj.size(); i++)
+				printf("%d ", adj[i].ocorre); 
 			notas.push_back(daNota(adj, label));
 			printf("Nota = %d\n", daNota(adj, label));
 		}
@@ -139,9 +142,10 @@ template<typename type1>
 void Validation<type1>::print(char *p_arq){
 	FILE *arquivo = fopen(p_arq, "w");
 	printf("printando arq\n");
+	fprintf(arquivo, "Notas = [ ");
 	for (int i = 0; i < this->notas.size(); i++)
-		fprintf(arquivo, "%d\n", notas[i]);
-
+		fprintf(arquivo, "%d ", notas[i]);
+	fprintf(arquivo, " ];");
 	fclose(arquivo);
 }
 

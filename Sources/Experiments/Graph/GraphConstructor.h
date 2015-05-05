@@ -199,10 +199,6 @@ void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Hi
 	this->quantidade = 0;
 	time_t timer = time(NULL);
 
-	printf(reader.hasNext() ? "has next\n" : "Doesnt have next\n");
-	printf("vertices = %s\n Grafo = %s\n", this->arq_vertice,this->arq_grafo);
-
-	system("pause");
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
