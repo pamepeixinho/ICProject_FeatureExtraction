@@ -48,34 +48,56 @@ using namespace std;
 int main(int argc, char* argv[]){
 
 
-	if (argc!=8){
-
-		printf("\nEntrada de Argumentos:\n(h s v)0 0 0 (k || valor_comp)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
-
+	if (argc == 1){
+		printf("TYPE (HSV, Area, Orientacao)\n");
 		return 0;
-
+	}
+	
+	if (strcmp(argv[1], "HSV")==0 && argc!=10){
+		printf("\nEntrada de Argumentos:\nTYPE pathSUN (h s v)0 0 0 (k || valor_comp)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
+		return 0;
+	}
+	else if (strcmp(argv[1], "Area") == 0 && argc!=7){
+		printf("\nEntrada de Argumentos:\nTYPE pathSUN (Discr Area)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
+		return 0;
 	}
 
-
-	char *arq_vertice = argv[5], *arq_grafo = argv[6], *arq_ocorrencia = argv[7];
-	int arg_h = atoi(argv[1]), arg_s = atoi(argv[2]), arg_v = atoi(argv[3]);
-	float arg_K = atoi(argv[4]);
-
 	
-	printf("ARGUMENTOS: h%d s%d v%d k%.2f %s %s %s\n\n", arg_h, arg_s, arg_v, arg_K, arq_vertice, arq_grafo, arq_ocorrencia);
-//	system("pause");
-	SunDatabaseReader reader("/home/pamela/SUN2012/");
-	//SunDatabaseReader reader("C:/Users/pamela/Documents/IC/Study/project1/SUN2012_COMPLETA/SUN2012/");
-//	SunDatabaseReader reader("/home/pamela/Dropbox/IC-Pamela1/SUN_TESTE/");
+	char *arq_vertice ,*arq_grafo ,*arq_ocorrencia;
+	int arg_h,arg_s, arg_v, arg_d;
+	float arg_K;
+	int type = 0;
 
+	if (strcmp(argv[1], "HSV") == 0){
+		arg_h = atoi(argv[3]);
+		arg_s = atoi(argv[4]);
+		arg_v = atoi(argv[5]);
+		arg_K = atoi(argv[6]);
+		arq_vertice = argv[7];
+		arq_grafo = argv[8];
+		arq_ocorrencia = argv[9];
+		type = 1;
+		printf("ARGUMENTOS: h%d s%d v%d k%.2f %s %s %s\n\n", arg_h, arg_s, arg_v, arg_K, arq_vertice, arq_grafo, arq_ocorrencia);
+	}
+	else if (strcmp(argv[1], "Area") == 0){
+		arg_d = atoi(argv[3]);
+		arq_vertice = argv[4];
+		arq_grafo = argv[5];
+		arq_ocorrencia = argv[6];
+		type = 2;
+		printf("ARGUMENTOS: D%d %s %s %s\n\n", arg_d, arq_vertice, arq_grafo, arq_ocorrencia);
+	}
 
-	//Graph<Label, Hsv_DiscrY>Grafo;
-
-	/*GraphConstructor<Label,Hsv_DiscrY> constructor(reader, nomearquivo, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);*/
-
-	GraphConstructor<Label, Hsv_DiscrY> constructor(reader, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
-
-	constructor.build();
+	SunDatabaseReader reader(argv[2]);
+	
+	if (type == 1){
+		GraphConstructor<Label, Hsv_DiscrY> constructor(reader, arq_vertice, arq_grafo, arg_h, arg_s, arg_v, arg_K);
+		constructor.build();
+	}
+	else if (type == 2){
+		GraphConstructor<Label, Area> constructor(reader, arq_vertice, arq_grafo, arg_d);
+		constructor.build();
+	}
 
 	char ocorre[100], grafo[100], vert1[100];
 	strcpy(grafo, arq_grafo);
@@ -87,10 +109,6 @@ int main(int argc, char* argv[]){
 
 	printf("%s\n %s\n %s\n %s\n", ocorre, vert1, arq_vertice, grafo);
 
-	//char *vertice, char *vertice_b, char *grafo, char *arquivo_p
-
-	/*OcorrenciaH_Grafo(arq_vertice, grafo, arq_ocorrencia);
-	OcorrenciaVert_Grafo(arq_vertice,grafo, ocorre);*/
 
 	HistogramaOcorrencia Evaluation = HistogramaOcorrencia(vert1, arq_vertice, grafo, arq_ocorrencia);
 

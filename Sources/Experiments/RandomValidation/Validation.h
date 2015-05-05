@@ -56,9 +56,11 @@ private:
 	RandomRegionReader &regions;
 	int type;
 	int H, S, V, Y;
+	int D;
 public:
 	int daNota(vector<Vert>, string);
 	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int, int, int, int);
+	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int);
 	void print(char *);
 	void print();
 	void build();
@@ -85,6 +87,14 @@ int Validation<type1>::daNota(vector<Vert>adj, string rLabel){
 
 template<typename type1>
 Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &regions, int type, int H, int S, int V, int Y):Grafo(Grafo),regions(regions), type(type), H(H),S(S),V(V),Y(Y){
+	this->D = -1;
+}
+template<typename type1>
+Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &regions, int type, int D) : Grafo(Grafo), regions(regions), type(type),D(D){
+	this->H = -1;
+	this->S = -1;
+	this->V = -1;
+	this->Y = -1;
 }
 
 template<typename type1>
@@ -101,15 +111,17 @@ void Validation<type1>::build(){
 		printf("rc = %d\n", rc);
 		
 		Mat image = imread(img.getImagePath().toStdString());
-		cvtColor(image, image, CV_BGR2HSV_FULL);
+		if (type==1)
+			cvtColor(image, image, CV_BGR2HSV_FULL);
 		Mat mask = img.getRegions()[rc].getMask();
-
 		string label = img.getRegions()[rc].getLabel().toStdString();
 		
 		type1 crt;
 		if (this->type == 1)
 			crt = type1(image, mask, H, S, V, rc, label, Y);
-		
+		else if (type==2)
+			crt = type1(img.getRegions()[rc], D, image.cols, image.rows);
+
 		printf("Procura\n");
 		int in = Grafo.finding(crt);
 		printf("in = %d\n", in);
@@ -126,9 +138,6 @@ void Validation<type1>::build(){
 			/*printf("adj = \n");
 			for (int i = 0; i < adj.size(); i++)
 				printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());*/
-			printf("adj = ");
-			for (int i = 0; i < adj.size(); i++)
-				printf("%d ", adj[i].ocorre); 
 			notas.push_back(daNota(adj, label));
 			printf("Nota = %d\n", daNota(adj, label));
 		}

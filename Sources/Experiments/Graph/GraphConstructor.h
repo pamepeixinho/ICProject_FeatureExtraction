@@ -28,11 +28,15 @@
 #include <Experiments/Graph/Vertice.h>
 #include <Experiments/Graph/Label.h>
 #include <Experiments/Graph/Histograma.h>
+#include <Experiments/Graph/Area.h>
 #include <memory>
 #include <Experiments/Graph/Graph.h>
-//#include <Experiments/AnaliseGrafo/OcorrenciaGrafo.h>
 
-template <typename Label_type, typename Histograma_type>
+// TYPE
+// HISTOGRAMA 1
+// AREA 2
+
+template <typename Label_type, typename feature_type>
 class GraphConstructor{
 	//Graph *Grafo;
 	DatabaseReader &reader;
@@ -43,30 +47,46 @@ class GraphConstructor{
 	int arg_s;
 	int arg_v;
 	float arg_K;
-
+	int Discr;
+	int type;
 	int quantidade;
 
 public:
-	GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int, int quantidade=0);
+	GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int,int quantidade=0);
+	GraphConstructor(DatabaseReader &, char*, char *, int, int quantidade = 0);
 	void build();
-	//Graph<Label_type, Histograma_type> build_g();
-	void build_g(Graph<Label_type, Histograma_type>&);
+	//Graph<Label_type, feature_type> build_g();
+	void build_g(Graph<Label_type, feature_type>&);
 	void recover(char*, char*,char *,int);
 };
 
 
-template <typename Label_type, typename Histograma_type>
-GraphConstructor<Label_type, Histograma_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int h, int s, int v, int k, int q) :reader(Reader), arq_vertice(arq_vertice),
+template <typename Label_type, typename feature_type>
+GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int h, int s, int v, int k, int q) :reader(Reader), arq_vertice(arq_vertice),
 arq_grafo(arq_grafo), arg_h(h), arg_s(s), arg_v(v), arg_K(k), quantidade(q)
 {
+	this->type = 1;
+	this->Discr = -1;
 }
 
-template <typename Label_type, typename Histograma_type>
-void GraphConstructor<Label_type, Histograma_type>::build(){
+template <typename Label_type, typename feature_type>
+GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int Discr, int q) :reader(Reader), arq_vertice(arq_vertice),
+arq_grafo(arq_grafo), Discr(Discr), quantidade(q)
+{
+	this->type = 2;
+	this->arg_h = -1;
+	this->arg_s = -1;
+	this->arg_v = -1;
+	this->arg_K = -1;
+
+}
+
+template <typename Label_type, typename feature_type>
+void GraphConstructor<Label_type, feature_type>::build(){
 
 	time_t timer = time(NULL);
 	
-	Graph<Label_type, Histograma_type> Grafo;
+	Graph<Label_type, feature_type> Grafo;
 //	char nomearquivo_temp[100];
 	while (reader.hasNext()){
 
@@ -74,7 +94,6 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 
 //		char num[10];
 //		sprintf(num, "%d", quantidade);
-
 //		strcpy(nomearquivo_temp, arq_hsvimages);
 //		strcat(nomearquivo_temp, num);
 //		strcat(nomearquivo_temp, ".txt");
@@ -100,12 +119,15 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 			//imshow("mask_show", mask_show);
 			//waitKey(0);
 
-			Histograma_type HSV;
-			//Hsv_Dist HSV(arg_K);
+			feature_type FEATURE;
+	
 			if ((mask.cols != 0 && mask.rows != 0) && (image.rows != 0 && image.cols != 0)){
-				HSV = Histograma_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
-				//HSV = Histograma_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
-				Grafo.ConstructEdges(LABEL, HSV);
+				if (type == 1) //histograma
+					FEATURE = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+				else if (type == 2) //area
+					printf("width*height = %d %d\n", image.cols, image.rows);
+					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
+				Grafo.ConstructEdges(LABEL,FEATURE);
 			}	
 		}
 
@@ -129,10 +151,10 @@ void GraphConstructor<Label_type, Histograma_type>::build(){
 }
 
 //complete
-template <typename Label_type, typename Histograma_type>
-void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, char *g,int qt){
+template <typename Label_type, typename feature_type>
+void GraphConstructor<Label_type, feature_type>::recover(char *v, char *vb, char *g,int qt){
 	
-/*	Graph<Label_type, Histograma_type> Grafo;
+/*	Graph<Label_type, feature_type> Grafo;
 	Grafo.loadGraph(v,vb, g);
 	
 	this->quantidade = qt;
@@ -171,11 +193,11 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 			//imshow("mask_show", mask_show);
 			//waitKey(0);
 
-				Histograma_type HSV;
+				feature_type HSV;
 			//Hsv_Dist HSV(arg_K);
 				if ((mask.cols != 0 && mask.rows != 0) && (image.rows != 0 && image.cols != 0)){
-					HSV = Histograma_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
-					//HSV = Histograma_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+					HSV = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+					//HSV = feature_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 					Grafo.ConstructEdges(LABEL, HSV);
 				}
 
@@ -193,8 +215,8 @@ void GraphConstructor<Label_type, Histograma_type>::recover(char *v, char *vb, c
 	}*/
 }
 
-template <typename Label_type, typename Histograma_type>
-void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Histograma_type>& Grafo)
+template <typename Label_type, typename feature_type>
+void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, feature_type>& Grafo)
 {
 	this->quantidade = 0;
 	time_t timer = time(NULL);
@@ -220,17 +242,16 @@ void GraphConstructor<Label_type, Histograma_type>::build_g(Graph<Label_type, Hi
 
 			Mat mask = i.getRegions()[n].getMask(), mask_show;
 
-			//resize(mask, mask_show, Size(mask.cols / 4, mask.rows / 4));
-			//imshow("mask_show", mask_show);
-			//waitKey(0);
-
-			Histograma_type HSV;
-			//Hsv_Dist HSV(arg_K);
+			feature_type FEATURE;
 			if ((mask.cols != 0 && mask.rows != 0) && (image.rows != 0 && image.cols != 0)){
-				HSV = Histograma_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
-				//HSV = Histograma_type(nomearquivo_temp, image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
-				Grafo.ConstructEdges(LABEL, HSV);
+				if (type == 1) //histograma
+					FEATURE = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+				else if (type == 2) //area
+					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
+
+				Grafo.ConstructEdges(LABEL, FEATURE);
 			}
+		
 		}
 
 		if (this->quantidade % 100 == 0){

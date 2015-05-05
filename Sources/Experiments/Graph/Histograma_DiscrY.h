@@ -6,6 +6,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <Utilities/SupervisedImage.hpp>
+#include <FeatureExtractors/Region.hpp>
 #include "Vertice.h"
 #include "Funcoes_Vector_hist.h"
 
@@ -20,6 +22,7 @@ public:
 	Hsv_DiscrY(const vector<int>&, int);
 	Hsv_DiscrY(const vector<int>&);
 	Hsv_DiscrY(vector<float>&, int);
+	Hsv_DiscrY(const Region&, int, int, int);
 	Hsv_DiscrY(cv::Mat, cv::Mat, int, int, int, int, string, float);
 	
 	int getType() const;

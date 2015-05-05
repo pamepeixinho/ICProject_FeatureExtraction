@@ -4,6 +4,7 @@
 //#include <Experiments/Graph/Vertice.h>
 #include <Experiments/Graph/Label.h>
 #include <Experiments/Graph/Histograma.h>
+#include <Experiments/Graph/Area.h>
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -11,8 +12,12 @@
 #include <string.h>
 #include <set>
 #include <assert.h>
-
 using namespace std;
+
+// LABEL 0
+// HIST DISCRY 1
+// HIST DIST 2
+// AREA 3
 
 template<typename type1, typename type2>
 class Graph{
@@ -80,6 +85,10 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 			for (int j = 0; j < HistogramaF.size(); j++)
 				fprintf(arq_g, "%.2f ", HistogramaF[j]);
 		}
+		else if (indice[i]->getType() == 3){
+			fprintf(arq_gb, "1 ");
+			fprintf(arq_g, "%.2f", ((Area*)indice[i])->getArea());
+		}
 		else {
 			fprintf(arq_gb, "0 ");
 			fprintf(arq_g, "%s", ((Label*)indice[i])->getLabel().c_str());
@@ -93,7 +102,7 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 }
 
 template<typename type1, typename type2>
-void Graph<type1, type2>::printGraph( char *arquivo_grafo){
+void Graph<type1, type2>::printGraph(char *arquivo_grafo){
 	char v[260];
 	char aux[260];
 	char L = 'L';
@@ -134,8 +143,8 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 
 	//set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new Hsv_DiscrY(h)));
 	set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new type2(hist)));
-	printf("passou find Hist\n");
-	printf(it_h != Vertices.end() ? "achou H\n" : "nao achou H\n");
+	printf("passou find caracteristica\n");
+	printf(it_h != Vertices.end() ? "achou C\n" : "nao achou C\n");
 
 	std::pair<std::set<unique_ptr<Vertice>>::iterator, bool> insert_result;
 
@@ -156,7 +165,7 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 
 
 	if (it_h == Vertices.end()){
-		printf("Entrei para criar Hist**************\n");
+		printf("Entrei para criar Caracteristica**************\n");
 		unique_ptr<Vertice> new_h(new type2(hist));
 		//unique_ptr<Vertice> new_h(new Hsv_DiscrY(h));
 		new_h->idx = indice.size();
