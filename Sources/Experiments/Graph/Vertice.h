@@ -7,7 +7,7 @@ public:
 	virtual int getType() const = 0;
 	virtual ~Vertice(){}
 	//virtual Vertice * criaVertice(const Vertice &outro) = 0;
-
+	//virtual void imprime()const =0;
 	virtual bool operator<(const Vertice& other) const = 0;
 
 };

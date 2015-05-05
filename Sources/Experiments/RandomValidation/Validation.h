@@ -132,6 +132,7 @@ void Validation<type1>::build(){
 		else
 			notas.push_back(-1);
 	}
+	print();
 }
 
 template<typename type1>

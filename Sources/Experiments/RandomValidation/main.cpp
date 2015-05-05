@@ -33,26 +33,6 @@
 using namespace std;
 using namespace cv;
 
-//class Vert{
-//public:
-//	int ocorre;
-//	string label;
-//	bool operator < (const Vert &other){
-//		return (this->ocorre > other.ocorre);
-//	}
-//	Vert(string label, int o):label(label), ocorre(o){
-//	}
-//};
-//
-//int daNota(vector<Vert>adj,string rLabel){
-//	for (int i = 0; i < adj.size(); i++){
-//		//printf("%s == %s\n", adj[i].label.c_str(), rLabel.c_str());
-//		if (adj[i].label == rLabel)
-//			return i+1;
-//	}
-//	return -1;
-//}
-
 int main(int argc, char *argv[])
 {
 	
@@ -128,56 +108,11 @@ int main(int argc, char *argv[])
 
 	Validation<Hsv_DiscrY> validation(Grafo, regions, tipo, H, S, V, Y);
 	validation.build();
+	printf("BUILD\n");
 	validation.print(strcat(pathc,argv[6]));
+	printf("FPRINTF\n");
 	validation.print();
-
-////make class (grafo, regions)-----------------------------------------------	
-//	vector<Vertice*> indice = Grafo.getIndice();
-//	vector <vector<int> > matriz = Grafo.getMatriz();
-//	printf("matriz.size() = %d\n", matriz.size());
-//	
-//	vector<Vert> adj;
-//	vector<int>notas;
-//
-//	printf(regions.hasNextRegion() ? "has next\n" : "Doesnt have next\n");
-//
-//	while (regions.hasNextRegion()){
-//		ChoosedRegion r = regions.readNextRegion();
-//		SupervisedImage img = r.readNextSupervisedImage();
-//		int rc = r.regionChoosed;
-//		printf("rc = %d\n", rc);
-//		Mat image = imread(img.getImagePath().toStdString());
-//		cvtColor(image, image, CV_BGR2HSV_FULL);
-//		Mat mask = img.getRegions()[rc].getMask();
-//
-//		string label = img.getRegions()[rc].getLabel().toStdString();
-//
-//		Hsv_DiscrY hsv = Hsv_DiscrY(image, mask, H, S, V, rc, label, Y);
-//		printf("Procura\n");
-//		int in = Grafo.finding(hsv);
-//		printf("in = %d\n", in);
-//		if (in > 0){
-//			for (int i = 0; i < matriz[in].size(); i++){
-//				if (matriz[in][i] != 0){
-//					int oco = matriz[in][i];
-//					string l = ((Label*)indice[i])->getLabel();
-//					adj.push_back(Vert(l, oco));
-//				}
-//			}
-//			sort(adj.begin(), adj.end());
-//			printf("adj = \n");
-//			for (int i = 0; i < adj.size(); i++)
-//				printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());
-//			notas.push_back(daNota(adj, label));
-//			printf("Nota = %d\n", daNota(adj, label));
-//		}
-//		else
-//			notas.push_back(-1);
-//	}
-//
-//	printf("notas: \n");
-//	for (int i = 0; i < notas.size(); i++)
-//		printf("%d\n", notas[i]);
+	printf("PRINTF\n");
 
 	return 0;
 }
