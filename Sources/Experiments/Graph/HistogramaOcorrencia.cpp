@@ -14,6 +14,10 @@ int HistogramaOcorrencia::grau(int v){
 	return ocorre[v];
 }
 
+bool ordenaGrau(const Ocorrencia_Label &a, const Ocorrencia_Label &b){
+	return (a.c.size() < b.c.size());
+}
+
 vector<int> HistogramaOcorrencia::grau_v(int v){
 	int grau = 0;
 	vector<int>ind_grau;
@@ -118,20 +122,20 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 	}
 	
 	printf("alimentou o ocorrencias\n");
-	//printf("oco size  = %d\n", Oco.size());
-
-	/*for (int i = 0; i < Oco.size(); i++)
-		printf("%d - %f\n", Oco[i].indice, Oco[i].media);*/
 
 	for (int i = 0; i < Oco.size(); i++)
 		fprintf(arq_print_b, "%.2f ", Oco[i].media);
 
+	//ordena pelo grau do label
+	sort(Oco.begin(), Oco.end(), ordenaGrau);
+
+	//ordena pela sobrecarga < (media)
 	sort(Oco.begin(), Oco.end());
 
-	//printf("-----------------sort----------------\n");
+	printf("-----------------sort----------------\n");
 
-	//for (int i = 0; i < Oco.size(); i++)
-	//	printf("%.2f\n", Oco[i].media);
+	for (int i = 0; i < Oco.size(); i++)
+		printf("%d - %.2f\n", Oco[i].c.size(), Oco[i].media);
 	
 
 	fprintf(arq_print_t, "--Top 10--\n\nTop Menor Media:\n");
@@ -147,7 +151,6 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 		fprintf(arq_print_t, "%d) %s\n", j+1, label);
 		down.push_back(label);
 	}
-
 
 	fclose(arq_grafo);
 	fclose(arq_vertices);

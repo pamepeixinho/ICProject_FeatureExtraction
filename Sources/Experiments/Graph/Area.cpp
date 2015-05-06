@@ -22,6 +22,7 @@ Area::Area(const Region &r, int discr, int width, int height) : discr(discr)
 	//printf("width*height = %d %d\n", width, height);
 	int areaImg = width*height;
 	//printf("width*height = %d\n", areaImg);
+
 	QPolygon boundary = r.getBoundary();
 	for (int i = 0; i < boundary.size() - 1; i++)
 		area += ((1.0*boundary[i].x()*boundary[i + 1].y()) - (1.0*boundary[i].y()*boundary[i + 1].x()));
@@ -31,9 +32,10 @@ Area::Area(const Region &r, int discr, int width, int height) : discr(discr)
 	//printf("1 ------- Area = %.2f\n", area);
 	float areav = area / (1.0*areaImg);
 	//printf("2 ------- %.2f = %.2f / %d\n",areav, area,areaImg);
+
 	//discretizacao(area*discr) normalizado /discr
 	this->area = ((int)(areav*discr)) / (float)discr;
-	printf("3 ------- Area = %f\n", area);
+	printf(" ------- Area = %f\n", area);
 }
 
 int Area::getType() const{

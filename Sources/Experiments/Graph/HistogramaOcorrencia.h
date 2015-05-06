@@ -21,6 +21,8 @@ public:
 	bool operator < (const Ocorrencia_Label &other)const;
 };
 
+bool ordenaGrau(const Ocorrencia_Label &, const Ocorrencia_Label &);
+
 class HistogramaOcorrencia{
 	vector<Ocorrencia_Label>Oco;
 	vector<vector<int> > Matriz;
