@@ -5,6 +5,7 @@
 #include <Experiments/Graph/Label.h>
 #include <Experiments/Graph/Histograma.h>
 #include <Experiments/Graph/Area.h>
+#include <Experiments/Graph/Orientacao.h>
 #include <vector>
 #include <iostream>
 #include <memory>
@@ -18,6 +19,7 @@ using namespace std;
 // HIST DISCRY 1
 // HIST DIST 2
 // AREA 3
+// Ocorrencia 4
 
 template<typename type1, typename type2>
 class Graph{
@@ -88,6 +90,10 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 		else if (indice[i]->getType() == 3){
 			fprintf(arq_gb, "1 ");
 			fprintf(arq_g, "%.2f", ((Area*)indice[i])->getArea());
+		}
+		else if (indice[i]->getType() == 4){
+			fprintf(arq_gb, "1 ");
+			fprintf(arq_g, "%.d", ((Orientacao*) indice[i])->getOrientacao());
 		}
 		else {
 			fprintf(arq_gb, "0 ");

@@ -29,6 +29,7 @@
 #include <Experiments/Graph/Label.h>
 #include <Experiments/Graph/Histograma.h>
 #include <Experiments/Graph/Area.h>
+#include <Experiments/Graph/Orientacao.h>
 #include <memory>
 #include <Experiments/Graph/Graph.h>
 
@@ -53,7 +54,7 @@ class GraphConstructor{
 
 public:
 	GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int,int quantidade=0);
-	GraphConstructor(DatabaseReader &, char*, char *, int, int quantidade = 0);
+	GraphConstructor(DatabaseReader &, char*, char *, int, int, int quantidade = 0);
 	void build();
 	//Graph<Label_type, feature_type> build_g();
 	void build_g(Graph<Label_type, feature_type>&);
@@ -70,10 +71,10 @@ arq_grafo(arq_grafo), arg_h(h), arg_s(s), arg_v(v), arg_K(k), quantidade(q)
 }
 
 template <typename Label_type, typename feature_type>
-GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int Discr, int q) :reader(Reader), arq_vertice(arq_vertice),
+GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int Discr, int t, int q) :reader(Reader), arq_vertice(arq_vertice),
 arq_grafo(arq_grafo), Discr(Discr), quantidade(q)
 {
-	this->type = 2;
+	this->type = t;
 	this->arg_h = -1;
 	this->arg_s = -1;
 	this->arg_v = -1;
@@ -101,7 +102,7 @@ void GraphConstructor<Label_type, feature_type>::build(){
 		String path_image = i.getImagePath().toStdString();
 		Mat image = imread(path_image), image_show;
 
-		if(image.rows!=0 && image.cols !=0)
+		if((image.rows!=0 && image.cols !=0) && type==1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
 		
 		printf("\n\n %d -", quantidade);
@@ -125,8 +126,10 @@ void GraphConstructor<Label_type, feature_type>::build(){
 				if (type == 1) //histograma
 					FEATURE = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				else if (type == 2) //area
-					/*printf("width*height = %d %d\n", image.cols, image.rows);*/
 					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
+				//else if (type == 3) //Orientacao
+				//	FEATURE = feature_type(i.getRegions()[n], Discr);
+
 				Grafo.ConstructEdges(LABEL,FEATURE);
 			}	
 		}
@@ -228,7 +231,7 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 		String path_image = i.getImagePath().toStdString();
 		Mat image = imread(path_image), image_show;
 
-		if (image.rows != 0 && image.cols != 0)
+		if ((image.rows != 0 && image.cols != 0) && type == 1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
 
 		printf("\n\n %d -", quantidade);
@@ -248,7 +251,8 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 					FEATURE = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				else if (type == 2) //area
 					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
-
+				else if (type == 3) //Orientacao
+					FEATURE = feature_type(i.getRegions()[n], Discr);
 				Grafo.ConstructEdges(LABEL, FEATURE);
 			}
 		

@@ -15,6 +15,9 @@ Hsv_DiscrY::Hsv_DiscrY(const vector<int>&h) : histograma_y(h){}
 Hsv_DiscrY::Hsv_DiscrY(const Region& r, int v, int s, int  t){
 }
 
+Hsv_DiscrY::Hsv_DiscrY(const Region &r, int t){
+}
+
 Hsv_DiscrY::Hsv_DiscrY(vector<float>&h, int K){
 	this->K = K;
 	histograma_y.resize(h.size());

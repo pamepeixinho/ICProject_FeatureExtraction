@@ -28,6 +28,7 @@
 #include <Experiments/Graph/OcorrenciaGrafo.h>
 #include <Experiments/Graph/GraphConstructor.h>
 #include <Experiments/Graph/HistogramaOcorrencia.h>
+#include <Experiments/Graph/Orientacao.h>
 
 
 //#define VALOR_COMP 0.25
@@ -87,6 +88,14 @@ int main(int argc, char* argv[]){
 		type = 2;
 		printf("ARGUMENTOS: D%d %s %s %s\n\n", arg_d, arq_vertice, arq_grafo, arq_ocorrencia);
 	}
+	else if (strcmp(argv[1], "Orientacao") == 0){
+		arg_d = atoi(argv[3]);
+		arq_vertice = argv[4];
+		arq_grafo = argv[5];
+		arq_ocorrencia = argv[6];
+		type = 3;
+		printf("ARGUMENTOS: D%d %s %s %s\n\n", arg_d, arq_vertice, arq_grafo, arq_ocorrencia);
+	}
 
 	SunDatabaseReader reader(argv[2]);
 	
@@ -95,9 +104,13 @@ int main(int argc, char* argv[]){
 		constructor.build();
 	}
 	else if (type == 2){
-		GraphConstructor<Label, Area> constructor(reader, arq_vertice, arq_grafo, arg_d);
+		GraphConstructor<Label, Area> constructor(reader, arq_vertice, arq_grafo, arg_d,2);
 		constructor.build();
 	}
+	//else if (type == 3){
+	//	GraphConstructor<Label,Orientacao> constructor(reader, arq_vertice, arq_grafo, arg_d,3);
+	//	constructor.build();
+	//}
 
 	char ocorre[100], grafo[100], vert1[100];
 	strcpy(grafo, arq_grafo);

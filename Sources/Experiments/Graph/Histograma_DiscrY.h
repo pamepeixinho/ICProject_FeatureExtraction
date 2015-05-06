@@ -24,6 +24,7 @@ public:
 	Hsv_DiscrY(vector<float>&, int);
 	Hsv_DiscrY(const Region&, int, int, int);
 	Hsv_DiscrY(cv::Mat, cv::Mat, int, int, int, int, string, float);
+	Hsv_DiscrY(const Region &, int);
 	
 	int getType() const;
 

@@ -11,7 +11,9 @@ RandomRegionReader::RandomRegionReader(vector<string> im, vector<string>sup){
 	for (int i = 0; i < im.size(); i++){
 		SupervisedImage img = SupervisedImage(QString(im[i].c_str()), QString(sup[i].c_str()));
 		int n = rand() % img.getRegions().size();
-		Regions.push_back(ChoosedRegion(im[i], sup[i], n));
+		cv::Mat mask = img.getRegions()[n].getMask();
+		if (mask.cols!=0 && mask.rows!=0)
+			Regions.push_back(ChoosedRegion(im[i], sup[i], n));
 	}
 }
 
@@ -28,7 +30,9 @@ RandomRegionReader::RandomRegionReader(string file){
 		if(!feof(arq)){
                 SupervisedImage img = SupervisedImage(QString(linha),QString(linha2));
                  int n = rand() % img.getRegions().size();
-		 		Regions.push_back(ChoosedRegion(string(linha),string(linha2),n));
+				 cv::Mat mask = img.getRegions()[n].getMask();
+				 if (mask.cols != 0 && mask.rows != 0)
+		 				Regions.push_back(ChoosedRegion(string(linha),string(linha2),n));
 		}
 	}
 }

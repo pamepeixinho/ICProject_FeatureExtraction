@@ -28,6 +28,8 @@
 #include <Experiments/Graph/Graph.h>
 #include <Experiments/Graph/OcorrenciaGrafo.h>
 #include <Experiments/Graph/GraphConstructor.h>
+#include <Experiments/Graph/Orientacao.h>
+#include <Experiments/Graph/Area.h>
 #include "Validation.h"
 
 using namespace std;
@@ -47,7 +49,7 @@ int main(int argc, char *argv[])
 		printf("path_SUN path nomeVertice nomeGrafo nomeSaida.txt (H)0 (S)0 (V)0 (Y)0\n");
 		return 0;
 	}
-	else if (strcmp(type, "Area") == 0 && argc != 8){
+	else if ((strcmp(type, "Area") == 0 && argc != 8) || (strcmp(type, "Orientacao") == 0 && argc != 8)){
 		printf("path_SUN path nomeVertice nomeGrafo nomeSaida.txt (D)0\n");
 		return 0;
 	}
@@ -74,6 +76,11 @@ int main(int argc, char *argv[])
 	else if (strcmp(type, "Area") == 0){
 		D = atoi(argv[7]);
 		tipo = 2;
+		printf("%d\n", D);
+	}
+	else if (strcmp(type, "Orientacao") == 0){
+		D = atoi(argv[7]);
+		tipo = 3;
 		printf("%d\n", D);
 	}
 
@@ -126,7 +133,7 @@ int main(int argc, char *argv[])
 	}
 	else if (tipo == 2){
 		Graph<Label, Area> Grafo;
-		GraphConstructor<Label, Area> constructor(reader, v, g, D);
+		GraphConstructor<Label, Area> constructor(reader, v, g, D, 2);
 		constructor.build_g(Grafo);
 		printf("graph constructor\n");
 
@@ -141,6 +148,24 @@ int main(int argc, char *argv[])
 		validation.print();
 		printf("PRINTF\n");
 	}
+	/*else if (tipo == 3){
+
+		Graph<Label,Orientacao> Grafo;
+		GraphConstructor<Label, Orientacao> constructor(reader, v, g, D, 3);
+		constructor.build_g(Grafo);
+		printf("graph constructor\n");
+
+		RandomRegionReader regions(imageC, supC);
+		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
+
+		Validation<Orientacao> validation(Grafo, regions, tipo, D);
+		validation.build();
+		printf("VALIDATION - BUILD\n");
+		validation.print(strcat(pathc, argv[6]));
+		printf("FPRINTF\n");
+		validation.print();
+		printf("PRINTF\n");
+	}*/
 
 	return 0;
 }

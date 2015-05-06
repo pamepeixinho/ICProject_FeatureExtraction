@@ -11,6 +11,7 @@ Area::Area(int discr) :discr(discr)
 Area::Area(float area, int discr) :area(area), discr(discr)
 {
 }
+Area::Area(const Region &r, int t){}
 
 Area::Area(cv::Mat a, cv::Mat b, int c, int d, int e, int f, std::string g, float h){
 }

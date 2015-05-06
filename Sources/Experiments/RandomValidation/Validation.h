@@ -29,6 +29,8 @@
 #include <Experiments/Graph/Label.h>
 #include <Experiments/Graph/Histograma.h>
 #include <Experiments/Graph/Graph.h>
+#include <Experiments/Graph/Orientacao.h>
+#include <Experiments/Graph/Area.h>
 #include <Experiments/Graph/OcorrenciaGrafo.h>
 #include <Experiments/Graph/GraphConstructor.h>
 
@@ -99,6 +101,7 @@ Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &re
 
 template<typename type1>
 void Validation<type1>::build(){
+
 	vector<Vertice*> indice = Grafo.getIndice();
 	vector <vector<int> > matriz = Grafo.getMatriz();
 	printf("matriz.size() = %d\n", matriz.size());
@@ -115,36 +118,44 @@ void Validation<type1>::build(){
 		if (type==1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
 		Mat mask = img.getRegions()[rc].getMask();
-		string label = img.getRegions()[rc].getLabel().toStdString();
-		
-		type1 crt;
-		if (this->type == 1)
-			crt = type1(image, mask, H, S, V, rc, label, Y);
-		else if (type==2)
-			crt = type1(img.getRegions()[rc], D, image.cols, image.rows);
 
-		printf("Procura\n");
-		int in = Grafo.finding(crt);
-		printf("in = %d\n", in);
+		if ((image.cols!=0 && image.rows!=0) && (mask.rows != 0 && mask.cols != 0)){
+			string label = img.getRegions()[rc].getLabel().toStdString();
+			type1 crt;
+			if (this->type == 1)
+				crt = type1(image, mask, H, S, V, rc, label, Y);
+			else if (type==2)
+				crt = type1(img.getRegions()[rc], D, image.cols, image.rows);
+			else if (type==3)
+				crt = type1(img.getRegions()[rc], D);
+
+			printf("Procura\n");
+			int in = Grafo.finding(crt);
+			printf("in = %d\n", in);
 		
-		if (in > 0){
-			for (int i = 0; i < matriz[in].size(); i++){
-				if (matriz[in][i] != 0){
-					int oco = matriz[in][i];
-					string l = ((Label*)indice[i])->getLabel();
-					adj.push_back(Vert(l, oco));
+			if (in > 0){
+				for (int i = 0; i < matriz[in].size(); i++){
+					if (matriz[in][i] != 0){
+						int oco = matriz[in][i];
+						string l = ((Label*)indice[i])->getLabel();
+						adj.push_back(Vert(l, oco));
+					}
 				}
+				sort(adj.begin(), adj.end());
+				/*printf("adj = \n");
+				for (int i = 0; i < adj.size(); i++)
+					printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());*/
+				int dn = daNota(adj, label);
+				if (adj[dn].ocorre - adj[0].ocorre == 0)
+						dn = 1;
+				notas.push_back(dn);
+				printf("Nota = %d\n", dn);
 			}
-			sort(adj.begin(), adj.end());
-			/*printf("adj = \n");
-			for (int i = 0; i < adj.size(); i++)
-				printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());*/
-			notas.push_back(daNota(adj, label));
-			printf("Nota = %d\n", daNota(adj, label));
+			else
+				notas.push_back(-1);
+			i++;
+			printf("\n\n");
 		}
-		else
-			notas.push_back(-1);
-		i++;
 	}
 	print();
 }
