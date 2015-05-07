@@ -1,7 +1,7 @@
 #include "HistogramaOcorrencia.h"
 //#include <HistogramaOcorrencia.h>
 
-Ocorrencia_Label::Ocorrencia_Label(int indice, vector<int> c,float media):indice(indice), c(c){
+Ocorrencia_Label::Ocorrencia_Label(int indice, vector<int> c,float media, int grau):indice(indice), c(c), grau(grau){
 	this->media = media;
 	//cout << "media construtor = " << this->media << endl;
 }
@@ -15,7 +15,7 @@ int HistogramaOcorrencia::grau(int v){
 }
 
 bool ordenaGrau(const Ocorrencia_Label &a, const Ocorrencia_Label &b){
-	return (a.c.size() < b.c.size());
+	return (a.grau > b.grau);
 }
 
 vector<int> HistogramaOcorrencia::grau_v(int v){
@@ -87,8 +87,7 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 		for (int j = 0; j < n; j++){
 			fscanf(arq_grafo, "%d", &aux);
 			this->Matriz[i].push_back(aux);
-			if (aux != 0)
-				o++;
+			o += aux;
 		}
 		ocorre[i] = o;
 		o = 0;
@@ -103,18 +102,16 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 			fscanf(arq_vertices, "%d", &type);
 		if (type == 0){
 			vi = grau_v(i);
-			gl = vi.size();
+			gl = ocorre[i];
 	
-			for (int j = 0; j < vi.size(); j++){
-				//printf("ocorre = %d\n", ocorre[vi[j]]);
+			for (int j = 0; j < vi.size(); j++)
 				soma += ocorre[vi[j]];
-			}
-
+			
 			media = soma /gl;
 			//Ocorrencia_Label a = Ocorrencia_Label(i, vi, media);
 			//Ocorrencia_Label *a = new Ocorrencia_Label(i, vi, media);
 			float valor1 = media;
-			Oco.push_back(Ocorrencia_Label(i, vi, valor1));
+			Oco.push_back(Ocorrencia_Label(i, vi, valor1, ocorre[i]));
 		}
 		vi.clear();
 		soma = 0;
@@ -127,15 +124,20 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 		fprintf(arq_print_b, "%.2f ", Oco[i].media);
 
 	//ordena pelo grau do label
-	sort(Oco.begin(), Oco.end(), ordenaGrau);
+	stable_sort(Oco.begin(), Oco.end(), ordenaGrau);
+
+	//printf("-----------------sort1----------------\n");
+	//for (int i = 0; i < Oco.size(); i++)
+	//	printf("%d - %.2f\n", Oco[i].grau, Oco[i].media);
 
 	//ordena pela sobrecarga < (media)
-	sort(Oco.begin(), Oco.end());
+	stable_sort(Oco.begin(), Oco.end());
 
-	printf("-----------------sort----------------\n");
 
-	for (int i = 0; i < Oco.size(); i++)
-		printf("%d - %.2f\n", Oco[i].c.size(), Oco[i].media);
+	//printf("-----------------sort2----------------\n");
+
+	//for (int i = 0; i < Oco.size(); i++)
+	//	printf("%d - %.2f\n", Oco[i].grau, Oco[i].media);
 	
 
 	fprintf(arq_print_t, "--Top 10--\n\nTop Menor Media:\n");

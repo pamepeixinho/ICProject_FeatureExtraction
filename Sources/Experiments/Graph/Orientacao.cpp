@@ -3,6 +3,8 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+Orientacao::Orientacao(){}
+
 Orientacao::Orientacao(const Region &r, int discr):discr(discr){
 	factory(r);
 }

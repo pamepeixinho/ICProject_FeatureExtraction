@@ -127,8 +127,8 @@ void GraphConstructor<Label_type, feature_type>::build(){
 					FEATURE = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				else if (type == 2) //area
 					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
-				//else if (type == 3) //Orientacao
-				//	FEATURE = feature_type(i.getRegions()[n], Discr);
+				else if (type == 3) //Orientacao
+					FEATURE = feature_type(i.getRegions()[n], Discr);
 
 				Grafo.ConstructEdges(LABEL,FEATURE);
 			}	

@@ -17,7 +17,8 @@ public:
 	int indice;
 	vector<int>c;
 	float media;
-	Ocorrencia_Label(int, vector<int>, float);
+	int grau;
+	Ocorrencia_Label(int, vector<int>, float,int);
 	bool operator < (const Ocorrencia_Label &other)const;
 };
 

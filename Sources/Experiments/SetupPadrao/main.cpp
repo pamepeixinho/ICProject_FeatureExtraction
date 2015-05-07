@@ -107,10 +107,10 @@ int main(int argc, char* argv[]){
 		GraphConstructor<Label, Area> constructor(reader, arq_vertice, arq_grafo, arg_d,2);
 		constructor.build();
 	}
-	//else if (type == 3){
-	//	GraphConstructor<Label,Orientacao> constructor(reader, arq_vertice, arq_grafo, arg_d,3);
-	//	constructor.build();
-	//}
+	else if (type == 3){
+		GraphConstructor<Label,Orientacao> constructor(reader, arq_vertice, arq_grafo, arg_d,3);
+		constructor.build();
+	}
 
 	char ocorre[100], grafo[100], vert1[100];
 	strcpy(grafo, arq_grafo);
