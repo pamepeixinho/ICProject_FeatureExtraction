@@ -126,19 +126,8 @@ HistogramaOcorrencia::HistogramaOcorrencia(char *vertice, char *vertice_b, char 
 	//ordena pelo grau do label
 	stable_sort(Oco.begin(), Oco.end(), ordenaGrau);
 
-	//printf("-----------------sort1----------------\n");
-	//for (int i = 0; i < Oco.size(); i++)
-	//	printf("%d - %.2f\n", Oco[i].grau, Oco[i].media);
-
 	//ordena pela sobrecarga < (media)
 	stable_sort(Oco.begin(), Oco.end());
-
-
-	//printf("-----------------sort2----------------\n");
-
-	//for (int i = 0; i < Oco.size(); i++)
-	//	printf("%d - %.2f\n", Oco[i].grau, Oco[i].media);
-	
 
 	fprintf(arq_print_t, "--Top 10--\n\nTop Menor Media:\n");
 	for (int i = 0; i < 10; i++){

@@ -4,6 +4,7 @@
 #include <math.h>
 
 Orientacao::Orientacao(){}
+Orientacao::~Orientacao(){}
 
 Orientacao::Orientacao(const Region &r, int discr):discr(discr){
 	factory(r);
@@ -26,6 +27,7 @@ void Orientacao::factory(const Region &r){
 	QPoint rp = (p2 - p1);
 	float angle = atan2(rp.y(), rp.x()) *180. / M_PI + 180;
 	int v = discretiza(0, 360, this->discr, angle);
+	printf("Orientacao = %d\n", v);
 	this->orientacao = v;
 }
 
@@ -37,30 +39,11 @@ Orientacao::Orientacao(cv::Mat, cv::Mat, int, int, int, int, string, float){
 
 QList<QPoint> Orientacao::makeQList(const Region &r){
 	QPolygon boundary = r.getBoundary();
-	QPoint leftMost = boundary.first();
-	QPoint rightMost = boundary.first();
-	QPoint topMost = boundary.first();
-	QPoint downMost = boundary.first();
-
-	for (QPolygon::Iterator p = boundary.begin(); p != boundary.end(); p++){
-		if (p->x() < leftMost.x())
-			leftMost = *p;
-
-		if (p->x() > rightMost.x())
-			rightMost = *p;
-
-		if (p->y() > topMost.y())
-			topMost = *p;
-
-		if (p->y() < downMost.y())
-			downMost = *p;
-	}
 	QList<QPoint>points;
-	points.append(leftMost);
-	points.append(rightMost);
-	points.append(topMost);
-	points.append(downMost);
 
+	for (QPolygon::Iterator p = boundary.begin(); p != boundary.end(); p++)
+		points.append(*p);
+		
 	return points;
 }
 

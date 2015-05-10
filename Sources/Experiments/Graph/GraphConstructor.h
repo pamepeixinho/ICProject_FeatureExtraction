@@ -79,7 +79,6 @@ arq_grafo(arq_grafo), Discr(Discr), quantidade(q)
 	this->arg_s = -1;
 	this->arg_v = -1;
 	this->arg_K = -1;
-
 }
 
 template <typename Label_type, typename feature_type>
@@ -263,7 +262,7 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
 		}
 		if (this->quantidade % 500 == 0){
-			printf("printar1 - quantidade = %d -> %f\n",this->quantidade, quantidade%500);
+			//printf("quantidade = %d\n", this->quantidade);
 			Grafo.printVertices(this->arq_vertice);
 			Grafo.printGraph(this->arq_grafo);
 		}

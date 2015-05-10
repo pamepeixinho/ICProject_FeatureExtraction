@@ -61,6 +61,7 @@ private:
 	int D;
 public:
 	int daNota(vector<Vert>, string);
+	int Nota(vector<Vert>, string);
 	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int, int, int, int);
 	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int);
 	void print(char *);
@@ -87,6 +88,48 @@ int Validation<type1>::daNota(vector<Vert>adj, string rLabel){
 	return -1;
 }
 
+
+template<typename type1>
+int Validation<type1>::Nota(vector<Vert>adj, string rLabel){
+	vector<vector<Vert> > Lista;
+	int j = 0;
+	Lista.resize(j + 1);
+	Lista[0].push_back(adj[j]);
+	for (int i = 1; i < adj.size(); i++){
+		if (adj[i].ocorre == Lista[j][0].ocorre)
+			Lista[j].push_back(adj[i]);
+		else{
+			j++;
+			Lista.resize(Lista.size()+1);
+			Lista[j].push_back(adj[i]);
+		}
+		if (adj[i].label == rLabel){
+			printf("LABEL CERTO********** %d\n", j + 1);
+			return j + 1;
+		}
+	}
+
+	//impressao para teste
+	/*printf("Label certo = %s\n", rLabel.c_str()); 
+	printf("Adj.size() = %d\n", adj.size());
+	printf("antes:\n");
+	for (int i = 0; i < adj.size(); i++)
+		printf("%d)%d %s\n", i + 1, adj[i].ocorre, adj[i].label.c_str());
+
+	printf("\n\nLista.size() = %d\n", Lista.size());
+	printf("depois:\n");
+	for (int i = 0; i < Lista.size(); i++){
+		printf("%d) ", i+1);
+		for (int k = 0; k < Lista[i].size(); k++)
+			printf("%d-%s ",Lista[i][k].ocorre, Lista[i][k].label.c_str());
+		printf("\n");
+	}
+	*/
+
+	//se nao achou label certo return
+	return -1;
+}
+
 template<typename type1>
 Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &regions, int type, int H, int S, int V, int Y):Grafo(Grafo),regions(regions), type(type), H(H),S(S),V(V),Y(Y){
 	this->D = -1;
@@ -109,6 +152,7 @@ void Validation<type1>::build(){
 	int i = 0;
 	while (regions.hasNextRegion()){
 		printf("IMG  = %d\n", i);
+		//pega regiao escolhida
 		ChoosedRegion r = regions.readNextRegion();
 		SupervisedImage img = r.readNextSupervisedImage();
 		int rc = r.regionChoosed;
@@ -117,8 +161,8 @@ void Validation<type1>::build(){
 		Mat image = imread(img.getImagePath().toStdString());
 		if (type==1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
-		Mat mask = img.getRegions()[rc].getMask();
 
+		Mat mask = img.getRegions()[rc].getMask();
 		if ((image.cols!=0 && image.rows!=0) && (mask.rows != 0 && mask.cols != 0)){
 			string label = img.getRegions()[rc].getLabel().toStdString();
 			type1 crt;
@@ -141,20 +185,23 @@ void Validation<type1>::build(){
 						adj.push_back(Vert(l, oco));
 					}
 				}
+				//Ordena decrescente por Ocorrencia
+
 				sort(adj.begin(), adj.end());
 				/*printf("adj = \n");
 				for (int i = 0; i < adj.size(); i++)
 					printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());*/
-				int dn = daNota(adj, label);
-				if (adj[dn].ocorre - adj[0].ocorre == 0)
-						dn = 1;
+				//int dn = daNota(adj, label);
+				int dn = Nota(adj, label);
+				/*if (adj[dn].ocorre - adj[0].ocorre == 0)
+						dn = 1;*/
 				notas.push_back(dn);
 				printf("Nota = %d\n", dn);
 			}
 			else
 				notas.push_back(-1);
 			i++;
-			printf("\n\n");
+			printf("-----------------------------------------------\n\n");
 		}
 	}
 	print();

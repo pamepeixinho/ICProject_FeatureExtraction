@@ -62,7 +62,10 @@ int main(int argc, char* argv[]){
 		printf("\nEntrada de Argumentos:\nTYPE pathSUN (Discr Area)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
 		return 0;
 	}
-
+	else if (strcmp(argv[1], "Orientacao") == 0 && argc != 7){
+		printf("\nEntrada de Argumentos:\nTYPE pathSUN (Discr Orientacao)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
+		return 0;
+	}
 	
 	char *arq_vertice ,*arq_grafo ,*arq_ocorrencia;
 	int arg_h,arg_s, arg_v, arg_d;

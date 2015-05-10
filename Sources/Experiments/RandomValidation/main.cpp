@@ -148,7 +148,7 @@ int main(int argc, char *argv[])
 		validation.print();
 		printf("PRINTF\n");
 	}
-	/*else if (tipo == 3){
+	else if (tipo == 3){
 
 		Graph<Label,Orientacao> Grafo;
 		GraphConstructor<Label, Orientacao> constructor(reader, v, g, D, 3);
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 		printf("FPRINTF\n");
 		validation.print();
 		printf("PRINTF\n");
-	}*/
+	}
 
 	return 0;
 }

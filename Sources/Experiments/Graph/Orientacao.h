@@ -34,7 +34,7 @@ public:
 	bool operator<(const Vertice& other) const;
 
 	int getOrientacao()const;
-	//~Orientacao();
+	~Orientacao();
 };
 
 #endif //ORIENTACAO_H
