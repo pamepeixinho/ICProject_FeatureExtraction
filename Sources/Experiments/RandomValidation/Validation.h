@@ -191,8 +191,8 @@ void Validation<type1>::build(){
 				/*printf("adj = \n");
 				for (int i = 0; i < adj.size(); i++)
 					printf("Ocorre: %d - Label:%s\n", adj[i].ocorre, adj[i].label.c_str());*/
-				//int dn = daNota(adj, label);
-				int dn = Nota(adj, label);
+				int dn = daNota(adj, label);
+				//int dn = Nota(adj, label);
 				/*if (adj[dn].ocorre - adj[0].ocorre == 0)
 						dn = 1;*/
 				notas.push_back(dn);
