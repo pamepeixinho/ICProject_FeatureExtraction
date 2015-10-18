@@ -12,6 +12,16 @@ vector<float> normalizavetor(vector<float>hist, int t, int size){
 	return hist;
 }
 
+vector<int> normalizaDiscr(vector<float>hist, int t, int size, int K){
+	vector<int> hist_y(hist.size());
+	t = (float)t;
+	int i = 0;
+	for (i = 0; i < size; i++)
+		hist_y[i] = (int)(((hist[i] / t)* K) + 0.5);
+	
+	return hist_y;
+}
+
 void particiona(int *n_img, float porcao){
 
 	result = 0;

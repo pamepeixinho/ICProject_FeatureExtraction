@@ -117,7 +117,7 @@ void Graph<type1, type2>::printGraph(char *arquivo_grafo){
 	strcpy(v, arquivo_grafo);
 	strcpy(aux, arquivo_grafo);
 
-	printf("grafo = %s\n", v);
+	//printf("grafo = %s\n", v);
 	FILE *arq_g = fopen(strcat(aux, ".txt"), "w");
 	FILE *arq_gb = fopen(strcat(v, ".bin"), "wb");
 
@@ -144,25 +144,25 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 
 	bool it_b;
 	set<unique_ptr<Vertice>>::iterator it_l = Vertices.find(unique_ptr<Vertice>(new type1(label)));
-	printf("passou find label\n");
-	printf(it_l != Vertices.end() ? "achou L\n" : "nao achou L\n");
+	//printf("passou find label\n");
+	//printf(it_l != Vertices.end() ? "achou L\n" : "nao achou L\n");
 
 	//set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new Hsv_DiscrY(h)));
 	set<unique_ptr<Vertice>>::iterator it_h = Vertices.find(unique_ptr<Vertice>(new type2(hist)));
-	printf("passou find caracteristica\n");
-	printf(it_h != Vertices.end() ? "achou C\n" : "nao achou C\n");
+	//printf("passou find caracteristica\n");
+	//printf(it_h != Vertices.end() ? "achou C\n" : "nao achou C\n");
 
 	std::pair<std::set<unique_ptr<Vertice>>::iterator, bool> insert_result;
 
 	if (it_l == Vertices.end()){
-		printf("Entrei para criar Label\n");
+		//printf("Entrei para criar Label\n");
 		unique_ptr<Vertice> new_l(new type1(label));
 		new_l->idx = indice.size();
 		insert_result = Vertices.insert(move(new_l));
 		it_l = insert_result.first;
 		it_b = insert_result.second;
 		indice.push_back(it_l->get());
-		printf(it_b ? "cria vertice L\n" : "Erro ao criar\n");
+		//printf(it_b ? "cria vertice L\n" : "Erro ao criar\n");
 
 		Matriz_Adjacencia.resize(Matriz_Adjacencia.size() + 1);
 		for (int i = 0; i < Matriz_Adjacencia.size(); i++)
@@ -171,7 +171,7 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 
 
 	if (it_h == Vertices.end()){
-		printf("Entrei para criar Caracteristica**************\n");
+		//printf("Entrei para criar Caracteristica**************\n");
 		unique_ptr<Vertice> new_h(new type2(hist));
 		//unique_ptr<Vertice> new_h(new Hsv_DiscrY(h));
 		new_h->idx = indice.size();
@@ -179,7 +179,7 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 		it_h = insert_result.first;
 		it_b = insert_result.second;
 		indice.push_back(it_h->get());
-		printf(it_b ? "cria vertice H\n" : "Erro ao criar\n");
+		//printf(it_b ? "cria vertice H\n" : "Erro ao criar\n");
 
 		Matriz_Adjacencia.resize(Matriz_Adjacencia.size() + 1);
 		for (int i = 0; i < Matriz_Adjacencia.size(); i++)
@@ -187,7 +187,7 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 	}
 
 	//cout << Matriz_Adjacencia.size() << endl;
-	printf("iH =%d   iL = %d\n\n", it_h->get()->idx, it_l->get()->idx);
+	//printf("iH =%d   iL = %d\n\n", it_h->get()->idx, it_l->get()->idx);
 	Matriz_Adjacencia[it_h->get()->idx][it_l->get()->idx] += 1;
 	Matriz_Adjacencia[it_l->get()->idx][it_h->get()->idx] += 1;
 }
@@ -223,7 +223,7 @@ void Graph<type1, type2>::loadGraph(char *vert, char *vertb,char * grafo){
 		if(!feof(arq_vert)){
 				char *ch = strchr(linha, '=');
 				strcpy(aux, ch+2);
-			printf("aux = %s\n", aux);
+			//printf("aux = %s\n", aux);
 			if(type==0){
 				unique_ptr<Vertice> new_l(new type1(aux));
 				new_l->idx = indice.size();
@@ -238,10 +238,10 @@ void Graph<type1, type2>::loadGraph(char *vert, char *vertb,char * grafo){
 					hist.push_back(atoi((char*)aux[i]));
 				}
 
-				printf("Hist = ");
+				/*printf("Hist = ");
 				for(int i=0;i<hist.size();i++)
 					printf("%d ", hist[i]);
-				printf("\n");
+				printf("\n");*/
 
 				unique_ptr<Vertice> new_h(new type2(hist));
 				new_h->idx = indice.size();

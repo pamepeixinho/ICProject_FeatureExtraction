@@ -104,11 +104,12 @@ void GraphConstructor<Label_type, feature_type>::build(){
 		if((image.rows!=0 && image.cols !=0) && type==1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
 		
-		printf("\n\n %d -", quantidade);
-		printf("%s\n", path_image.c_str());
+		if (this->quantidade % 100 == 0)
+			printf("\n\n %d - %s\n", this->quantidade, path_image.c_str());
+		
 
 		for (int n = 0; n < i.getRegions().size(); n++){
-			printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
+			//printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
 
 			string label = i.getRegions()[n].getLabel().toStdString();
 			Label_type LABEL(label);
@@ -143,7 +144,7 @@ void GraphConstructor<Label_type, feature_type>::build(){
 		}
 
 		quantidade++;
-		printf("\n");
+		//printf("\n");
 
 		image.release();
 

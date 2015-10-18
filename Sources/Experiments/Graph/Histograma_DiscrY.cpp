@@ -49,7 +49,7 @@ bool Hsv_DiscrY::operator<(const Vertice& other) const{
 
 Hsv_DiscrY::Hsv_DiscrY( cv::Mat image, cv::Mat mask, int h, int s, int v, int n, std::string regiao, float  K){
 	this->K = (int)K;
-	printf("K = %d\n",this->K);
+	//printf("K = %d\n",this->K);
 	vector<float> hist;
 
 	//FILE* arq = fopen(nomearquivo, "a");
@@ -64,8 +64,8 @@ Hsv_DiscrY::Hsv_DiscrY( cv::Mat image, cv::Mat mask, int h, int s, int v, int n,
 //	ps = 255.0 / (s - 1);
 //	pv = 255.0 / (v - 1);
 
-
-	hist.resize((h*s*v), 0);
+	int sizeH = (h*s*v);
+	hist.resize(sizeH, 0);
 
 //	cvtColor(image, img_hsv, CV_BGR2HSV_FULL);
 	//Convert RGB to HSV (FULL)->(0 - 255, 0-255, 0-255)
@@ -96,19 +96,20 @@ Hsv_DiscrY::Hsv_DiscrY( cv::Mat image, cv::Mat mask, int h, int s, int v, int n,
 				s1 = MIN(image.data[shift + 1] / 255.*(s - 1) + 0.5, (s - 1));
 				v1 = MIN(image.data[shift + 2] / 255.*(v - 1) + 0.5, (v - 1));
 
-				hist[h1*v*s + v*s1 + v1] ++;
+				hist[h1*v*s + v*s1 + v1] +=1;
 				branco++;
 			}
 		
 		}
 	}
 
-	hist = normalizavetor(hist, branco, (h*s*v));
+	this->histograma_y = normalizaDiscr(hist, branco, (sizeH), K);
 
-
+	/*hist = normalizavetor(hist, branco, (h*s*v));
+	
 	histograma_y.resize(hist.size());
 	for (int i = 0; i < hist.size(); i++)
-		this->histograma_y[i] = (int)((hist[i] * K) + 0.5);
+		this->histograma_y[i] = (int)((hist[i] * K) + 0.5);*/
 	
 //	printHistY();
 
