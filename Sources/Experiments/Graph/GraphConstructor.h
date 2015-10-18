@@ -104,7 +104,7 @@ void GraphConstructor<Label_type, feature_type>::build(){
 		if((image.rows!=0 && image.cols !=0) && type==1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
 		
-		if (this->quantidade % 100 == 0)
+		//if (this->quantidade % 100 == 0)
 			printf("\n\n %d - %s\n", this->quantidade, path_image.c_str());
 		
 
