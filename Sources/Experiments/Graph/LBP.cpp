@@ -70,7 +70,8 @@ float _w1[],float _w2[],float _w3[],float _w4[], int soma, int disc){
                     else if(mask.data[p2 * mask.cols + p4] <= 0)
                         t4 = 0;
 
-                    t = t1*_w1[p]*src.at<uchar>(p1,p3) + t2*_w2[p]*src.at<uchar>(p1,p4) + t3*_w3[p]*src.at<uchar>(p2,p3) + t4*_w4[p]*src.at<uchar>(p2,p4);
+//                    t = t1*_w1[p]*src.at<uchar>(p1,p3) + t2*_w2[p]*src.at<uchar>(p1,p4) + t3*_w3[p]*src.at<uchar>(p2,p3) + t4*_w4[p]*src.at<uchar>(p2,p4);
+                    t = t1*_w1[p]*(src.data[p1 * src.cols + p3]) + t2*_w2[p]*(src.data[p1 * src.cols + p4]) + t3*_w3[p]*(src.data[p2 * src.cols + p3])  + t4*_w4[p]*(src.data[p2 * src.cols + p4]);
 
                     if(src.at<uchar>(Xc,Yc) <= t && (t1 + t2 + t3 + t4) != 0)
                         _LBP += pow(2,p);
