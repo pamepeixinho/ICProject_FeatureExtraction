@@ -74,6 +74,7 @@ arq_grafo(arq_grafo), arg_h(h), arg_s(s), arg_v(v), arg_K(k)
 {
 	this->type = 1;
 	this->Discr = -1;
+    this->quantidade = 0;
 }
 
 template <typename Label_type, typename feature_type>
@@ -85,6 +86,7 @@ arq_grafo(arq_grafo), Discr(Discr)
 	this->arg_s = -1;
 	this->arg_v = -1;
 	this->arg_K = -1;
+    this->quantidade = 0;
 }
 
 template <typename Label_type, typename feature_type>
@@ -95,10 +97,12 @@ arq_grafo(arq_grafo), Discr(Discr), radius(radius), neighbors(neighbors){
     this->arg_s = -1;
     this->arg_v = -1;
     this->arg_K = -1;
+    this->quantidade = 0;
 }
 
 template <typename Label_type, typename feature_type>
 void GraphConstructor<Label_type, feature_type>::build(){
+    printf("Building\n");
 
 	time_t timer = time(NULL);
 	
