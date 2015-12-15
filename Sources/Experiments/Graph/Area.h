@@ -25,6 +25,9 @@ public:
 	Area(float, int);
 	Area(cv::Mat, cv::Mat, int, int, int, int, std::string, float);
 	Area(const Region &, int);
+    Area(cv::Mat, cv::Mat, int, int, int _fx[],int _fy[],int _cx[], int _cy[],
+    float _w1[],float _w2[],float _w3[],float _w4[], int soma, int disc);
+
 	int getType() const;
 	bool operator<(const Vertice& other) const;
 	~Area();

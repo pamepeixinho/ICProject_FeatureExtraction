@@ -31,11 +31,14 @@
 #include <Experiments/Graph/Area.h>
 #include <Experiments/Graph/Orientacao.h>
 #include <memory>
+#include <Experiments/Graph/LBP.h>
 #include <Experiments/Graph/Graph.h>
 
 // TYPE
 // HISTOGRAMA 1
 // AREA 2
+//ORIENTACAO 3
+//LBP 4
 
 template <typename Label_type, typename feature_type>
 class GraphConstructor{
@@ -49,13 +52,16 @@ class GraphConstructor{
 	int arg_v;
 	float arg_K;
 	int Discr;
+    int radius, neighbors; //LBP
 	int type;
 	int quantidade;
 
 public:
-	GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int,int quantidade=0);
-	GraphConstructor(DatabaseReader &, char*, char *, int, int, int quantidade = 0);
-	void build();
+    GraphConstructor(DatabaseReader &, char*, char *, int, int, int, int);
+    GraphConstructor(DatabaseReader &, char*, char *, int, int);
+    GraphConstructor(DatabaseReader &, char *, char *, int, int, int);
+
+    void build();
 	//Graph<Label_type, feature_type> build_g();
 	void build_g(Graph<Label_type, feature_type>&);
 	void recover(char*, char*,char *,int);
@@ -63,16 +69,16 @@ public:
 
 
 template <typename Label_type, typename feature_type>
-GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int h, int s, int v, int k, int q) :reader(Reader), arq_vertice(arq_vertice),
-arq_grafo(arq_grafo), arg_h(h), arg_s(s), arg_v(v), arg_K(k), quantidade(q)
+GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int h, int s, int v, int k) :reader(Reader), arq_vertice(arq_vertice),
+arq_grafo(arq_grafo), arg_h(h), arg_s(s), arg_v(v), arg_K(k)
 {
 	this->type = 1;
 	this->Discr = -1;
 }
 
 template <typename Label_type, typename feature_type>
-GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int Discr, int t, int q) :reader(Reader), arq_vertice(arq_vertice),
-arq_grafo(arq_grafo), Discr(Discr), quantidade(q)
+GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int Discr, int t) :reader(Reader), arq_vertice(arq_vertice),
+arq_grafo(arq_grafo), Discr(Discr)
 {
 	this->type = t;
 	this->arg_h = -1;
@@ -82,12 +88,49 @@ arq_grafo(arq_grafo), Discr(Discr), quantidade(q)
 }
 
 template <typename Label_type, typename feature_type>
+GraphConstructor<Label_type, feature_type>::GraphConstructor(DatabaseReader &Reader, char *arq_vertice, char *arq_grafo, int radius, int neighbors, int Discr) :reader(Reader), arq_vertice(arq_vertice),
+arq_grafo(arq_grafo), Discr(Discr), radius(radius), neighbors(neighbors){
+    this->type = 4;
+    this->arg_h = -1;
+    this->arg_s = -1;
+    this->arg_v = -1;
+    this->arg_K = -1;
+}
+
+template <typename Label_type, typename feature_type>
 void GraphConstructor<Label_type, feature_type>::build(){
 
 	time_t timer = time(NULL);
 	
 	Graph<Label_type, feature_type> Grafo;
-//	char nomearquivo_temp[100];
+
+    int _fx[neighbors], _fy[neighbors], _cx[neighbors], _cy[neighbors], soma = 0;
+    float _w1[neighbors], _w2[neighbors], _w3[neighbors], _w4[neighbors];
+    float tx = 0, ty = 0, x=0, y=0;
+
+    if(this->type == 4){
+        for(int i = 0; i < neighbors; i++){
+            soma += pow(2,i);
+            x = static_cast<float>(radius) * cos(2.0 * M_PI * i / neighbors*1.0);
+            y = static_cast<float>(radius) * (-sin(2.0 * M_PI * i / neighbors*1.0));
+
+            _fx[i] = static_cast<int>(floor(x));
+            _fy[i] = static_cast<int>(floor(y));
+            _cx[i] = static_cast<int>(ceil(x));
+            _cy[i] = static_cast<int>(ceil(y));
+
+            tx = x - _fx[i];
+            ty = y - _fy[i];
+
+            _w1[i] = (1 - tx) * (1 - ty);
+            _w2[i] = tx * (1 - ty);
+            _w3[i] = (1 - tx) * ty;
+            _w4[i] = tx * ty;
+
+        }
+    }
+
+
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
@@ -99,22 +142,20 @@ void GraphConstructor<Label_type, feature_type>::build(){
 //		strcat(nomearquivo_temp, ".txt");
 
 		String path_image = i.getImagePath().toStdString();
-		Mat image = imread(path_image), image_show;
+        Mat image = imread(path_image);
 
-		if((image.rows!=0 && image.cols !=0) && type==1)
+        if(type==1 && (image.rows!=0 && image.cols !=0))
 			cvtColor(image, image, CV_BGR2HSV_FULL);
-		
-		//if (this->quantidade % 100 == 0)
-			printf("\n\n %d - %s\n", this->quantidade, path_image.c_str());
-		
+
+        if(type == 4 && (image.rows != 0 && image.cols != 0))
+            cvtColor(image, image, CV_BGR2GRAY);
+
 
 		for (int n = 0; n < i.getRegions().size(); n++){
-			//printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
-
 			string label = i.getRegions()[n].getLabel().toStdString();
 			Label_type LABEL(label);
 
-			Mat mask = i.getRegions()[n].getMask(), mask_show;
+            Mat mask = i.getRegions()[n].getMask();
 
 			//resize(mask, mask_show, Size(mask.cols / 4, mask.rows / 4));
 			//imshow("mask_show", mask_show);
@@ -129,9 +170,12 @@ void GraphConstructor<Label_type, feature_type>::build(){
 					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
 				else if (type == 3) //Orientacao
 					FEATURE = feature_type(i.getRegions()[n], Discr);
+                else if (type == 4) //LBP
+                    FEATURE = feature_type(image, mask, radius, neighbors, _fx, _fy, _cx, _cy,_w1, _w2, _w3, _w4,soma, Discr);
 
 				Grafo.ConstructEdges(LABEL,FEATURE);
 			}	
+
 		}
 
 		if (this->quantidade % 100 == 0){
@@ -224,18 +268,47 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 	this->quantidade = 0;
 	time_t timer = time(NULL);
 
+    int _fx[neighbors], _fy[neighbors], _cx[neighbors], _cy[neighbors], soma = 0;
+    float _w1[neighbors], _w2[neighbors], _w3[neighbors], _w4[neighbors];
+     float tx = 0, ty = 0, x=0, y=0;
+
+    if(this->type == 4){
+        for(int i = 0; i < neighbors; i++){
+            soma += pow(2,i);
+            x = static_cast<float>(radius) * cos(2.0 * M_PI * i / neighbors*1.0);
+            y = static_cast<float>(radius) * (-sin(2.0 * M_PI * i / neighbors*1.0));
+
+            _fx[i] = static_cast<int>(floor(x));
+            _fy[i] = static_cast<int>(floor(y));
+            _cx[i] = static_cast<int>(ceil(x));
+            _cy[i] = static_cast<int>(ceil(y));
+
+            tx = x - _fx[i];
+            ty = y - _fy[i];
+
+            _w1[i] = (1 - tx) * (1 - ty);
+            _w2[i] = tx * (1 - ty);
+            _w3[i] = (1 - tx) * ty;
+            _w4[i] = tx * ty;
+
+        }
+    }
+
 	while (reader.hasNext()){
 
 		SupervisedImage i = reader.readNext();
 
 		String path_image = i.getImagePath().toStdString();
-		Mat image = imread(path_image), image_show;
+        Mat image = imread(path_image);
 
-		if ((image.rows != 0 && image.cols != 0) && type == 1)
-			cvtColor(image, image, CV_BGR2HSV_FULL);
+        if(type==1 && (image.rows!=0 && image.cols !=0))
+            cvtColor(image, image, CV_BGR2HSV_FULL);
 
-		printf("\n\n %d -", quantidade);
-		printf("%s\n", path_image.c_str());
+        if (type == 4 && (image.rows != 0 && image.cols != 0))
+            cvtColor(image, image, CV_BGR2GRAY);
+
+//		printf("\n\n %d -", quantidade);
+//		printf("%s\n", path_image.c_str());
 
 		for (int n = 0; n < i.getRegions().size(); n++){
 			printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
@@ -253,6 +326,9 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
 				else if (type == 3) //Orientacao
 					FEATURE = feature_type(i.getRegions()[n], Discr);
+                else if (type == 4) //LBP
+                    FEATURE = feature_type(image, mask, radius, neighbors, _fx, _fy, _cx, _cy,_w1, _w2, _w3, _w4,soma, Discr);
+
 				Grafo.ConstructEdges(LABEL, FEATURE);
 			}
 		

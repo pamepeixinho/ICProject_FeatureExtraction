@@ -29,6 +29,7 @@
 #include <Experiments/Graph/GraphConstructor.h>
 #include <Experiments/Graph/HistogramaOcorrencia.h>
 #include <Experiments/Graph/Orientacao.h>
+#include <Experiments/Graph/LBP.h>
 
 
 //#define VALOR_COMP 0.25
@@ -50,7 +51,7 @@ int main(int argc, char* argv[]){
 
 
 	if (argc == 1){
-		printf("TYPE (HSV, Area, Orientacao)\n");
+        printf("TYPE (HSV, Area, Orientacao, LBP)\n");
 		return 0;
 	}
 	
@@ -66,9 +67,13 @@ int main(int argc, char* argv[]){
 		printf("\nEntrada de Argumentos:\nTYPE pathSUN (Discr Orientacao)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
 		return 0;
 	}
+    else if (strcmp(argv[1], "LBP")==0 && argc!= 9){
+        printf("\nEntrada de Argumentos:\nTYPE pathSUN (radius)0 (neighbors)0 (k || Discr)0 (pasta/arquivo_Vertice)Vertice (pasta/arquivo_Grafo)Grafo (pasta/arquivo_Ocorrencia)Ocorrencia\n");
+        return 0;
+    }
 	
 	char *arq_vertice ,*arq_grafo ,*arq_ocorrencia;
-	int arg_h,arg_s, arg_v, arg_d;
+    int arg_h,arg_s, arg_v, arg_d, arg_radius, arg_neighbors, arg_discr;
 	float arg_K;
 	int type = 0;
 
@@ -99,6 +104,16 @@ int main(int argc, char* argv[]){
 		type = 3;
 		printf("ARGUMENTOS: D%d %s %s %s\n\n", arg_d, arq_vertice, arq_grafo, arq_ocorrencia);
 	}
+    else if (strcmp(argv[1], "LBP") == 0){
+        arg_radius = atoi(argv[3]);
+        arg_neighbors = atoi(argv[4]);
+        arg_discr = atoi(argv[5]);
+        arq_vertice = argv[6];
+        arq_grafo = argv[7];
+        arq_ocorrencia = argv[8];
+        type = 4;
+        printf("ARGUMENTOS: R%d N%d Y%d %s %s %s\n\n", arg_radius,arg_neighbors, arg_discr, arq_vertice, arq_grafo, arq_ocorrencia);
+    }
 
 	SunDatabaseReader reader(argv[2]);
 	
@@ -114,6 +129,11 @@ int main(int argc, char* argv[]){
 		GraphConstructor<Label,Orientacao> constructor(reader, arq_vertice, arq_grafo, arg_d,3);
 		constructor.build();
 	}
+    else if (type == 4){
+        GraphConstructor<Label,LBP> constructor(reader, arq_vertice, arq_grafo, arg_radius, arg_neighbors, arg_discr);
+        constructor.build();
+    }
+
 
 	char ocorre[100], grafo[100], vert1[100];
 	strcpy(grafo, arq_grafo);

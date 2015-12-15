@@ -38,6 +38,9 @@ Area::Area(const Region &r, int discr, int width, int height) : discr(discr)
 	printf(" ------- Area = %f\n", area);
 }
 
+Area::Area(cv::Mat image, cv::Mat mask, int radius, int neighbors, int _fx[], int _fy[], int _cx[], int _cy[],
+float _w1[], float _w2[], float _w3[], float _w4[], int soma, int disc){}
+
 int Area::getType() const{
 	return 3;
 }

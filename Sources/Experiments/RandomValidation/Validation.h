@@ -59,10 +59,12 @@ private:
 	int type;
 	int H, S, V, Y;
 	int D;
+    int radius, neighbors;
 public:
 	int daNota(vector<Vert>, string);
 	int Nota(vector<Vert>, string);
 	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int, int, int, int);
+    Validation(Graph<Label, type1> &, RandomRegionReader &, int, int, int, int);
 	Validation(Graph<Label, type1> &, RandomRegionReader &, int, int);
 	void print(char *);
 	void print();
@@ -134,6 +136,15 @@ template<typename type1>
 Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &regions, int type, int H, int S, int V, int Y):Grafo(Grafo),regions(regions), type(type), H(H),S(S),V(V),Y(Y){
 	this->D = -1;
 }
+
+template<typename type1>
+Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &regions, int type, int R, int N, int Discr):Grafo(Grafo),regions(regions), type(type), radius(R),neighbors(N),D(Discr){
+    this->H = -1;
+    this->S = -1;
+    this->V = -1;
+    this->Y = -1;
+}
+
 template<typename type1>
 Validation<type1>::Validation(Graph<Label, type1> &Grafo, RandomRegionReader &regions, int type, int D) : Grafo(Grafo), regions(regions), type(type),D(D){
 	this->H = -1;
@@ -150,6 +161,33 @@ void Validation<type1>::build(){
 	printf("matriz.size() = %d\n", matriz.size());
 	printf(this->regions.hasNextRegion() ? "has next\n" : "Doesnt have next\n");
 	int i = 0;
+
+    int _fx[neighbors], _fy[neighbors], _cx[neighbors], _cy[neighbors], soma = 0;
+    float _w1[neighbors], _w2[neighbors], _w3[neighbors], _w4[neighbors];
+     float tx = 0, ty = 0, x=0, y=0;
+
+    if(type == 4){
+        for(int i = 0; i < neighbors; i++){
+            soma += pow(2,i);
+            x = static_cast<float>(radius) * cos(2.0 * M_PI * i / neighbors*1.0);
+            y = static_cast<float>(radius) * (-sin(2.0 * M_PI * i / neighbors*1.0));
+
+            _fx[i] = static_cast<int>(floor(x));
+            _fy[i] = static_cast<int>(floor(y));
+            _cx[i] = static_cast<int>(ceil(x));
+            _cy[i] = static_cast<int>(ceil(y));
+
+            tx = x - _fx[i];
+            ty = y - _fy[i];
+
+            _w1[i] = (1 - tx) * (1 - ty);
+            _w2[i] = tx * (1 - ty);
+            _w3[i] = (1 - tx) * ty;
+            _w4[i] = tx * ty;
+
+        }
+    }
+
 	while (regions.hasNextRegion()){
 		printf("IMG  = %d\n", i);
 		//pega regiao escolhida
@@ -159,8 +197,11 @@ void Validation<type1>::build(){
 		printf("rc = %d\n", rc);
 		
 		Mat image = imread(img.getImagePath().toStdString());
-		if (type==1)
+
+        if (type==1)
 			cvtColor(image, image, CV_BGR2HSV_FULL);
+        if (type == 4)
+            cvtColor(image, image, CV_BGR2GRAY);
 
 		Mat mask = img.getRegions()[rc].getMask();
 		if ((image.cols!=0 && image.rows!=0) && (mask.rows != 0 && mask.cols != 0)){
@@ -172,6 +213,8 @@ void Validation<type1>::build(){
 				crt = type1(img.getRegions()[rc], D, image.cols, image.rows);
 			else if (type==3)
 				crt = type1(img.getRegions()[rc], D);
+            else if (type==4)
+                crt = type1(image, mask, radius, neighbors,_fx, _fy, _cx, _cy,_w1, _w2, _w3, _w4, soma, D);
 
 			printf("Procura\n");
 			int in = Grafo.finding(crt);

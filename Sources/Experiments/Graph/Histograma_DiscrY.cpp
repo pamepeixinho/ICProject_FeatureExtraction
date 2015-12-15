@@ -25,6 +25,9 @@ Hsv_DiscrY::Hsv_DiscrY(vector<float>&h, int K){
 		histograma_y[i] = (int)((h[i] * K) + 0.5);
 }
 
+Hsv_DiscrY::Hsv_DiscrY( cv::Mat src, cv::Mat mask, int radius, int neighbors, int _fx[],int _fy[],int _cx[], int _cy[],
+float _w1[],float _w2[],float _w3[],float _w4[],int soma, int disc){}
+
 int Hsv_DiscrY::getType() const{
 	return 2;
 }

@@ -38,7 +38,7 @@ using namespace cv;
 int main(int argc, char *argv[]){
 	
 	if (argc == 1){
-		printf("TYPE (HSV, Area, Orientacao)\n");
+        printf("TYPE (HSV, Area, Orientacao, LBP)\n");
 		return 0;
 	}
 	char *type  = argv[1];
@@ -51,9 +51,10 @@ int main(int argc, char *argv[]){
 		printf("path_SUN path nomeVertice nomeGrafo nomeSaida.txt (D)0\n");
 		return 0;
 	}
-
-//C:/Users/pamela/Documents/IC/Study/project1/SUN2012_COMPLETA/SUN2012_TESTE/
-//C:/Users/pamela/Dropbox/IC-Pamela1/Projeto/ICProject_FeatureExtraction/experimentos/AvaliacaoRandom/HSV/
+    else if ((strcmp(type, "LBP") == 0 && argc != 10)){
+        printf("path_SUN path nomeVertice nomeGrafo nomeSaida.txt (R)0 (N)0 (D)0\n");
+        return 0;
+    }
 
 	string path(argv[3]);
 	char *pathc = argv[3];
@@ -61,7 +62,7 @@ int main(int argc, char *argv[]){
 	QString path_SUN(argv[2]);
 	int tipo = 0;
 
-	int H, S, V, Y, D;
+    int H, S, V, Y, D, R, N;
 
 	if (strcmp(type, "HSV") == 0){
 		H = atoi(argv[7]);
@@ -81,6 +82,13 @@ int main(int argc, char *argv[]){
 		tipo = 3;
 		printf("%d\n", D);
 	}
+    else if (strcmp(type, "LBP") == 0){
+        R = atoi(argv[7]);
+        N = atoi(argv[8]);
+        D = atoi(argv[9]);
+        tipo = 4;
+        printf("%d\n", D);
+    }
 
 	SunDatabaseReader sunreader(path_SUN);
 
@@ -164,6 +172,23 @@ int main(int argc, char *argv[]){
 		validation.print();
 		printf("PRINTF\n");
 	}
+    else if (tipo == 4){
 
+        Graph<Label,LBP> Grafo;
+        GraphConstructor<Label, LBP> constructor(reader, v, g, R, N, D);
+        constructor.build_g(Grafo);
+        printf("graph constructor\n");
+
+        RandomRegionReader regions(imageC, supC);
+        printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
+
+        Validation<LBP> validation(Grafo, regions, tipo, R, N, D);
+        validation.build();
+        printf("VALIDATION - BUILD\n");
+        validation.print(strcat(pathc, argv[6]));
+        printf("FPRINTF\n");
+        validation.print();
+        printf("PRINTF\n");
+    }
 	return 0;
 }

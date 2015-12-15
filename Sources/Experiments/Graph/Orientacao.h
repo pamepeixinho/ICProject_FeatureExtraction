@@ -25,6 +25,10 @@ public:
 	Orientacao(const Region &r, int discr);
 	Orientacao(const Region&, int, int, int);
 	Orientacao(cv::Mat, cv::Mat, int, int, int, int, string, float);
+    Orientacao( cv::Mat src, cv::Mat mask, int radius, int neighbors, int _fx[],int _fy[],int _cx[], int _cy[],
+    float _w1[],float _w2[],float _w3[],float _w4[],int soma, int disc);
+
+
 	QList<QPoint> makeQList(const Region &r);
 	void factory(const Region &r);
 	float distance(QPoint a, QPoint b)const;

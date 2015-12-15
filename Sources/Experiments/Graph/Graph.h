@@ -12,6 +12,7 @@
 #include <cstdlib>
 #include <string.h>
 #include <set>
+#include "LBP.h"
 #include <assert.h>
 using namespace std;
 
@@ -19,7 +20,8 @@ using namespace std;
 // HIST DISCRY 1
 // HIST DIST 2
 // AREA 3
-// Ocorrencia 4
+// Orientacao 4
+//LBP 5
 
 template<typename type1, typename type2>
 class Graph{
@@ -71,7 +73,7 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 	//printf("v = %s\naux = %s\n", v, aux);
 
 	vector<int>HistogramaI;
-	vector<float>HistogramaF;
+    vector<float>HistogramaF;
 
 	for (int i = 0; i < indice.size(); i++){
 		fprintf(arq_g, "[%d] = ", i);
@@ -95,6 +97,12 @@ void Graph<type1, type2>::printVertices(char *arquivo_vertices){
 			fprintf(arq_gb, "1 ");
 			fprintf(arq_g, "%.d", ((Orientacao*) indice[i])->getOrientacao());
 		}
+        else if (indice[i]->getType() == 5){
+            fprintf(arq_gb, "1 ");
+            HistogramaI = ((LBP*)indice[i])->getLBP_y();
+            for (int j = 0; j < HistogramaI.size(); j++)
+                fprintf(arq_g, "%d ", HistogramaI[j]);
+        }
 		else {
 			fprintf(arq_gb, "0 ");
 			fprintf(arq_g, "%s", ((Label*)indice[i])->getLabel().c_str());
@@ -190,6 +198,7 @@ void Graph<type1, type2>::ConstructEdges(type1 label, type2 hist){
 	//printf("iH =%d   iL = %d\n\n", it_h->get()->idx, it_l->get()->idx);
 	Matriz_Adjacencia[it_h->get()->idx][it_l->get()->idx] += 1;
 	Matriz_Adjacencia[it_l->get()->idx][it_h->get()->idx] += 1;
+//    printf("Vertices e arestas construidas com sucesso!\n");
 }
 
 //label 0
