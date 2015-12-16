@@ -197,6 +197,8 @@ void GraphConstructor<Label_type, feature_type>::build(){
 		image.release();
 
 	}
+    time_t tempo = time(NULL);
+    printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
 	Grafo.printVertices(arq_vertice);
 	Grafo.printGraph(arq_grafo);
 }
@@ -315,7 +317,7 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 //		printf("%s\n", path_image.c_str());
 
 		for (int n = 0; n < i.getRegions().size(); n++){
-			printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
+//			printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
 
 			string label = i.getRegions()[n].getLabel().toStdString();
 			Label_type LABEL(label);
@@ -356,6 +358,8 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 	}
 	
 	printf("printar2\n");
+    time_t tempo = time(NULL);
+    printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
 	Grafo.printVertices(arq_vertice);
 	Grafo.printGraph(arq_grafo);
 

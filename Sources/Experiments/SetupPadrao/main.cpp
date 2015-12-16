@@ -143,7 +143,7 @@ int main(int argc, char* argv[]){
 	strcat(arq_vertice, "_ordem.bin");
 	strcat(grafo, ".bin");
 
-	printf("%s\n %s\n %s\n %s\n", ocorre, vert1, arq_vertice, grafo);
+    printf("%s\n %s\n %s\n %s\n", arq_ocorrencia, vert1, arq_vertice, grafo);
 
 
 	HistogramaOcorrencia Evaluation = HistogramaOcorrencia(vert1, arq_vertice, grafo, arq_ocorrencia);

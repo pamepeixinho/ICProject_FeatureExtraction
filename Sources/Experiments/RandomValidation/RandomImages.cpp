@@ -16,7 +16,7 @@ int n=0;
 		n++;
 	}
 	
-	printf("all = %d - %d\n", all.size(), n);
+//	printf("all = %d - %d\n", all.size(), n);
 
 	n=0;
 	srand(time(0));
@@ -30,7 +30,7 @@ int n=0;
 		qtatual++;
 	}
 
-	printf("quant30 = %d, 70% =  %d,qtatual =  %d\n",all.size(), percent, qtatual);
+//	printf("quant30 = %d, 70% =  %d,qtatual =  %d\n",all.size(), percent, qtatual);
 	n = 0;
 	
 	while(all.size()>0){	
@@ -41,7 +41,7 @@ int n=0;
 		n++;
 	}
 
-	printf("images = %d\nall = %d\n", images.size(), all.size());
+//	printf("images = %d\nall = %d\n", images.size(), all.size());
 }
 
 void RandomImages::getReader(vector<string>&img, vector<string> &sup){
@@ -63,10 +63,10 @@ void RandomImages::getReaderChoosen(vector<string>&img, vector<string> &sup){
 void RandomImages::print(string file_path){
 	
 	string choosen = file_path + "ImagesChoosen.bin";
-	printf("%s\n", choosen.c_str());
+//	printf("%s\n", choosen.c_str());
 	
 	string others = file_path + "Others.bin";
-	printf("%s\n",others.c_str());
+//	printf("%s\n",others.c_str());
 
 	FILE *arq70 = fopen(choosen.c_str(), "wb");
 	assert(arq70 != NULL);

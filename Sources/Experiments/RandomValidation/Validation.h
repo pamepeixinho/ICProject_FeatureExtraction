@@ -106,7 +106,7 @@ int Validation<type1>::Nota(vector<Vert>adj, string rLabel){
 			Lista[j].push_back(adj[i]);
 		}
 		if (adj[i].label == rLabel){
-			printf("LABEL CERTO********** %d\n", j + 1);
+//			printf("LABEL CERTO********** %d\n", j + 1);
 			return j + 1;
 		}
 	}
@@ -189,12 +189,12 @@ void Validation<type1>::build(){
     }
 
 	while (regions.hasNextRegion()){
-		printf("IMG  = %d\n", i);
+//		printf("IMG  = %d\n", i);
 		//pega regiao escolhida
 		ChoosedRegion r = regions.readNextRegion();
 		SupervisedImage img = r.readNextSupervisedImage();
 		int rc = r.regionChoosed;
-		printf("rc = %d\n", rc);
+//		printf("rc = %d\n", rc);
 		
 		Mat image = imread(img.getImagePath().toStdString());
 
@@ -216,9 +216,9 @@ void Validation<type1>::build(){
             else if (type==4)
                 crt = type1(image, mask, radius, neighbors,_fx, _fy, _cx, _cy,_w1, _w2, _w3, _w4, soma, D);
 
-			printf("Procura\n");
+//			printf("Procura\n");
 			int in = Grafo.finding(crt);
-			printf("in = %d\n", in);
+//			printf("in = %d\n", in);
 		
 			if (in > 0){
 				for (int i = 0; i < matriz[in].size(); i++){
@@ -239,12 +239,12 @@ void Validation<type1>::build(){
 				/*if (adj[dn].ocorre - adj[0].ocorre == 0)
 						dn = 1;*/
 				notas.push_back(dn);
-				printf("Nota = %d\n", dn);
+//				printf("Nota = %d\n", dn);
 			}
 			else
 				notas.push_back(-1);
 			i++;
-			printf("-----------------------------------------------\n\n");
+//			printf("-----------------------------------------------\n\n");
 		}
 	}
 	print();
@@ -253,7 +253,7 @@ void Validation<type1>::build(){
 template<typename type1>
 void Validation<type1>::print(char *p_arq){
 	FILE *arquivo = fopen(p_arq, "w");
-	printf("printando arq\n");
+//	printf("printando arq\n");
 	fprintf(arquivo, "Notas = [ ");
 	for (int i = 0; i < this->notas.size(); i++)
 		fprintf(arquivo, "%d ", notas[i]);

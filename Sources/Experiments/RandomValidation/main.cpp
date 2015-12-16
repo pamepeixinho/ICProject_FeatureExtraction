@@ -104,8 +104,8 @@ int main(int argc, char *argv[]){
 	a.getReader(imageC, supC);
 
 
-	printf("Img.size = %d e Sup.size() = %d\n", image_path.size(), sup.size());
-	printf("ImgC.size = %d e SupC.size() = %d\n", imageC.size(), supC.size());
+//    printf("Img.size = %d e Sup.size() = %d\n", image_path.size(), sup.size());
+//	printf("ImgC.size = %d e SupC.size() = %d\n", imageC.size(), supC.size());
 
 	string Sgrafo = path + string(argv[5]);
 	string Svertice = path + string(argv[4]);
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]){
 	printf("Vertice = %s e Grafo = %s\n", v, g);
 
 	RandomReader reader(image_path,sup);
-	printf(reader.hasNext() ? "reader has next\n" : "reader Doesnt have next\n");
+//	printf(reader.hasNext() ? "reader has next\n" : "reader Doesnt have next\n");
 
 	if (tipo == 1){
 		Graph<Label, Hsv_DiscrY> Grafo;
@@ -127,15 +127,15 @@ int main(int argc, char *argv[]){
 		printf("graph constructor\n");
 
 		RandomRegionReader regions(imageC, supC);
-		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
+//		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
 
 		Validation<Hsv_DiscrY> validation(Grafo, regions, tipo, H, S, V, Y);
 		validation.build();
-		printf("VALIDATION - BUILD\n");
+//		printf("VALIDATION - BUILD\n");
 		validation.print(strcat(pathc,argv[6]));
-		printf("FPRINTF\n");
+//		printf("FPRINTF\n");
 		validation.print();
-		printf("PRINTF\n");
+//		printf("PRINTF\n");
 	}
 	else if (tipo == 2){
 		Graph<Label, Area> Grafo;
@@ -144,15 +144,15 @@ int main(int argc, char *argv[]){
 		printf("graph constructor\n");
 
 		RandomRegionReader regions(imageC, supC);
-		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
+//		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
 
 		Validation<Area> validation(Grafo, regions, tipo, D);
 		validation.build();
-		printf("VALIDATION - BUILD\n");
+//		printf("VALIDATION - BUILD\n");
 		validation.print(strcat(pathc, argv[6]));
-		printf("FPRINTF\n");
+//		printf("FPRINTF\n");
 		validation.print();
-		printf("PRINTF\n");
+//		printf("PRINTF\n");
 	}
 	else if (tipo == 3){
 
@@ -162,15 +162,15 @@ int main(int argc, char *argv[]){
 		printf("graph constructor\n");
 
 		RandomRegionReader regions(imageC, supC);
-		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
+//		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
 
 		Validation<Orientacao> validation(Grafo, regions, tipo, D);
 		validation.build();
-		printf("VALIDATION - BUILD\n");
+//		printf("VALIDATION - BUILD\n");
 		validation.print(strcat(pathc, argv[6]));
-		printf("FPRINTF\n");
+//		printf("FPRINTF\n");
 		validation.print();
-		printf("PRINTF\n");
+//		printf("PRINTF\n");
 	}
     else if (tipo == 4){
 
@@ -180,15 +180,15 @@ int main(int argc, char *argv[]){
         printf("graph constructor\n");
 
         RandomRegionReader regions(imageC, supC);
-        printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
+//        printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
 
         Validation<LBP> validation(Grafo, regions, tipo, R, N, D);
         validation.build();
-        printf("VALIDATION - BUILD\n");
+//        printf("VALIDATION - BUILD\n");
         validation.print(strcat(pathc, argv[6]));
-        printf("FPRINTF\n");
+//        printf("FPRINTF\n");
         validation.print();
-        printf("PRINTF\n");
+//        printf("PRINTF\n");
     }
 	return 0;
 }

@@ -10,15 +10,15 @@ RandomReader::RandomReader(string path){
 		if (!feof(arq)){
 			fgets(supervised, 500, arq);
 			//fscanf(arq, "%s", supervised);
-			printf("passou scanf supervised\n");
-			printf("img = %s\nSup = %s\n", image, supervised);
+//			printf("passou scanf supervised\n");
+//			printf("img = %s\nSup = %s\n", image, supervised);
 			images_path.push_back(string(image));
 			supervised_path.push_back(string(supervised));
 		}
-		printf("\n%d %d\n", images_path.size(), supervised_path.size());
+//		printf("\n%d %d\n", images_path.size(), supervised_path.size());
 	}
 
-	printf("\n%d %d\n", images_path.size(), supervised_path.size());
+//	printf("\n%d %d\n", images_path.size(), supervised_path.size());
 	i_it = images_path.begin();
 	s_it = supervised_path.begin();
 	started = false;
@@ -29,7 +29,7 @@ RandomReader::RandomReader(string path){
 RandomReader::RandomReader(vector<string>img, vector<string>sup){
 	this->images_path = img;
 	this->supervised_path = sup;
-	printf("I = %d e S = %d\n", images_path.size(), supervised_path.size());
+//	printf("I = %d e S = %d\n", images_path.size(), supervised_path.size());
 
 	i_it = images_path.begin();
 	s_it = supervised_path.begin();
