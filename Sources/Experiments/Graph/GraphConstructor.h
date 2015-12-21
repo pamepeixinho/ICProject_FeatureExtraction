@@ -6,7 +6,6 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <FeatureExtractors/Region.hpp>
 #include <Utilities/FeaturesComplexNetwork.hpp>
-//#include <Utilities/RandomWalk.hpp>
 #include <FeatureExtractors/LabelFeatureFactory.hpp>
 #include <opencv2/core/core.hpp>
 #include <opencv2/core/mat.hpp>
@@ -313,8 +312,6 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
         if (type == 4 && (image.rows != 0 && image.cols != 0))
             cvtColor(image, image, CV_BGR2GRAY);
 
-//		printf("\n\n %d -", quantidade);
-//		printf("%s\n", path_image.c_str());
 
 		for (int n = 0; n < i.getRegions().size(); n++){
 //			printf("regiao: %s\n", i.getRegions()[n].getLabel().toStdString().c_str());
@@ -340,12 +337,10 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 		
 		}
 
-		if (this->quantidade % 100 == 0){
+		if (this->quantidade % 500 == 0){
 			time_t tempo = time(NULL);
 			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
-		}
-		if (this->quantidade % 500 == 0){
-			//printf("quantidade = %d\n", this->quantidade);
+
 			Grafo.printVertices(this->arq_vertice);
 			Grafo.printGraph(this->arq_grafo);
 		}

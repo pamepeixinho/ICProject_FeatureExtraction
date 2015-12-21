@@ -1,35 +1,11 @@
 #include <Utilities/SunDatabaseReader.hpp>
-#include <Utilities/DatabaseReader.hpp>
-#include <Utilities/SupervisedImage.hpp>
-#include <FeatureExtractors/Region.hpp>
-#include <Utilities/FeaturesComplexNetwork.hpp>
-#include <Utilities/RandomWalk.hpp>
-#include <FeatureExtractors/LabelFeatureFactory.hpp>
-#include <cstdio>
-#include <cstdlib>
-#include <iostream>
-#include <opencv2/core/core.hpp>
-#include <opencv2/core/mat.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv/cv.h>
-#include <opencv/highgui.h>
-#include <opencv/cxcore.h>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <string.h>
-#include <vector>
-#include <time.h>
-#include <assert.h>
 #include "RandomImages.h"
 #include "RandomReader.h"
 #include "RandomRegionReader.h"
-#include <Experiments/Graph/Vertice.h>
 #include <Experiments/Graph/Label.h>
 #include <Experiments/Graph/Histograma.h>
 #include <Experiments/Graph/Graph.h>
-#include <Experiments/Graph/OcorrenciaGrafo.h>
 #include <Experiments/Graph/GraphConstructor.h>
-#include <Experiments/Graph/Orientacao.h>
-#include <Experiments/Graph/Area.h>
 #include "Validation.h"
 
 using namespace std;
@@ -190,5 +166,6 @@ int main(int argc, char *argv[]){
         validation.print();
 //        printf("PRINTF\n");
     }
+
 	return 0;
 }
