@@ -351,13 +351,11 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 		}
 
 		this->quantidade++;
-		printf("\n");
 
 		image.release();
 
 	}
-	
-	printf("printar2\n");
+    
     time_t tempo = time(NULL);
     printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
     fflush(stdout);
