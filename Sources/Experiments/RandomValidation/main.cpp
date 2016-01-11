@@ -45,13 +45,17 @@ int main(int argc, char *argv[]){
 		S = atoi(argv[8]);
 		V = atoi(argv[9]);
 		Y = atoi(argv[10]);
+		fflush(stdout);
 		printf("%d %d %d %d\n", H, S, V, Y);
+		fflush(stdout);
 		tipo = 1;
 	}
 	else if (strcmp(type, "Area") == 0){
 		D = atoi(argv[7]);
 		tipo = 2;
+		fflush(stdout);
 		printf("%d\n", D);
+		fflush(stdout);
 	}
 	else if (strcmp(type, "Orientacao") == 0){
 		D = atoi(argv[7]);
@@ -63,7 +67,9 @@ int main(int argc, char *argv[]){
         N = atoi(argv[8]);
         D = atoi(argv[9]);
         tipo = 4;
+		fflush(stdout);
         printf("%d\n", D);
+		fflush(stdout);
     }
 
 	SunDatabaseReader sunreader(path_SUN);
@@ -90,7 +96,7 @@ int main(int argc, char *argv[]){
 	memcpy(v, Svertice.c_str(), Svertice.length() + 1);
 	char *g = new char[Sgrafo.length() + 1];
 	memcpy(g, Sgrafo.c_str(), Svertice.length() + 1);
-
+	fflush(stdout);
 	printf("Vertice = %s e Grafo = %s\n", v, g);
 
 	RandomReader reader(image_path,sup);
@@ -101,6 +107,7 @@ int main(int argc, char *argv[]){
 		GraphConstructor<Label, Hsv_DiscrY> constructor(reader, v, g, H, S, V, Y);
 		constructor.build_g(Grafo);
 		printf("graph constructor\n");
+		fflush(stdout);
 
 		RandomRegionReader regions(imageC, supC);
 //		printf(regions.hasNextRegion() ? "regions has next\n" : "regions Doesnt have next\n");
