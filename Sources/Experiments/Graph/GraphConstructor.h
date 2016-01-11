@@ -109,7 +109,7 @@ void GraphConstructor<Label_type, feature_type>::build(){
 
     int _fx[neighbors], _fy[neighbors], _cx[neighbors], _cy[neighbors], soma = 0;
     float _w1[neighbors], _w2[neighbors], _w3[neighbors], _w4[neighbors];
-    float tx = 0, ty = 0, x=0, y=0;
+    float tx = 0, ty = 0, x = 0, y = 0;
 
     if(this->type == 4){
         for(int i = 0; i < neighbors; i++){
@@ -145,13 +145,16 @@ void GraphConstructor<Label_type, feature_type>::build(){
 //		strcat(nomearquivo_temp, ".txt");
 
 		String path_image = i.getImagePath().toStdString();
-        Mat image = imread(path_image);
+        Mat image = imread(path_image), dst;
 
-        if(type==1 && (image.rows!=0 && image.cols !=0))
-			cvtColor(image, image, CV_BGR2HSV_FULL);
+        if(type == 1 && (image.rows!=0 && image.cols !=0)){
+			cvtColor(image, dst, CV_BGR2HSV_FULL);
+		}
 
-        if(type == 4 && (image.rows != 0 && image.cols != 0))
-            cvtColor(image, image, CV_BGR2GRAY);
+        if(type == 4 && (image.rows != 0 && image.cols != 0)){
+            dst = Mat::zeros(image.rows, image.cols, CV_8UC1);
+			cvtColor(image, dst, CV_BGR2GRAY);
+		}
 
 
 		for (int n = 0; n < i.getRegions().size(); n++){
@@ -168,13 +171,13 @@ void GraphConstructor<Label_type, feature_type>::build(){
 	
 			if ((mask.cols != 0 && mask.rows != 0) && (image.rows != 0 && image.cols != 0)){
 				if (type == 1) //histograma
-					FEATURE = feature_type(image, mask, arg_h, arg_s, arg_v, n, label, arg_K);
+					FEATURE = feature_type(dst, mask, arg_h, arg_s, arg_v, n, label, arg_K);
 				else if (type == 2) //area
 					FEATURE = feature_type(i.getRegions()[n], Discr, image.cols, image.rows);
 				else if (type == 3) //Orientacao
 					FEATURE = feature_type(i.getRegions()[n], Discr);
                 else if (type == 4) //LBP
-                    FEATURE = feature_type(image, mask, radius, neighbors, _fx, _fy, _cx, _cy,_w1, _w2, _w3, _w4,soma, Discr);
+                    FEATURE = feature_type(dst, mask, radius, neighbors, _fx, _fy, _cx, _cy,_w1, _w2, _w3, _w4, soma, Discr);
 
 				Grafo.ConstructEdges(LABEL,FEATURE);
 			}	
@@ -184,6 +187,7 @@ void GraphConstructor<Label_type, feature_type>::build(){
 		if (this->quantidade % 100 == 0){
 			time_t tempo = time(NULL);
 			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer)/60);
+			fflush(stdout);
 		}
 		if (this->quantidade % 500 == 0){
 			Grafo.printVertices(arq_vertice);
@@ -198,6 +202,7 @@ void GraphConstructor<Label_type, feature_type>::build(){
 	}
     time_t tempo = time(NULL);
     printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
+    fflush(stdout);
 	Grafo.printVertices(arq_vertice);
 	Grafo.printGraph(arq_grafo);
 }
@@ -340,7 +345,7 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 		if (this->quantidade % 500 == 0){
 			time_t tempo = time(NULL);
 			printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
-
+            fflush(stdout);
 			Grafo.printVertices(this->arq_vertice);
 			Grafo.printGraph(this->arq_grafo);
 		}
@@ -355,6 +360,7 @@ void GraphConstructor<Label_type, feature_type>::build_g(Graph<Label_type, featu
 	printf("printar2\n");
     time_t tempo = time(NULL);
     printf("TIME\t%d\t%.2f\n", this->quantidade, difftime(tempo, timer) / 60);
+    fflush(stdout);
 	Grafo.printVertices(arq_vertice);
 	Grafo.printGraph(arq_grafo);
 
